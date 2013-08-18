@@ -311,10 +311,8 @@ public class L_Player implements Listener {
 			if (b.getTypeId() == Material.SIGN_POST.getId()
 					|| b.getTypeId() == Material.WALL_SIGN.getId()) {
 				Sign sign = (Sign) b.getState();
-				player.sendMessage("Bis zu isLomSign");
 				if (isLoM_Sign(sign)) {
 					LoM_Sign lomSign = getLoM_Sign(sign);
-					player.sendMessage("Bis zu Typen");
 					if (lomSign.getType().getType()
 							.equalsIgnoreCase(LoM_SignType.ARENA.getType())) {
 						player.performCommand("lom join " + lomSign.getName());
@@ -361,7 +359,7 @@ public class L_Player implements Listener {
 		boolean isSign = false;
 		Location loc = sign.getBlock().getLocation();
 		for (LoM_Sign lomSign : plugin.Signs) {
-			if (lomSign.getLocation().getLocation().distance(loc) <= 1) {
+			if (lomSign.getLocation().getLocation() == loc) {
 				isSign = true;
 			}
 		}
@@ -374,7 +372,7 @@ public class L_Player implements Listener {
 	public LoM_Sign getLoM_Sign(Sign sign) {
 		Location loc = sign.getBlock().getLocation();
 		for (LoM_Sign lomsign : plugin.Signs) {
-			if (lomsign.getLocation().getLocation().distance(loc) <= 1) {
+			if (lomsign.getLocation().getLocation() == loc) {
 				return lomsign;
 			}
 		}
