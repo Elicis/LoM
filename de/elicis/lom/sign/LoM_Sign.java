@@ -1,7 +1,5 @@
 package de.elicis.lom.sign;
 
-import java.util.HashMap;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,18 +13,18 @@ import de.elicis.lom.Main;
 
 public class LoM_Sign {
 	LoMLocation loc;
+	Main main;
 	LoM_SignType type;
-	public HashMap<String, Arena> Arena;
 	String name;
 	String line1;
 	String line2;
 	String line3;
 
 	public LoM_Sign(String name2, LoM_SignType type2, Main t, Location location) {
-		Arena = t.Arenas;
-		if (Arena.containsKey(name2)) {
+		main = t;
+		if (main.Arenas.containsKey(name2)) {
 			name = name2;
-			Arena a = Arena.get(name);
+			Arena a = main.Arenas.get(name);
 			loc = new LoMLocation(location);
 			if (loc.getLocation().getBlock().getType() == Material.SIGN
 					|| loc.getLocation().getBlock().getType() == Material.SIGN_POST) {
@@ -64,8 +62,8 @@ public class LoM_Sign {
 
 			}
 			if (type.getType().equalsIgnoreCase(LoM_SignType.ARENA.getType())) {
-				if (Arena.containsKey(name)) {
-					Arena a = Arena.get(name);
+				if (main.Arenas.containsKey(name)) {
+					Arena a = main.Arenas.get(name);
 					String state;
 					if (a.isActive()) {
 						state = ChatColor.RED + "Running";
