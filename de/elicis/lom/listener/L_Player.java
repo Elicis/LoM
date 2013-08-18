@@ -61,6 +61,14 @@ public class L_Player implements Listener {
 				player.getItemInHand().setDurability((short) 0.0);
 			}
 		}
+		Block b = event.getBlock();
+		if (b.getTypeId() == Material.SIGN_POST.getId()
+				|| b.getTypeId() == Material.WALL_SIGN.getId()) {
+			Sign sign = (Sign) b.getState();
+			if (isLoM_Sign(sign)) {
+				plugin.Signs.remove(getLoM_Sign(sign));
+			}
+		}
 	}
 
 	@EventHandler
