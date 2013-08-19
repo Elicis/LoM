@@ -16,7 +16,7 @@ import de.elicis.lom.shop.Shop;
 import de.elicis.lom.sign.LoM_Sign;
 
 public class Main extends JavaPlugin {
-	public HashMap<String, Arena> Arenas = new HashMap<String, Arena>();
+	public static HashMap<String, Arena> Arenas = new HashMap<String, Arena>();
 	public HashMap<String, Shop> Shops = new HashMap<String, Shop>();
 	public ArrayList<LoM_Sign> Signs = new ArrayList<LoM_Sign>();
 	public Shop shop = new Shop();
@@ -63,7 +63,7 @@ public class Main extends JavaPlugin {
 
 	private void registerListeners() {
 		getServer().getPluginManager().registerEvents(new L_Player(this), this);
-		getServer().getPluginManager().registerEvents(new L_Combat(this), this);
+		getServer().getPluginManager().registerEvents(new L_Combat(), this);
 	}
 
 	private void loadArenas() {
