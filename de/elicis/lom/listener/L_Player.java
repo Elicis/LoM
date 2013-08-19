@@ -263,7 +263,7 @@ public class L_Player implements Listener {
 			if (player.hasPermission("lom.sign.arena")) {
 				if (!event.getLine(1).isEmpty()) {
 					String line2 = event.getLine(1);
-					if (plugin.Arenas.get(line2) != null) {
+					if (Main.Arenas.get(line2) != null) {
 						LoM_Sign sign = new LoM_Sign(line2.toLowerCase(),
 								LoM_SignType.ARENA, plugin, event.getBlock()
 										.getLocation());
@@ -279,7 +279,7 @@ public class L_Player implements Listener {
 							World world = cre.createWorld();
 							world.setKeepSpawnInMemory(true);
 							Arena arena = new Arena(line2.toLowerCase());
-							plugin.Arenas.put(line2.toLowerCase(), arena);
+							Main.Arenas.put(line2.toLowerCase(), arena);
 							LoM_Sign sign = new LoM_Sign(line2.toLowerCase(),
 									LoM_SignType.ARENA, plugin, event
 											.getBlock().getLocation());
@@ -338,7 +338,7 @@ public class L_Player implements Listener {
 	 * Checks if the player is already in an arena
 	 */
 	public boolean isInArena(Player player) {
-		for (Arena arena : plugin.Arenas.values()) {
+		for (Arena arena : Main.Arenas.values()) {
 			if (arena.getPlayersS().contains(player.getName())) {
 				return true;
 			}
@@ -351,7 +351,7 @@ public class L_Player implements Listener {
 	 * Return an Arena for a specific Player
 	 */
 	public Arena getArenaP(Player player) {
-		for (Arena arena : plugin.Arenas.values()) {
+		for (Arena arena : Main.Arenas.values()) {
 			if (arena.getPlayers().contains(player)) {
 				return arena;
 			}

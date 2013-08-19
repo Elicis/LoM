@@ -47,13 +47,13 @@ public class CE_LoM implements CommandExecutor {
 				 */
 				if (args[0].equalsIgnoreCase("create")) {
 					if (sender.hasPermission("lom.arena.create")) {
-						if (!plugin.Arenas.containsKey(args[1].toLowerCase())) {
+						if (!Main.Arenas.containsKey(args[1].toLowerCase())) {
 							WorldCreator cre = new WorldCreator(
 									args[1].toLowerCase());
 							World world = cre.createWorld();
 							world.setKeepSpawnInMemory(true);
 							Arena arena = new Arena(args[1].toLowerCase());
-							plugin.Arenas.put(args[1].toLowerCase(), arena);
+							Main.Arenas.put(args[1].toLowerCase(), arena);
 							sender.sendMessage(ChatColor.GREEN
 									+ "Succesfully created!");
 							return true;
@@ -92,8 +92,8 @@ public class CE_LoM implements CommandExecutor {
 						if (Bukkit.getWorld(args[1]) != null) {
 							Bukkit.getWorlds().remove(
 									Bukkit.getWorld(args[1].toLowerCase()));
-							if (plugin.Arenas.containsKey(args[1])) {
-								plugin.Arenas.remove(args[1].toLowerCase());
+							if (Main.Arenas.containsKey(args[1])) {
+								Main.Arenas.remove(args[1].toLowerCase());
 							}
 							sender.sendMessage(ChatColor.GREEN
 									+ "Arena removed!");
@@ -116,14 +116,14 @@ public class CE_LoM implements CommandExecutor {
 							Arena arena = getArenaW(player.getWorld());
 							if (args[1].equalsIgnoreCase("red")) {
 								arena.setLobbyRed(player.getLocation());
-								plugin.Arenas.put(arena.getName(), arena);
+								Main.Arenas.put(arena.getName(), arena);
 								sender.sendMessage(ChatColor.GREEN
 										+ "Lobby set!");
 								return true;
 							}
 							if (args[1].equalsIgnoreCase("blue")) {
 								arena.setLobbyBlue(player.getLocation());
-								plugin.Arenas.put(arena.getName(), arena);
+								Main.Arenas.put(arena.getName(), arena);
 								sender.sendMessage(ChatColor.GREEN
 										+ "Lobby set!");
 								return true;
@@ -149,14 +149,14 @@ public class CE_LoM implements CommandExecutor {
 							Arena arena = getArenaW(player.getWorld());
 							if (args[1].equalsIgnoreCase("red")) {
 								arena.setSpawnRed(player.getLocation());
-								plugin.Arenas.put(arena.getName(), arena);
+								Main.Arenas.put(arena.getName(), arena);
 								sender.sendMessage(ChatColor.GREEN
 										+ "Spawn set!");
 								return true;
 							}
 							if (args[1].equalsIgnoreCase("blue")) {
 								arena.setSpawnBlue(player.getLocation());
-								plugin.Arenas.put(arena.getName(), arena);
+								Main.Arenas.put(arena.getName(), arena);
 								sender.sendMessage(ChatColor.GREEN
 										+ "Spawn set!");
 								return true;
@@ -179,25 +179,25 @@ public class CE_LoM implements CommandExecutor {
 				if (args[0].equalsIgnoreCase("join")) {
 					if (sender.hasPermission("lom.arena.join")) {
 						if (!isInArena(player)) {
-							if (plugin.Arenas
+							if (Main.Arenas
 									.containsKey(args[1].toLowerCase())) {
-								if (!(plugin.Arenas.get(args[1].toLowerCase())
+								if (!(Main.Arenas.get(args[1].toLowerCase())
 										.getPlayers().size() == 10)) {
-									if (!plugin.Arenas.get(args[1]).isActive()) {
-										if (plugin.Arenas.get(
+									if (!Main.Arenas.get(args[1]).isActive()) {
+										if (Main.Arenas.get(
 												args[1].toLowerCase())
 												.getLobbyBlue() != null
-												&& plugin.Arenas.get(
+												&& Main.Arenas.get(
 														args[1].toLowerCase())
 														.getLobbyRed() != null
-												&& plugin.Arenas.get(
+												&& Main.Arenas.get(
 														args[1].toLowerCase())
 														.getSpawnBlue() != null
-												&& plugin.Arenas.get(
+												&& Main.Arenas.get(
 														args[1].toLowerCase())
 														.getSpawnBlue() != null) {
 											InvSave.saveInventory(player);
-											Arena arena = plugin.Arenas
+											Arena arena = Main.Arenas
 													.get(args[1].toLowerCase());
 											joinTeam(arena, player);
 											sender.sendMessage(ChatColor.GREEN
@@ -239,7 +239,7 @@ public class CE_LoM implements CommandExecutor {
 									player.getName()) != null) {
 								Arena a = getArenaP(player);
 								a.removeChamp(player);
-								plugin.Arenas.put(a.getName(), a);
+								Main.Arenas.put(a.getName(), a);
 							}
 							Champion champ = null;
 							switch (args[1].toLowerCase()) {
@@ -265,7 +265,7 @@ public class CE_LoM implements CommandExecutor {
 							if (champ != null) {
 								Arena a = getArenaP(player);
 								a.addChamp(player, champ);
-								plugin.Arenas.put(a.getName(), a);
+								Main.Arenas.put(a.getName(), a);
 								player.sendMessage(ChatColor.GREEN
 										+ "You are now playing as: "
 										+ ChatColor.GOLD + champ.getName());
@@ -328,8 +328,8 @@ public class CE_LoM implements CommandExecutor {
 				}
 				if (args[0].equalsIgnoreCase("start")) {
 					if (sender.hasPermission("lom.arena.start")) {
-						if (plugin.Arenas.containsKey(args[1].toLowerCase())) {
-							Arena arena = plugin.Arenas.get(args[1]
+						if (Main.Arenas.containsKey(args[1].toLowerCase())) {
+							Arena arena = Main.Arenas.get(args[1]
 									.toLowerCase());
 							if (arena.getLobbyBlue() != null
 									&& arena.getLobbyRed() != null
@@ -345,7 +345,7 @@ public class CE_LoM implements CommandExecutor {
 								}
 								if (allchamps) {
 									arena.startGame();
-									plugin.Arenas.put(arena.getName(), arena);
+									Main.Arenas.put(arena.getName(), arena);
 									return true;
 								}
 								sender.sendMessage(ChatColor.RED
@@ -454,7 +454,7 @@ public class CE_LoM implements CommandExecutor {
 	 * Returns true if the world is a Arena
 	 */
 	public boolean isArena(World world) {
-		for (Arena arena : plugin.Arenas.values()) {
+		for (Arena arena : Main.Arenas.values()) {
 			if (arena.getWorld().getName() == world.getName()) {
 				return true;
 			}
@@ -467,7 +467,7 @@ public class CE_LoM implements CommandExecutor {
 	 * Returns an Arena for a specific World
 	 */
 	public Arena getArenaW(World world) {
-		for (Arena arena : plugin.Arenas.values()) {
+		for (Arena arena : Main.Arenas.values()) {
 			if (arena.getWorld() == world) {
 				return arena;
 			}
@@ -480,7 +480,7 @@ public class CE_LoM implements CommandExecutor {
 	 * Return an Arena for a specific Player
 	 */
 	public Arena getArenaP(Player player) {
-		for (Arena arena : plugin.Arenas.values()) {
+		for (Arena arena : Main.Arenas.values()) {
 			if (arena.getPlayers().contains(player)) {
 				return arena;
 			}
@@ -493,7 +493,7 @@ public class CE_LoM implements CommandExecutor {
 	 * Checks if the player is already in an arena
 	 */
 	public boolean isInArena(Player player) {
-		for (Arena arena : plugin.Arenas.values()) {
+		for (Arena arena : Main.Arenas.values()) {
 			if (arena.getPlayersS().contains(player.getName())) {
 				return true;
 			}
@@ -533,7 +533,7 @@ public class CE_LoM implements CommandExecutor {
 		if (arena.getPlayersS().size() == 10) {
 			arena.startGame();
 		}
-		plugin.Arenas.put(arena.getName(), arena);
+		Main.Arenas.put(arena.getName(), arena);
 
 	}
 

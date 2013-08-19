@@ -23,7 +23,7 @@ public class LoM_Sign {
 	String line3;
 
 	public LoM_Sign(String name2, LoM_SignType type2, Main t, Location location) {
-		Arena = t.Arenas;
+		Arena = Main.Arenas;
 		if (Arena.containsKey(name2)) {
 			name = name2;
 			Arena a = Arena.get(name);
@@ -86,6 +86,9 @@ public class LoM_Sign {
 			sign.update(true);
 
 		}
+	}
+	public void setArenas(HashMap<String, Arena> Arena2){
+		Arena = Arena2;
 	}
 
 	public LoMLocation getLocation() {

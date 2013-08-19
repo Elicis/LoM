@@ -19,7 +19,7 @@ public class Engine {
 
 					@Override
 					public void run() {
-						for (Arena arena : plugin.Arenas.values()) {
+						for (Arena arena : Main.Arenas.values()) {
 							if (arena.isActive()) {
 								for (Champion champ : arena.getChamps()
 										.values()) {
@@ -37,7 +37,7 @@ public class Engine {
 											champ);
 									continue;
 								}
-								plugin.Arenas.put(arena.getName(), arena);
+								Main.Arenas.put(arena.getName(), arena);
 							}
 							continue;
 						}
@@ -49,6 +49,7 @@ public class Engine {
 			@Override
 			public void run() {
 				for (LoM_Sign sign : plugin.Signs) {
+					sign.setArenas(Main.Arenas);
 					sign.updateSign();
 				}
 

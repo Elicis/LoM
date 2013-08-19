@@ -18,11 +18,9 @@ import de.elicis.lom.Main;
 import de.elicis.lom.champions.Champion;
 
 public class L_Combat implements Listener {
-	private static Main plugin;
 	ArrayList<Integer> weapons = new ArrayList<Integer>();
 
-	public L_Combat(Main t) {
-		plugin = t;
+	public L_Combat() {
 		addweapons();
 	}
 
@@ -122,7 +120,7 @@ public class L_Combat implements Listener {
 	 * Checks if the player is already in an arena
 	 */
 	public boolean isInArena(Player player) {
-		for (Arena arena : plugin.Arenas.values()) {
+		for (Arena arena : Main.Arenas.values()) {
 			if (arena.getPlayersS().contains(player.getName())) {
 				return true;
 			}
@@ -135,7 +133,7 @@ public class L_Combat implements Listener {
 	 * Return an Arena for a specific Player
 	 */
 	public Arena getArenaP(Player player) {
-		for (Arena arena : plugin.Arenas.values()) {
+		for (Arena arena : Main.Arenas.values()) {
 			if (arena.getPlayers().contains(player)) {
 				return arena;
 			}
