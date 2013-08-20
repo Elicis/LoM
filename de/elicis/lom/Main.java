@@ -15,8 +15,6 @@ import de.elicis.lom.listener.L_Player;
 import de.elicis.lom.shop.Shop;
 import de.elicis.lom.sign.LoM_Sign;
 
-// Test
-
 public class Main extends JavaPlugin {
 	public static HashMap<String, Arena> Arenas = new HashMap<String, Arena>();
 	public HashMap<String, Shop> Shops = new HashMap<String, Shop>();
