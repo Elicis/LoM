@@ -1,6 +1,9 @@
 package de.elicis.lom.sign;
 
-public enum LoM_SignType {
+public enum LoM_SignType{
+	
+	
+	
 	ARENA("arena"), CHAMPION("champion");
 
 	String name;

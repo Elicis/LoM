@@ -1,29 +1,33 @@
 package de.elicis.lom.sign;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
 import de.elicis.lom.Arena;
 import de.elicis.lom.LoMLocation;
-import de.elicis.lom.Main;
 
-public class LoM_Sign {
+public class LoM_Sign implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6659308713687725185L;
 	LoMLocation loc;
 	LoM_SignType type;
-	public HashMap<String, Arena> Arena;
+	HashMap<String, Arena> Arena;
 	String name;
 	String line1;
 	String line2;
 	String line3;
 
-	public LoM_Sign(String name2, LoM_SignType type2, Main t, Location location) {
-		Arena = Main.Arenas;
+	public LoM_Sign(String name2, LoM_SignType type2, Location location, HashMap<String, Arena> Arena2) {
+		
+		Arena = Arena2;
 		if (Arena.containsKey(name2)) {
 			name = name2;
 			Arena a = Arena.get(name);
@@ -33,9 +37,9 @@ public class LoM_Sign {
 				if (type == LoM_SignType.ARENA) {
 					String state;
 					if (a.isActive()) {
-						state = ChatColor.RED + "Running";
+						state =  "Running";
 					} else {
-						state = ChatColor.GREEN + "Ready";
+						state =  "Ready";
 					}
 					line1 = "[Arena]";
 					line2 = name;
@@ -52,8 +56,7 @@ public class LoM_Sign {
 	}
 
 	public void updateSign() {
-		World w = loc.getLocation().getWorld();
-		Block b = w.getBlockAt(loc.getLocation());
+		Block b = loc.getLocation().getBlock();
 		if (b.getTypeId() == Material.SIGN_POST.getId()
 				|| b.getTypeId() == Material.WALL_SIGN.getId()) {
 			if (type.getType()
@@ -68,14 +71,13 @@ public class LoM_Sign {
 					Arena a = Arena.get(name);
 					String state;
 					if (a.isActive()) {
-						state = ChatColor.RED + "Running";
+						state =  "Running";
 					} else {
-						state = ChatColor.GREEN + "Ready";
+						state =  "Ready";
 					}
 					line1 = "[Arena]";
 					line2 = name;
-					line3 = "[" + a.getPlayers().size() + "/10]" + "[" + state
-							+ ChatColor.BLACK + "]";
+					line3 = "[" + a.getPlayers().size() + "/10]" + "[" + state + "]";
 				}
 
 			}

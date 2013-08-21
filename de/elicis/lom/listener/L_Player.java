@@ -265,8 +265,8 @@ public class L_Player implements Listener {
 					String line2 = event.getLine(1);
 					if (Main.Arenas.get(line2) != null) {
 						LoM_Sign sign = new LoM_Sign(line2.toLowerCase(),
-								LoM_SignType.ARENA, plugin, event.getBlock()
-										.getLocation());
+								LoM_SignType.ARENA, event.getBlock()
+										.getLocation(), Main.Arenas);
 						plugin.Signs.add(sign);
 						Bukkit.getLogger().log(Level.INFO,
 								player.getName() + " created a new Arena Sign");
@@ -281,8 +281,8 @@ public class L_Player implements Listener {
 							Arena arena = new Arena(line2.toLowerCase());
 							Main.Arenas.put(line2.toLowerCase(), arena);
 							LoM_Sign sign = new LoM_Sign(line2.toLowerCase(),
-									LoM_SignType.ARENA, plugin, event
-											.getBlock().getLocation());
+									LoM_SignType.ARENA, event
+											.getBlock().getLocation(), Main.Arenas);
 							plugin.Signs.add(sign);
 							Bukkit.getLogger().log(
 									Level.INFO,
@@ -301,8 +301,8 @@ public class L_Player implements Listener {
 				if (!event.getLine(1).isEmpty()) {
 					String line2 = event.getLine(1);
 					LoM_Sign sign = new LoM_Sign(line2.toLowerCase(),
-							LoM_SignType.CHAMPION, plugin, event.getBlock()
-									.getLocation());
+							LoM_SignType.CHAMPION, event.getBlock()
+									.getLocation(), Main.Arenas);
 					plugin.Signs.add(sign);
 					player.sendMessage(ChatColor.GREEN + "Succesfully created!");
 				}
@@ -367,7 +367,7 @@ public class L_Player implements Listener {
 		boolean isSign = false;
 		Location loc = sign.getBlock().getLocation();
 		for (LoM_Sign lomSign : plugin.Signs) {
-			if (lomSign.getLocation().getLocation() == loc) {
+			if (isSameLocation(loc, lomSign.getLocation().getLocation())) {
 				isSign = true;
 			}
 		}
@@ -379,11 +379,29 @@ public class L_Player implements Listener {
 	 */
 	public LoM_Sign getLoM_Sign(Sign sign) {
 		Location loc = sign.getBlock().getLocation();
-		for (LoM_Sign lomsign : plugin.Signs) {
-			if (lomsign.getLocation().getLocation() == loc) {
-				return lomsign;
+		for (LoM_Sign lomSign : plugin.Signs) {
+			if (isSameLocation(loc, lomSign.getLocation().getLocation())) {
+				return lomSign;
 			}
 		}
 		return null;
+	}
+	/*
+	 * Compares two Locations
+	 */
+	public boolean isSameLocation(Location loc1, Location loc2){
+		int x1 = loc1.getBlockX();
+		int x2 = loc2.getBlockX();
+		int y1 = loc1.getBlockY();
+		int y2 = loc2.getBlockY();
+		int z1 = loc1.getBlockZ();
+		int z2 = loc2.getBlockZ();
+		String world1 = loc1.getWorld().getName();
+		String world2 = loc2.getWorld().getName();
+		boolean isSame = false;
+		if(x1 == x2 && y1 == y2 && z1 == z2 && world1.equalsIgnoreCase(world2)){
+			isSame = true;
+		}
+		return isSame;
 	}
 }
