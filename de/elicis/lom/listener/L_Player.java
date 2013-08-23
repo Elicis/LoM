@@ -239,8 +239,8 @@ public class L_Player implements Listener {
 		Player player = event.getPlayer();
 		if (isInArena(player)) {
 			getArenaP(player).removePlayer(player);
-			player.setMaxHealth(20);
-			player.setHealth(player.getMaxHealth());
+			player.setMaxHealth((float) 20);
+			player.setHealth((float) 20);
 			player.setFoodLevel(20);
 			player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
 			InvSave.reloadInventory(player);
