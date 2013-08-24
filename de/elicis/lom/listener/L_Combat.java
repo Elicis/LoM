@@ -42,7 +42,7 @@ public class L_Combat implements Listener {
 											.get(player1.getName());
 									Champion champPlayer2 = arena.getChamps()
 											.get(player2.getName());
-									event.setDamage(champPlayer1.getDamage()
+									event.setDamage((float) champPlayer1.getDamage()
 											* (100 / (100 + champPlayer2
 													.getArmor())));
 								}
@@ -65,7 +65,7 @@ public class L_Combat implements Listener {
 										Champion champPlayer2 = arena
 												.getChamps().get(
 														player2.getName());
-										event.setDamage(champPlayer1
+										event.setDamage((float) champPlayer1
 												.getDamage()
 												* (100 / (100 + champPlayer2
 														.getArmor())));
@@ -88,7 +88,7 @@ public class L_Combat implements Listener {
 										Champion champPlayer2 = arena
 												.getChamps().get(
 														player2.getName());
-										event.setDamage(champPlayer1
+										event.setDamage((float) champPlayer1
 												.getDamage()
 												* (100 / (100 + champPlayer2
 														.getArmor())));
