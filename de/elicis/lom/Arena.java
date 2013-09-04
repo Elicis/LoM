@@ -193,10 +193,6 @@ public class Arena implements Serializable {
 		}
 	}
 
-	public void addPlayer(Player player) {
-		Players.add(player.getName());
-	}
-
 	public void removePlayer(Player player) {
 		if (Players.contains(player.getName())) {
 			Players.remove(player.getName());

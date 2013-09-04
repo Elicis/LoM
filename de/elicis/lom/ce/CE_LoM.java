@@ -89,9 +89,8 @@ public class CE_LoM implements CommandExecutor {
 				 */
 				if (args[0].equalsIgnoreCase("delete")) {
 					if (sender.hasPermission("lom.arena.delete")) {
-						if (Bukkit.getWorld(args[1]) != null) {
-							Bukkit.getWorlds().remove(
-									Bukkit.getWorld(args[1].toLowerCase()));
+						if (Bukkit.getWorld(args[1].toLowerCase()) != null) {
+							Bukkit.unloadWorld(args[1].toLowerCase(), true);
 							if (Main.Arenas.containsKey(args[1])) {
 								Main.Arenas.remove(args[1].toLowerCase());
 							}
@@ -336,9 +335,8 @@ public class CE_LoM implements CommandExecutor {
 									&& arena.getSpawnBlue() != null
 									&& arena.getSpawnBlue() != null) {
 								boolean allchamps = true;
-								for (Player playertemp : arena.getPlayers()) {
-									if (!arena.getChamps().containsKey(
-											playertemp.getName())) {
+								for (String str : arena.getPlayersS()) {
+									if(arena.getChamps().get(str) == null){
 										allchamps = false;
 									}
 									continue;
@@ -441,6 +439,21 @@ public class CE_LoM implements CommandExecutor {
 							+ "You have to be in an Arena to use this!");
 					return true;
 				}
+				if(args[0].equalsIgnoreCase("shop")){
+					if (sender.hasPermission("lom.arena.leave")) {
+						if (isInArena(player)) {
+							player.openInventory(plugin.shop.getPage(0));
+							return true;
+						}
+						sender.sendMessage(ChatColor.RED
+								+ "You have to be in an Arena to use this!");
+						return true;
+					}
+					sender.sendMessage(ChatColor.RED
+							+ "You don't have the permission to do that!");
+					return true;
+				}
+				
 
 			}
 
@@ -510,6 +523,7 @@ public class CE_LoM implements CommandExecutor {
 		player.setLevel(1);
 		player.setExp(0);
 		player.setGameMode(GameMode.ADVENTURE);
+		player.setSaturation((float) 20);
 		if (arena.getTeamBlue().size() < 5 && arena.getTeamRed().size() < 5) {
 			int randomTeam = (int) (Math.random() * 2 + 1);
 			if (randomTeam == 1) {
@@ -529,9 +543,6 @@ public class CE_LoM implements CommandExecutor {
 			arena.addPlayerRed(player);
 			player.sendMessage(ChatColor.RED + "You are in Team Red!");
 			player.teleport(arena.getLobbyRed().getLocation());
-		}
-		if (arena.getPlayersS().size() == 10) {
-			arena.startGame();
 		}
 		Main.Arenas.put(arena.getName(), arena);
 
