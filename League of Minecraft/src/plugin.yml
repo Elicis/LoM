@@ -1,0 +1,12 @@
+name: League of Minecraft
+version: 0.2
+description: League of Legends in Minecraft
+author: Elicis
+
+main: de.elicis.lom.Main
+
+commands:
+  lom:
+    description: Main Command
+    usage: /<command> help
+    aliases:
