@@ -13,6 +13,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.elicis.lom.ce.CE_LoM;
+import de.elicis.lom.champions.Alistar;
+import de.elicis.lom.champions.Ashe;
+import de.elicis.lom.champions.Garen;
+import de.elicis.lom.champions.Jax;
+import de.elicis.lom.champions.Veigar;
 import de.elicis.lom.listener.L_Combat;
 import de.elicis.lom.listener.L_Player;
 import de.elicis.lom.shop.Shop;
@@ -22,7 +27,8 @@ public class Main extends JavaPlugin {
 	public static HashMap<String, Arena> Arenas = new HashMap<String, Arena>();
 	public ArrayList<LoM_Sign> Signs = new ArrayList<LoM_Sign>();
 	public Shop shop = new Shop();
-	Config inventorys = new Config(this);
+	public static ArrayList<String> champions = new ArrayList<String>();
+	Config inventorys = new Config();
 	InvSave invSave = new InvSave(this);
 	Engine eng;
 
@@ -111,6 +117,13 @@ public class Main extends JavaPlugin {
 			arena.TeamRed.clear();
 
 		}
+	}
+	public void addChamps(){
+		champions.add(Ashe.class.getName());
+		champions.add(Garen.class.getName());
+		champions.add(Alistar.class.getName());
+		champions.add(Jax.class.getName());
+		champions.add(Veigar.class.getName());
 	}
 
 }

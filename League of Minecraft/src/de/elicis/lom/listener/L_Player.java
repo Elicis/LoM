@@ -12,6 +12,7 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,6 +36,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.elicis.lom.Arena;
+import de.elicis.lom.Config;
 import de.elicis.lom.InvSave;
 import de.elicis.lom.Main;
 import de.elicis.lom.champions.Champion;
@@ -43,13 +45,14 @@ import de.elicis.lom.sign.LoM_SignType;
 
 public class L_Player implements Listener {
 	private static Main plugin;
-
+	Config config = new Config();
+	FileConfiguration fconfig;
 	public L_Player(Main t) {
 		plugin = t;
+		fconfig = config.getConfig("config.yml");
 	}
 
 	HashMap<Player, ItemStack[]> Items = new HashMap<Player, ItemStack[]>();
-
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		Player player = event.getPlayer();
@@ -182,11 +185,13 @@ public class L_Player implements Listener {
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
+		Location to = event.getTo();
 		Player player = event.getPlayer();
 		if (isInArena(player)) {
 			if (player.getItemInHand().getDurability() != 0) {
 				player.getItemInHand().setDurability((short) 0.0);
 			}
+			
 			/*
 			if (event.getTo().getBlock().getTypeId() == 83) {
 				for (Player player2 : getArenaP(player).getPlayers()) {
@@ -205,6 +210,22 @@ public class L_Player implements Listener {
 				}
 			}
 			*/
+		}
+		if(isArena(to.getWorld())){
+			Location spawn = to.getWorld().getSpawnLocation();
+			Double distance = spawn.distance(to);
+			if(distance >= fconfig.getDouble("arena.radius")){
+				event.setCancelled(true);
+				player.sendMessage(ChatColor.RED + "You reached the end of the arena!");
+				if(to.subtract(4, 0, 0).distance(spawn) > distance){
+					player.teleport(to.add(4, 0, 0));
+				}else if(to.subtract(4, 0, 0).distance(spawn) < distance){
+					player.teleport(to.subtract(4, 0, 0));
+				}else{
+					player.teleport(spawn);
+				}
+				
+			}
 		}
 	}
 	
@@ -335,6 +356,18 @@ public class L_Player implements Listener {
 				}
 			}
 		}
+	}
+	/*
+	 * Returns true if the world is a Arena
+	 */
+	public boolean isArena(World world) {
+		for (Arena arena : Main.Arenas.values()) {
+			if (arena.getWorld().getName() == world.getName()) {
+				return true;
+			}
+			continue;
+		}
+		return false;
 	}
 
 	/*

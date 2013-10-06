@@ -15,9 +15,7 @@ public class Config {
 	FileConfiguration customConfig = null;
 	File customConfigurationFile = null;
 
-	public Config(Main t) {
-		plugin = t;
-
+	public Config() {
 	}
 
 	public void reloadConfig(String str) {
