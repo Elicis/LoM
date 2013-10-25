@@ -31,6 +31,10 @@ public class Arena implements Serializable {
 	HashMap<String, Champion> Champs = new HashMap<String, Champion>();
 	ArrayList<String> ChampsRed = new ArrayList<String>();
 	ArrayList<String> ChampsBlue = new ArrayList<String>();
+	Tower t_red_1, t_red_2,t_red_3,t_red_4,t_red_5,t_red_6,t_red_7,t_red_8,t_red_9,t_red_10,t_red_11;
+	Tower t_blue_1,t_blue_2,t_blue_3,t_blue_4,t_blue_5,t_blue_6,t_blue_7,t_blue_8,t_blue_9,t_blue_10,t_blue_11;
+	
+	
 
 	public Arena(String name2) {
 		world = name2;
@@ -252,6 +256,181 @@ public class Arena implements Serializable {
 	public void clearTeams(){
 		TeamRed.clear();
 		TeamBlue.clear();
+	}
+	public Tower getT_red_nexus_top() {
+		return t_red_1;
+	}
+
+	public void setT_red_nexus_top(Tower t_red_1) {
+		this.t_red_1 = t_red_1;
+	}
+
+	public Tower getT_red_nexus_bot() {
+		return t_red_2;
+	}
+
+	public void setT_red_nexus_bot(Tower t_red_2) {
+		this.t_red_2 = t_red_2;
+	}
+
+	public Tower getT_red_inhib_top() {
+		return t_red_3;
+	}
+
+	public void setT_red_inhib_top(Tower t_red_3) {
+		this.t_red_3 = t_red_3;
+	}
+
+	public Tower getT_red_inhib_mid() {
+		return t_red_4;
+	}
+
+	public void setT_red_inhib_mid(Tower t_red_4) {
+		this.t_red_4 = t_red_4;
+	}
+
+	public Tower getT_red_inhib_bot() {
+		return t_red_5;
+	}
+
+	public void setT_red_inhib_bot(Tower t_red_5) {
+		this.t_red_5 = t_red_5;
+	}
+
+	public Tower getT_red_inner_top() {
+		return t_red_6;
+	}
+
+	public void setT_red_inner_top(Tower t_red_6) {
+		this.t_red_6 = t_red_6;
+	}
+
+	public Tower getT_red_inner_mid() {
+		return t_red_7;
+	}
+
+	public void setT_red_inner_mid(Tower t_red_7) {
+		this.t_red_7 = t_red_7;
+	}
+
+	public Tower getT_red_inner_bot() {
+		return t_red_8;
+	}
+
+	public void setT_red_inner_bot(Tower t_red_8) {
+		this.t_red_8 = t_red_8;
+	}
+
+	public Tower getT_red_outer_top() {
+		return t_red_9;
+	}
+
+	public void setT_red_outer_top(Tower t_red_9) {
+		this.t_red_9 = t_red_9;
+	}
+
+	public Tower getT_red_outer_mid() {
+		return t_red_10;
+	}
+
+	public void setT_red_outer_mid(Tower t_red_10) {
+		this.t_red_10 = t_red_10;
+	}
+
+	public Tower getT_red_outer_bot() {
+		return t_red_11;
+	}
+
+	public void setT_red_outer_bot(Tower t_red_11) {
+		this.t_red_11 = t_red_11;
+	}
+
+	public Tower getT_blue_nexus_top() {
+		return t_blue_1;
+	}
+
+	public void setT_blue_nexus_top(Tower t_blue_1) {
+		this.t_blue_1 = t_blue_1;
+	}
+
+	public Tower getT_blue_nexus_bot() {
+		return t_blue_2;
+	}
+
+	public void setT_blue_nexus_bot(Tower t_blue_2) {
+		this.t_blue_2 = t_blue_2;
+	}
+
+	public Tower getT_blue_inhib_top() {
+		return t_blue_3;
+	}
+
+	public void setT_blue_inhib_top(Tower t_blue_3) {
+		this.t_blue_3 = t_blue_3;
+	}
+
+	public Tower getT_blue_inhib_mid() {
+		return t_blue_4;
+	}
+
+	public void setT_blue_inhib_mid(Tower t_blue_4) {
+		this.t_blue_4 = t_blue_4;
+	}
+
+	public Tower getT_blue_inhib_bot() {
+		return t_blue_5;
+	}
+
+	public void setT_blue_inhib_bot(Tower t_blue_5) {
+		this.t_blue_5 = t_blue_5;
+	}
+
+	public Tower getT_blue_inner_top() {
+		return t_blue_6;
+	}
+
+	public void setT_blue_inner_top(Tower t_blue_6) {
+		this.t_blue_6 = t_blue_6;
+	}
+
+	public Tower getT_blue_inner_mid() {
+		return t_blue_7;
+	}
+
+	public void setT_blue_inner_mid(Tower t_blue_7) {
+		this.t_blue_7 = t_blue_7;
+	}
+
+	public Tower getT_blue_inner_bot() {
+		return t_blue_8;
+	}
+
+	public void setT_blue_inner_bot(Tower t_blue_8) {
+		this.t_blue_8 = t_blue_8;
+	}
+
+	public Tower getT_blue_outer_top() {
+		return t_blue_9;
+	}
+
+	public void setT_blue_outer_top(Tower t_blue_9) {
+		this.t_blue_9 = t_blue_9;
+	}
+
+	public Tower getT_blue_outer_mid() {
+		return t_blue_10;
+	}
+
+	public void setT_blue_outer_mid(Tower t_blue_10) {
+		this.t_blue_10 = t_blue_10;
+	}
+
+	public Tower getT_blue_outer_bot() {
+		return t_blue_11;
+	}
+
+	public void setT_blue_outer_bot(Tower t_blue_11) {
+		this.t_blue_11 = t_blue_11;
 	}
 
 }

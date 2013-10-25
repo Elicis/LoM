@@ -10,7 +10,7 @@ import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.sign.LoM_Sign;
 
-public class Turret {
+public class Tower {
 	
 	String team;
 	int range;
@@ -20,7 +20,7 @@ public class Turret {
 	boolean isShooting;
 	LoM_Sign sign;
 
-	public Turret(String team, LoM_Sign sign) {
+	public Tower(String team, LoM_Sign sign) {
 		super();
 		this.team = team;
 		this.sign = sign;
@@ -100,6 +100,13 @@ public class Turret {
 
 	public void setTeam(String team) {
 		this.team = team;
+	}
+	public boolean isDestroyed(){
+		if(this.health <= 0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	

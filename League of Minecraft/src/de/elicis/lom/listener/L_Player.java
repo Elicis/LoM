@@ -331,12 +331,13 @@ public class L_Player implements Listener {
 			}
 
 		}
-		if(event.getLine(0).equalsIgnoreCase("[Turret]")){
-			if (player.hasPermission("lom.sign.turret")) {
+		if(event.getLine(0).equalsIgnoreCase("[Tower]")){
+			if (player.hasPermission("lom.sign.tower")) {
 				if (!event.getLine(1).isEmpty()) {
 					String line2 = event.getLine(1);
-					LoM_Sign sign = new LoM_Sign("turret_" + line2.toLowerCase(),
-							LoM_SignType.TURRET, event.getBlock()
+					LoM_Sign sign = new LoM_Sign("tower_"+ event.getBlock()
+							.getLocation().getWorld().getName() + line2.toLowerCase(),
+							LoM_SignType.TOWER, event.getBlock()
 									.getLocation());
 					de.elicis.lom.Main.getPlugin().Signs.add(sign);
 					player.sendMessage(ChatColor.GREEN + "Succesfully created!");

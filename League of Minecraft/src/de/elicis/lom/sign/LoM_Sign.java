@@ -53,8 +53,8 @@ public class LoM_Sign implements Serializable{
 					line1 = "[Champion]";
 					line2 = name;
 					line3 = "";
-				} else if(type == LoM_SignType.TURRET){
-					line1 = "[Turret]";
+				} else if(type == LoM_SignType.TOWER){
+					line1 = "[TOWER]";
 					line2 = "";
 				}
 			}
