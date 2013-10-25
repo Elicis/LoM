@@ -8,25 +8,21 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 import de.elicis.lom.champions.Champion;
+import de.elicis.lom.data.Arena;
 import de.elicis.lom.sign.LoM_Sign;
 
 public class Engine {
-	private static Main plugin;
-
-	public Engine(Main t) {
-		plugin = t;
-	}
-
 	public void startEngine() {
 
-		Bukkit.getScheduler().runTaskTimerAsynchronously(plugin,
+		Bukkit.getScheduler().runTaskTimerAsynchronously((Plugin) de.elicis.lom.Main.getPlugin(),
 				new Runnable() {
 
 					@Override
 					public void run() {
-						for (Arena arena : Main.Arenas.values()) {
+						for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
 							if (arena.isActive()) {
 								for (Champion champ : arena.getChamps()
 										.values()) {
@@ -51,23 +47,23 @@ public class Engine {
 									} else {
 										champ.setMana(champ.getMaxMana());
 									}
-									arena.Champs.put(champ.getPlayerName(),
+									arena.getChamps().put(champ.getPlayerName(),
 											champ);
 									continue;
 								}
-								Main.Arenas.put(arena.getName(), arena);
+								de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
 							}
 							continue;
 						}
 
 					}
 				}, 200, 40);
-		Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
+		Bukkit.getScheduler().runTaskTimer((Plugin) de.elicis.lom.Main.getPlugin(), new Runnable() {
 
 			@Override
 			public void run() {
-				for (LoM_Sign sign : plugin.Signs) {
-					sign.setArenas(Main.Arenas);
+				for (LoM_Sign sign : de.elicis.lom.Main.getPlugin().Signs) {
+					sign.setArenas(de.elicis.lom.Main.getPlugin().Arenas);
 					sign.updateSign();
 				}
 

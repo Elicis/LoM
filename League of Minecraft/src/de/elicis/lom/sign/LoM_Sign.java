@@ -9,8 +9,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
-import de.elicis.lom.Arena;
-import de.elicis.lom.LoMLocation;
+import de.elicis.lom.Main;
+import de.elicis.lom.data.Arena;
+import de.elicis.lom.data.LoMLocation;
 
 public class LoM_Sign implements Serializable{
 	/**
@@ -24,10 +25,13 @@ public class LoM_Sign implements Serializable{
 	String line1;
 	String line2;
 	String line3;
+	
+	//Just for SignType.Arena
+	int maxplayer;
 
-	public LoM_Sign(String name2, LoM_SignType type2, Location location, HashMap<String, Arena> Arena2) {
-		
-		Arena = Arena2;
+	public LoM_Sign(String name2, LoM_SignType type2, Location location) {
+		Arena = Main.getPlugin().Arenas;
+		maxplayer = Main.getPlugin().getConfig().getInt("arena.maxPlayer");
 		if (Arena.containsKey(name2)) {
 			name = name2;
 			Arena a = Arena.get(name);
@@ -43,12 +47,15 @@ public class LoM_Sign implements Serializable{
 					}
 					line1 = "[Arena]";
 					line2 = name;
-					line3 = "[" + a.getPlayers().size() + "/10]" + "[" + state
+					line3 = "[" + a.getPlayers().size() + "/"+ maxplayer +"]" + "[" + state
 							+ ChatColor.BLACK + "]";
 				} else if (type == LoM_SignType.CHAMPION) {
 					line1 = "[Champion]";
 					line2 = name;
 					line3 = "";
+				} else if(type == LoM_SignType.TURRET){
+					line1 = "[Turret]";
+					line2 = "";
 				}
 			}
 			type = type2;
@@ -77,7 +84,7 @@ public class LoM_Sign implements Serializable{
 					}
 					line1 = "[Arena]";
 					line2 = name;
-					line3 = "[" + a.getPlayers().size() + "/10]" + "[" + state + "]";
+					line3 = "[" + a.getPlayers().size() + "/"+ maxplayer + "]" + "[" + state + "]";
 				}
 
 			}

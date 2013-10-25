@@ -1,4 +1,4 @@
-package de.elicis.lom;
+package de.elicis.lom.data;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Config {
-	private static Main plugin;
-	FileConfiguration customConfig = null;
+	private FileConfiguration customConfig = null;
 	File customConfigurationFile = null;
 
 	public Config() {
@@ -20,34 +19,48 @@ public class Config {
 
 	public void reloadConfig(String str) {
 		if (customConfigurationFile == null) {
-			customConfigurationFile = new File(plugin.getDataFolder(), str);
+			customConfigurationFile = new File(de.elicis.lom.Main.getPlugin().getDataFolder(), str);
 		}
-		customConfig = YamlConfiguration
-				.loadConfiguration(customConfigurationFile);
-		InputStream defConfigStream = plugin.getResource(str);
+		setCustomConfig(YamlConfiguration
+				.loadConfiguration(customConfigurationFile));
+		InputStream defConfigStream = de.elicis.lom.Main.getPlugin().getResource(str);
 		if (defConfigStream != null) {
 			YamlConfiguration defConfig = YamlConfiguration
 					.loadConfiguration(defConfigStream);
-			customConfig.setDefaults(defConfig);
+			getCustomConfig().setDefaults(defConfig);
 		}
 	}
 
 	public FileConfiguration getConfig(String str) {
-		if (customConfig == null) {
+		if (getCustomConfig() == null) {
 			reloadConfig(str);
 		}
-		return customConfig;
+		return getCustomConfig();
 	}
 
 	public void saveCustomConfig() {
-		if (customConfig == null || customConfigurationFile == null) {
+		if (getCustomConfig() == null || customConfigurationFile == null) {
 			return;
 		}
 		try {
-			customConfig.save(customConfigurationFile);
+			getCustomConfig().save(customConfigurationFile);
 		} catch (IOException ex) {
 			Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE,
 					"Could not write " + customConfigurationFile, ex);
 		}
+	}
+
+	/**
+	 * @return the customConfig
+	 */
+	public FileConfiguration getCustomConfig() {
+		return customConfig;
+	}
+
+	/**
+	 * @param customConfig the customConfig to set
+	 */
+	public void setCustomConfig(FileConfiguration customConfig) {
+		this.customConfig = customConfig;
 	}
 }

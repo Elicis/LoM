@@ -11,32 +11,37 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import de.elicis.lom.ce.CE_LoM;
-import de.elicis.lom.champions.Alistar;
-import de.elicis.lom.champions.Ashe;
-import de.elicis.lom.champions.Garen;
-import de.elicis.lom.champions.Jax;
-import de.elicis.lom.champions.Veigar;
+import de.elicis.lom.data.Arena;
+import de.elicis.lom.data.Config;
+import de.elicis.lom.data.ConfigCreator;
+import de.elicis.lom.data.InvSave;
+import de.elicis.lom.data.Metrics;
+import de.elicis.lom.data.SL;
 import de.elicis.lom.listener.L_Combat;
 import de.elicis.lom.listener.L_Player;
 import de.elicis.lom.shop.Shop;
 import de.elicis.lom.sign.LoM_Sign;
 
 public class Main extends JavaPlugin {
-	public static HashMap<String, Arena> Arenas = new HashMap<String, Arena>();
+	public HashMap<String, Arena> Arenas = new HashMap<String, Arena>();
 	public ArrayList<LoM_Sign> Signs = new ArrayList<LoM_Sign>();
 	public Shop shop = new Shop();
-	public static ArrayList<String> champions = new ArrayList<String>();
-	Config inventorys = new Config();
-	InvSave invSave = new InvSave(this);
+	public ArrayList<String> champions = new ArrayList<String>();
+	private Config inventorys = new Config();
+	InvSave invSave = new InvSave();
 	Engine eng;
+	ConfigCreator creator;
 
 	@Override
-	public void onEnable() {
+	public void onEnable(){
+		addChamps();
+		getConfig().options().copyDefaults(true);
+		saveConfig();
 		this.getCommand("lom").setExecutor(new CE_LoM(this));
-		inventorys.reloadConfig("inventorys.yml");
+		getInventorys().reloadConfig("inventorys.yml");
 		registerListeners();
+		creator = new ConfigCreator();
 		try {
 			File verzeichnis = new File(this.getDataFolder() + "/data/");
 			verzeichnis.mkdirs();
@@ -55,11 +60,12 @@ public class Main extends JavaPlugin {
 			e.printStackTrace();
 		}
 		loadEngine();
+		
 	}
 
 	@Override
 	public void onDisable() {
-		inventorys.saveCustomConfig();
+		getInventorys().saveCustomConfig();
 		saveArenas();
 		unloadArenas();
 		try {
@@ -71,7 +77,7 @@ public class Main extends JavaPlugin {
 	}
 
 	private void registerListeners() {
-		getServer().getPluginManager().registerEvents(new L_Player(this), this);
+		getServer().getPluginManager().registerEvents(new L_Player(), this);
 		getServer().getPluginManager().registerEvents(new L_Combat(), this);
 		getServer().getPluginManager().registerEvents(shop, this);
 	}
@@ -95,7 +101,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public void loadEngine() {
-		eng = new Engine(this);
+		eng = new Engine();
 		eng.startEngine();
 	}
 
@@ -110,20 +116,36 @@ public class Main extends JavaPlugin {
 				player.setGameMode(GameMode.SURVIVAL);
 			}
 			arena.Players.clear();
-			arena.Champs.clear();
-			arena.ChampsBlue.clear();
-			arena.ChampsRed.clear();
-			arena.TeamBlue.clear();
-			arena.TeamRed.clear();
+			arena.getChamps().clear();
+			arena.getChampsBlue().clear();
+			arena.getChampsRed().clear();
+			arena.clearTeams();
 
 		}
 	}
 	public void addChamps(){
-		champions.add(Ashe.class.getName());
-		champions.add(Garen.class.getName());
-		champions.add(Alistar.class.getName());
-		champions.add(Jax.class.getName());
-		champions.add(Veigar.class.getName());
+		champions.add("Ashe");
+		champions.add("Garen");
+		champions.add("Alistar");
+		champions.add("Jax");
+		champions.add("Veigar");
 	}
+
+	/**
+	 * @return the inventorys
+	 */
+	public Config getInventorys() {
+		return inventorys;
+	}
+
+	/**
+	 * @param inventorys the inventorys to set
+	 */
+	public void setInventorys(Config inventorys) {
+		this.inventorys = inventorys;
+	}
+    public static Main getPlugin() {
+    	return (Main) Bukkit.getPluginManager().getPlugin("League of Minecraft");
+    }
 
 }

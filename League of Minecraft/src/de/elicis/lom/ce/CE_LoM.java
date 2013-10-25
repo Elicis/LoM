@@ -10,25 +10,29 @@ import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import de.elicis.lom.Arena;
-import de.elicis.lom.InvSave;
 import de.elicis.lom.Main;
+import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Alistar;
 import de.elicis.lom.champions.Ashe;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.champions.Garen;
 import de.elicis.lom.champions.Jax;
 import de.elicis.lom.champions.Veigar;
+import de.elicis.lom.data.Arena;
+import de.elicis.lom.data.Config;
+import de.elicis.lom.data.InvSave;
 
 public class CE_LoM implements CommandExecutor {
-	private static Main plugin;
-
+	Config config;
+	FileConfiguration fconfig;
 	public CE_LoM(Main t) {
-		plugin = t;
+		config = new Config();
+		fconfig = config.getConfig("champions.yml");
 	}
-
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String arg2,
 			String[] args) {
@@ -49,13 +53,13 @@ public class CE_LoM implements CommandExecutor {
 				 */
 				if (args[0].equalsIgnoreCase("create")) {
 					if (sender.hasPermission("lom.arena.create")) {
-						if (!Main.Arenas.containsKey(args[1].toLowerCase())) {
+						if (!de.elicis.lom.Main.getPlugin().Arenas.containsKey(args[1].toLowerCase())) {
 							WorldCreator cre = new WorldCreator(
 									args[1].toLowerCase());
 							World world = cre.createWorld();
 							world.setKeepSpawnInMemory(true);
 							Arena arena = new Arena(args[1].toLowerCase());
-							Main.Arenas.put(args[1].toLowerCase(), arena);
+							de.elicis.lom.Main.getPlugin().Arenas.put(args[1].toLowerCase(), arena);
 							sender.sendMessage(ChatColor.GREEN
 									+ "Succesfully created!");
 							return true;
@@ -93,8 +97,8 @@ public class CE_LoM implements CommandExecutor {
 					if (sender.hasPermission("lom.arena.delete")) {
 						if (Bukkit.getWorld(args[1].toLowerCase()) != null) {
 							Bukkit.unloadWorld(args[1].toLowerCase(), true);
-							if (Main.Arenas.containsKey(args[1])) {
-								Main.Arenas.remove(args[1].toLowerCase());
+							if (de.elicis.lom.Main.getPlugin().Arenas.containsKey(args[1])) {
+								de.elicis.lom.Main.getPlugin().Arenas.remove(args[1].toLowerCase());
 							}
 							sender.sendMessage(ChatColor.GREEN
 									+ "Arena removed!");
@@ -113,18 +117,18 @@ public class CE_LoM implements CommandExecutor {
 				 */
 				if (args[0].equalsIgnoreCase("setLobby")) {
 					if (sender.hasPermission("lom.arena.setLobby")) {
-						if (getArenaW(player.getWorld()) != null) {
-							Arena arena = getArenaW(player.getWorld());
+						if (LoM_API.getArenaW(player.getWorld()) != null) {
+							Arena arena = LoM_API.getArenaW(player.getWorld());
 							if (args[1].equalsIgnoreCase("red")) {
 								arena.setLobbyRed(player.getLocation());
-								Main.Arenas.put(arena.getName(), arena);
+								de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
 								sender.sendMessage(ChatColor.GREEN
 										+ "Lobby set!");
 								return true;
 							}
 							if (args[1].equalsIgnoreCase("blue")) {
 								arena.setLobbyBlue(player.getLocation());
-								Main.Arenas.put(arena.getName(), arena);
+								de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
 								sender.sendMessage(ChatColor.GREEN
 										+ "Lobby set!");
 								return true;
@@ -146,18 +150,18 @@ public class CE_LoM implements CommandExecutor {
 				 */
 				if (args[0].equalsIgnoreCase("setSpawn")) {
 					if (sender.hasPermission("lom.arena.setSpawn")) {
-						if (getArenaW(player.getWorld()) != null) {
-							Arena arena = getArenaW(player.getWorld());
+						if (LoM_API.getArenaW(player.getWorld()) != null) {
+							Arena arena = LoM_API.getArenaW(player.getWorld());
 							if (args[1].equalsIgnoreCase("red")) {
 								arena.setSpawnRed(player.getLocation());
-								Main.Arenas.put(arena.getName(), arena);
+								de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
 								sender.sendMessage(ChatColor.GREEN
 										+ "Spawn set!");
 								return true;
 							}
 							if (args[1].equalsIgnoreCase("blue")) {
 								arena.setSpawnBlue(player.getLocation());
-								Main.Arenas.put(arena.getName(), arena);
+								de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
 								sender.sendMessage(ChatColor.GREEN
 										+ "Spawn set!");
 								return true;
@@ -179,26 +183,34 @@ public class CE_LoM implements CommandExecutor {
 				 */
 				if (args[0].equalsIgnoreCase("join")) {
 					if (sender.hasPermission("lom.arena.join")) {
-						if (!isInArena(player)) {
-							if (Main.Arenas
+						if (!LoM_API.isInArena(player)) {
+							if (de.elicis.lom.Main.getPlugin().Arenas
 									.containsKey(args[1].toLowerCase())) {
-								if (!(Main.Arenas.get(args[1].toLowerCase())
-										.getPlayers().size() == 10)) {
-									if (!Main.Arenas.get(args[1]).isActive()) {
-										if (Main.Arenas.get(
+								int maxPlayer;
+								if(fconfig.getInt("arena.maxPlayer") > 10 ){
+									maxPlayer = 10;
+								}else if(fconfig.getInt("arena.maxPlayer") < 2 ){
+									maxPlayer = 2;
+								} else{
+									maxPlayer = fconfig.getInt("arena.maxPlayer");
+								}
+								if (!(de.elicis.lom.Main.getPlugin().Arenas.get(args[1].toLowerCase())
+										.getPlayers().size() == maxPlayer)) {
+									if (!de.elicis.lom.Main.getPlugin().Arenas.get(args[1]).isActive()) {
+										if (de.elicis.lom.Main.getPlugin().Arenas.get(
 												args[1].toLowerCase())
 												.getLobbyBlue() != null
-												&& Main.Arenas.get(
+												&& de.elicis.lom.Main.getPlugin().Arenas.get(
 														args[1].toLowerCase())
 														.getLobbyRed() != null
-												&& Main.Arenas.get(
+												&& de.elicis.lom.Main.getPlugin().Arenas.get(
 														args[1].toLowerCase())
 														.getSpawnBlue() != null
-												&& Main.Arenas.get(
+												&& de.elicis.lom.Main.getPlugin().Arenas.get(
 														args[1].toLowerCase())
 														.getSpawnBlue() != null) {
 											InvSave.saveInventory(player);
-											Arena arena = Main.Arenas
+											Arena arena = de.elicis.lom.Main.getPlugin().Arenas
 													.get(args[1].toLowerCase());
 											joinTeam(arena, player);
 											sender.sendMessage(ChatColor.GREEN
@@ -234,51 +246,66 @@ public class CE_LoM implements CommandExecutor {
 				 */
 				if (args[0].equalsIgnoreCase("choose")) {
 					if (sender.hasPermission("lom.champ.choose")) {
-						if (isInArena(player)) {
-							player.getInventory().clear();
-							if (getArenaP(player).getChamps().get(
-									player.getName()) != null) {
-								Arena a = getArenaP(player);
-								a.removeChamp(player);
-								Main.Arenas.put(a.getName(), a);
-							}
-							Champion champ = null;
-							switch (args[1].toLowerCase()) {
-							case "ashe":
-								champ = new Ashe(player);
-								break;
-							case "garen":
-								champ = new Garen(player);
-								break;
-							case "veigar":
-								champ = new Veigar(player);
-								break;
-							case "alistar":
-								champ = new Alistar(player);
-								break;
-							case "jax":
-								champ = new Jax(player);
-								break;
-							default:
-								break;
-							}
-
-							if (champ != null) {
-								Arena a = getArenaP(player);
-								a.addChamp(player, champ);
-								Main.Arenas.put(a.getName(), a);
-								player.sendMessage(ChatColor.GREEN
-										+ "You are now playing as: "
-										+ ChatColor.GOLD + champ.getName());
-								if (a.getChamps().size() == 10) {
-									a.startGame();
+						if (LoM_API.isInArena(player)) {
+								player.getInventory().clear();
+								if (LoM_API.getArenaP(player).getChamps().get(
+										player.getName()) != null) {
+									if(LoM_API.getArenaP(player).getChamps().get(player.getName()).isReady()){
+										player.sendMessage(ChatColor.RED + "Sorry but you already locked in!");
+										return true;
+									}
+									Arena a = LoM_API.getArenaP(player);
+									a.removeChamp(player);
+									de.elicis.lom.Main.getPlugin().Arenas.put(a.getName(), a);
 								}
-								return true;
-							} else {
-								sender.sendMessage(ChatColor.RED
-										+ "This is not a valid chap!");
-								return true;
-							}
+								if(fconfig.get("champions."+ args[1].toLowerCase() + ".active") != null){
+									if(!fconfig.getBoolean("champions."+ args[1].toLowerCase() + ".active")){
+										player.sendMessage(ChatColor.RED + "Sorry, but this champ isn't activated!");
+										return true;
+									}
+									if(fconfig.getBoolean("champions."+ args[1].toLowerCase() + ".needspermission")){
+										if(!player.hasPermission("lom.champion."+ args[1].toLowerCase())){
+											player.sendMessage(ChatColor.RED + "Sorry, but this Champ needs a permission!");
+											return true;
+										}
+									}
+								}
+								Champion champ = null;
+								switch (args[1].toLowerCase()) {
+								case "ashe":
+									champ = new Ashe(player);
+									break;
+								case "garen":
+									champ = new Garen(player);
+									break;
+								case "veigar":
+									champ = new Veigar(player);
+									break;
+								case "alistar":
+									champ = new Alistar(player);
+									break;
+								case "jax":
+									champ = new Jax(player);
+									break;
+								default:
+									break;
+								}
+	
+								if (champ != null) {
+									
+									Arena a = LoM_API.getArenaP(player);
+									a.addChamp(player, champ);
+									de.elicis.lom.Main.getPlugin().Arenas.put(a.getName(), a);
+									player.sendMessage(ChatColor.GREEN
+											+ "You are now playing as: "
+											+ ChatColor.GOLD + champ.getName());
+									return true;
+								} else {
+									sender.sendMessage(ChatColor.RED
+											+ "This is not a valid chap!");
+									return true;
+								}				
+											
 						}
 						sender.sendMessage(ChatColor.RED
 								+ "You are not in an arena!");
@@ -329,8 +356,8 @@ public class CE_LoM implements CommandExecutor {
 				}
 				if (args[0].equalsIgnoreCase("start")) {
 					if (sender.hasPermission("lom.arena.start")) {
-						if (Main.Arenas.containsKey(args[1].toLowerCase())) {
-							Arena arena = Main.Arenas.get(args[1]
+						if (de.elicis.lom.Main.getPlugin().Arenas.containsKey(args[1].toLowerCase())) {
+							Arena arena = de.elicis.lom.Main.getPlugin().Arenas.get(args[1]
 									.toLowerCase());
 							if (arena.getLobbyBlue() != null
 									&& arena.getLobbyRed() != null
@@ -338,24 +365,37 @@ public class CE_LoM implements CommandExecutor {
 									&& arena.getSpawnBlue() != null) {
 								boolean allchamps = true;
 								ArrayList<String> ar = new ArrayList<String>();
-								for (String str : arena.getPlayersS()) {
-									if(arena.getChamps().get(str) == null){
-										ar.add(str);
+								for (Champion champ : arena.getChamps().values()) {
+									if(!champ.isReady()){
+										ar.add(champ.getPlayerName());
 										allchamps = false;
 									}
 									continue;
 								}
-								if (allchamps) {
-									arena.startGame();
-									Main.Arenas.put(arena.getName(), arena);
+								int minPlayer;
+								if(fconfig.getInt("arena.minPlayer") > 10 ){
+									minPlayer = 10;
+								}else if (fconfig.getInt("arena.minPlayer") < 2 ){
+									minPlayer = 2;
+								}else{
+									minPlayer = fconfig.getInt("arena.minPlayer");
+								}
+								if(arena.getPlayers().size() > minPlayer){
+									if (allchamps) {
+										arena.startGame();
+										de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
+										return true;
+									}
+									sender.sendMessage(ChatColor.RED
+											+ "The following players aren't ready yet: ");
+									for(int i = 0; i <= ar.size(); i++){
+										player.sendMessage( ChatColor.GOLD +"- " + ar.get(i));
+									}
 									return true;
 								}
-								sender.sendMessage(ChatColor.RED
-										+ "The following players haven't choosen their champ yet: ");
-								for(int i = 0; i <= ar.size(); i++){
-									player.sendMessage( ChatColor.GOLD +"- " + ar.get(i));
-								}
+								player.sendMessage(ChatColor.RED + "Not enough players!");
 								return true;
+								
 
 							}
 							sender.sendMessage(ChatColor.RED
@@ -379,11 +419,11 @@ public class CE_LoM implements CommandExecutor {
 			if (args.length == 1) {
 				if (args[0].equalsIgnoreCase("leave")) {
 					if (sender.hasPermission("lom.arena.leave")) {
-						if (isInArena(player)) {
-							Arena arena = getArenaP(player);
+						if (LoM_API.isInArena(player)) {
+							Arena arena = LoM_API.getArenaP(player);
 							if (!arena.isActive()) {
 								arena.removePlayer(player);
-								player.teleport(plugin
+								player.teleport(de.elicis.lom.Main.getPlugin()
 										.getServer()
 										.getWorld(
 												Bukkit.getWorlds().get(0)
@@ -429,9 +469,9 @@ public class CE_LoM implements CommandExecutor {
 					return true;
 				}
 				if (args[0].equalsIgnoreCase("money")) {
-					if (isInArena(player)) {
-						if (getArenaP(player).isActive()) {
-							int money = getArenaP(player).getChamps()
+					if (LoM_API.isInArena(player)) {
+						if (LoM_API.getArenaP(player).isActive()) {
+							int money = LoM_API.getArenaP(player).getChamps()
 									.get(player.getName()).getMoney();
 							sender.sendMessage(ChatColor.GOLD
 									+ "You currently have: " + ChatColor.RED
@@ -448,8 +488,8 @@ public class CE_LoM implements CommandExecutor {
 				}
 				if(args[0].equalsIgnoreCase("shop")){
 					if (sender.hasPermission("lom.arena.leave")) {
-						if (isInArena(player)) {
-							player.openInventory(plugin.shop.getPage(0));
+						if (LoM_API.isInArena(player)) {
+							player.openInventory(de.elicis.lom.Main.getPlugin().shop.getPage(0));
 							return true;
 						}
 						sender.sendMessage(ChatColor.RED
@@ -468,58 +508,6 @@ public class CE_LoM implements CommandExecutor {
 			return true;
 		}
 		return true;
-	}
-
-	/*
-	 * Returns true if the world is a Arena
-	 */
-	public boolean isArena(World world) {
-		for (Arena arena : Main.Arenas.values()) {
-			if (arena.getWorld().getName() == world.getName()) {
-				return true;
-			}
-			continue;
-		}
-		return false;
-	}
-
-	/*
-	 * Returns an Arena for a specific World
-	 */
-	public Arena getArenaW(World world) {
-		for (Arena arena : Main.Arenas.values()) {
-			if (arena.getWorld() == world) {
-				return arena;
-			}
-			continue;
-		}
-		return null;
-	}
-
-	/*
-	 * Return an Arena for a specific Player
-	 */
-	public Arena getArenaP(Player player) {
-		for (Arena arena : Main.Arenas.values()) {
-			if (arena.getPlayers().contains(player)) {
-				return arena;
-			}
-			continue;
-		}
-		return null;
-	}
-
-	/*
-	 * Checks if the player is already in an arena
-	 */
-	public boolean isInArena(Player player) {
-		for (Arena arena : Main.Arenas.values()) {
-			if (arena.getPlayersS().contains(player.getName())) {
-				return true;
-			}
-			continue;
-		}
-		return false;
 	}
 
 	/*
@@ -551,7 +539,7 @@ public class CE_LoM implements CommandExecutor {
 			player.sendMessage(ChatColor.RED + "You are in Team Red!");
 			player.teleport(arena.getLobbyRed().getLocation());
 		}
-		Main.Arenas.put(arena.getName(), arena);
+		de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
 
 	}
 

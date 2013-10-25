@@ -14,13 +14,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import de.elicis.lom.Arena;
-import de.elicis.lom.Main;
+import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
+import de.elicis.lom.data.Arena;
 
 public class L_Combat implements Listener {
 	ArrayList<Material> weapons = new ArrayList<Material>();
-
 	public L_Combat() {
 		addweapons();
 	}
@@ -29,13 +28,13 @@ public class L_Combat implements Listener {
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
 		if (event.getEntityType() == (EntityType.PLAYER)) {
 			Player player1 = (Player) event.getEntity();
-			if (isInArena(player1)) {
-				Arena arena = getArenaP(player1);
+			if (LoM_API.isInArena(player1)) {
+				Arena arena = LoM_API.getArenaP(player1);
 
 				if (event.getDamager().getType() == (EntityType.PLAYER)) {
 					if (weapons.contains(player1.getItemInHand().getData().getItemType())) {
 						Player player2 = (Player) event.getDamager();
-						if (isInArena(player2)) {
+						if (LoM_API.isInArena(player2)) {
 							if (arena.isActive()) {
 								if (arena.getTeam(player1) != arena
 										.getTeam(player2)) {
@@ -56,7 +55,7 @@ public class L_Combat implements Listener {
 						Arrow a = (Arrow) event.getDamager();
 						if (a.getShooter() instanceof Player) {
 							Player player2 = (Player) a.getShooter();
-							if (isInArena(player2)) {
+							if (LoM_API.isInArena(player2)) {
 								if (arena.isActive()) {
 									if (arena.getTeam(player1) != arena
 											.getTeam(player2)) {
@@ -79,7 +78,7 @@ public class L_Combat implements Listener {
 						Snowball a = (Snowball) event.getDamager();
 						if (a.getShooter() instanceof Player) {
 							Player player2 = (Player) a.getShooter();
-							if (isInArena(player2)) {
+							if (LoM_API.isInArena(player2)) {
 								if (arena.isActive()) {
 									if (arena.getTeam(player1) != arena
 											.getTeam(player2)) {
@@ -109,38 +108,12 @@ public class L_Combat implements Listener {
 		Player player = event.getPlayer();
 		if (event.getAction() == (Action.LEFT_CLICK_AIR)
 				|| event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-			if (isInArena(player)) {
+			if (LoM_API.isInArena(player)) {
 				if (player.getItemInHand().getData().getItemType() == Material.GOLD_HOE) {
 
 				}
 			}
 		}
-	}
-
-	/*
-	 * Checks if the player is already in an arena
-	 */
-	public boolean isInArena(Player player) {
-		for (Arena arena : Main.Arenas.values()) {
-			if (arena.getPlayersS().contains(player.getName())) {
-				return true;
-			}
-			continue;
-		}
-		return false;
-	}
-
-	/*
-	 * Return an Arena for a specific Player
-	 */
-	public Arena getArenaP(Player player) {
-		for (Arena arena : Main.Arenas.values()) {
-			if (arena.getPlayers().contains(player)) {
-				return arena;
-			}
-			continue;
-		}
-		return null;
 	}
 
 	public void addweapons() {

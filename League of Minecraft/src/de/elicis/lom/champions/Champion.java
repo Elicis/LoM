@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 public abstract class Champion {
 	String name;
 	String player;
+	boolean isReady;
 	int money;
 	int level;
 	Double health;
@@ -40,6 +41,7 @@ public abstract class Champion {
 		itemarmor = 0;
 		itemmagicResist = 0;
 		itemspeed = 0;
+		isReady = false;
 	}
 
 	public String getName() {
@@ -49,6 +51,9 @@ public abstract class Champion {
 	public Player getPlayer() {
 		Player player2 = Bukkit.getPlayer(player);
 		return player2;
+	}
+	public boolean isReady(){
+		return isReady;
 	}
 
 	public String getPlayerName() {
@@ -129,6 +134,9 @@ public abstract class Champion {
 
 	public void setMoney(int moneynew) {
 		money = moneynew;
+	}
+	public void setReady(boolean newready){
+		isReady = newready;
 	}
 
 	public void setDamage(int newint) {
