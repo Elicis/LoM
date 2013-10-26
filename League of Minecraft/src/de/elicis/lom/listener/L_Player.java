@@ -350,7 +350,7 @@ public class L_Player implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		// Use Skill if right click
+		// Use Skill if right click on air or block
 		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
 			if(LoM_API.isInArena(player)){
 				for(Skill skill: LoM_API.getArenaP(player).getChamps().get(player).getSkills()){
