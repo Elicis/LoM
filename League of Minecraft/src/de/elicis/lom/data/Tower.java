@@ -2,6 +2,7 @@ package de.elicis.lom.data;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -56,22 +57,49 @@ public class Tower {
 	public LoMLocation getLocation() {
 		return sign.getLocation();
 	}
+	public World getWorld(){
+		return getLocation().getLocation().getWorld();
+	}
 	public boolean isShooting() {
 		return isShooting;
 	}
 	public void setShooting(boolean isShooting) {
 		this.isShooting = isShooting;
 	}
+	public void startTower(){
+		if(LoM_API.isArena(getWorld())){
+			final Arena a = LoM_API.getArenaW(getWorld());
+			if(a.isActive()){
+				Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new BukkitRunnable(){
+					@Override
+					public void run() {
+						if(!isShooting){
+							for(Player p : a.getPlayers()){
+								if(!a.getTeam(p).equalsIgnoreCase(team)){
+									if(p.getLocation().distance(getLocation().getLocation()) < range){
+										shootPlayer(p);
+									}
+								}
+							}
+						}
+					}
+					
+				}, 1000, 1000);
+			}
+		}
+	}
 	public void shootPlayer(final Player player){
 		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new BukkitRunnable(){
 			public void run(){
 				if(getLocation().getLocation().distance(player.getLocation()) > getRange()){
-						cancel();
+					isShooting = false;
+					cancel();
 				}else{
 					if(LoM_API.isInArena(player)){
 						Arena a = LoM_API.getArenaP(player);
 						if(a.isActive()){
+							isShooting = true;
 							Bukkit.getWorld(a.getWorldName()).playEffect(getLocation().getLocation().add(0, 10, 0), Effect.BLAZE_SHOOT, 0);
 							Champion c = a.getChamps().get(player.getName());
 							c.setHealth(c.getHealth() - (damage* (100 / (100 + c.getArmor()))));
