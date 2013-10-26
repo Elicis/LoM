@@ -5,5 +5,5 @@ arena:
   #Maximum Team size (max. 10)
   maxPlayer: 10
   #This is how many blocks you can walk away from spawn. (So not
-  #to many chunks get generatet)        
+  #too many chunks get generated)        
   radius: 1000

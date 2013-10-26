@@ -56,6 +56,7 @@ public class LoM_Sign implements Serializable{
 				} else if(type == LoM_SignType.TOWER){
 					line1 = "[TOWER]";
 					line2 = "";
+					line3 = "";
 				}
 			}
 			type = type2;
@@ -71,7 +72,7 @@ public class LoM_Sign implements Serializable{
 
 				line1 = "[Champion]";
 				line2 = name;
-
+				line3 = "";
 			}
 			if (type.getType().equalsIgnoreCase(LoM_SignType.ARENA.getType())) {
 				if (Arena.containsKey(name)) {
@@ -87,6 +88,9 @@ public class LoM_Sign implements Serializable{
 					line3 = "[" + a.getPlayers().size() + "/"+ maxplayer + "]" + "[" + state + "]";
 				}
 
+			}
+			if(type.getType().equalsIgnoreCase(LoM_SignType.TOWER.getType())){
+				
 			}
 			Sign sign = (Sign) b.getState();
 			sign.setLine(0, line1);
@@ -110,5 +114,34 @@ public class LoM_Sign implements Serializable{
 
 	public LoM_SignType getType() {
 		return type;
+	}
+	public void setTowerHealth(int health, int maxHealth){
+		if(this.getType() == LoM_SignType.TOWER){
+			this.line3 = health + "/" + maxHealth;
+		}
+	}
+
+	public String getLine1() {
+		return line1;
+	}
+
+	public void setLine1(String line1) {
+		this.line1 = line1;
+	}
+
+	public String getLine2() {
+		return line2;
+	}
+
+	public void setLine2(String line2) {
+		this.line2 = line2;
+	}
+
+	public String getLine3() {
+		return line3;
+	}
+
+	public void setLine3(String line3) {
+		this.line3 = line3;
 	}
 }

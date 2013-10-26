@@ -21,7 +21,7 @@ public class Tower {
 	boolean isShooting;
 	LoM_Sign sign;
 
-	public Tower(String team, LoM_Sign sign) {
+	public Tower(String team, LoM_Sign sign, String type) {
 		super();
 		this.team = team;
 		this.sign = sign;
@@ -29,6 +29,8 @@ public class Tower {
 		damage = 150;
 		range = 15;
 		health = 1550;
+		startTower();
+		sign.setLine2(type);
 	}
 	
 	
@@ -69,6 +71,7 @@ public class Tower {
 	public void startTower(){
 		if(LoM_API.isArena(getWorld())){
 			final Arena a = LoM_API.getArenaW(getWorld());
+			this.sign.setTowerHealth(health, 1550);
 			if(a.isActive()){
 				Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new BukkitRunnable(){
 					@Override
