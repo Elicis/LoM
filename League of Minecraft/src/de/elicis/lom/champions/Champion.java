@@ -1,8 +1,12 @@
 package de.elicis.lom.champions;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import de.elicis.lom.champions.skills.Skill;
 
 public abstract class Champion {
 	String name;
@@ -28,6 +32,7 @@ public abstract class Champion {
 	int itemmagicResist;
 	int speed;
 	int itemspeed;
+	ArrayList<Skill> skills;
 
 	ItemStack weapon;
 
@@ -130,6 +135,10 @@ public abstract class Champion {
 
 	public int getitemSpeed() {
 		return speed;
+	}
+	
+	public ArrayList<Skill> getSkills(){
+		return skills;
 	}
 
 	public void setMoney(int moneynew) {

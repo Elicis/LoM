@@ -5,6 +5,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.elicis.lom.champions.skills.MageBasicAttack;
+
 public class Veigar extends Champion {
 	public Veigar(Player player2) {
 		name = "Veigar";
@@ -20,6 +22,7 @@ public class Veigar extends Champion {
 		speed = 1 + itemspeed;
 		weapon = new ItemStack(Material.GOLD_HOE, 1);
 		weapon.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
+		getSkills().add(new MageBasicAttack(getPlayer(), 0, 8));
 		getPlayer().getInventory().addItem(weapon);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);

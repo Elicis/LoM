@@ -2,14 +2,21 @@ package de.elicis.lom.champions.skills;
 
 import java.util.Date;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
+import org.bukkit.inventory.ItemStack;
 
 public class MageBasicAttack extends Skill {
 	long lastlaunched = 0;
 
-	public MageBasicAttack(Player player2, int mana) {
-		super(player2, mana);
+	public MageBasicAttack(Player player2, int mana, int slot) {
+		super(player2, mana, new ItemStack(Material.SNOW_BALL), slot);
+	}
+	
+	public void setItemSlot(){
+		player.getInventory().setItem(slot, iconItem);
+		player.getInventory().getItem(slot).getItemMeta().setDisplayName("Mage Basic Attack");
 	}
 
 	@Override
