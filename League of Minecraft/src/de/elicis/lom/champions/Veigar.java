@@ -22,7 +22,7 @@ public class Veigar extends Champion {
 		speed = 1 + itemspeed;
 		weapon = new ItemStack(Material.GOLD_HOE, 1);
 		weapon.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
-		getSkills().add(new MageBasicAttack(getPlayer(), 0, 8));
+		basicAttack = new MageBasicAttack(player2, 0, 8);
 		getPlayer().getInventory().addItem(weapon);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);

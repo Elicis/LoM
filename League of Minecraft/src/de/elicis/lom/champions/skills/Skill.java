@@ -17,4 +17,8 @@ public abstract class Skill {
 	}
 
 	public abstract void useSkill();
+	
+	public ItemStack getIconItem(){
+		return iconItem;
+	}
 }

@@ -33,6 +33,7 @@ public abstract class Champion {
 	int speed;
 	int itemspeed;
 	ArrayList<Skill> skills;
+	Skill basicAttack;
 
 	ItemStack weapon;
 
@@ -139,6 +140,10 @@ public abstract class Champion {
 	
 	public ArrayList<Skill> getSkills(){
 		return skills;
+	}
+	
+	public Skill getBasicAttack(){
+		return basicAttack;
 	}
 
 	public void setMoney(int moneynew) {

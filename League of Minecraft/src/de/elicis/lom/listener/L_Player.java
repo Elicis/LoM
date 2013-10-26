@@ -37,6 +37,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
+import de.elicis.lom.champions.skills.Skill;
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.data.InvSave;
 import de.elicis.lom.sign.LoM_Sign;
@@ -349,6 +350,22 @@ public class L_Player implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
+		// Use Skill if right click
+		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
+			if(LoM_API.isInArena(player)){
+				for(Skill skill: LoM_API.getArenaP(player).getChamps().get(player).getSkills()){
+					if(skill.getIconItem() == player.getItemInHand()){
+						skill.useSkill();
+					}
+				}
+			}
+		}
+		// Use Basic Attack if left click
+		if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+			if(LoM_API.isInArena(player)){
+				LoM_API.getArenaP(player).getChamps().get(player).getBasicAttack().useSkill();
+			}
+		}
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			Block b = event.getClickedBlock();
 			if (b.getType() == Material.SIGN_POST
