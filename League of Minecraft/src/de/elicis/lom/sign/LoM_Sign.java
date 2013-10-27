@@ -144,4 +144,11 @@ public class LoM_Sign implements Serializable{
 	public void setLine3(String line3) {
 		this.line3 = line3;
 	}
+	public Sign getSign(){
+		if (loc.getLocation().getBlock().getType() == Material.SIGN
+				|| loc.getLocation().getBlock().getType() == Material.SIGN_POST) {
+			return (Sign) loc.getLocation().getBlock();
+		}
+		return null;
+	}
 }

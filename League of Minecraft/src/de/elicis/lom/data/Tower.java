@@ -71,11 +71,12 @@ public class Tower {
 	public void startTower(){
 		if(LoM_API.isArena(getWorld())){
 			final Arena a = LoM_API.getArenaW(getWorld());
-			this.sign.setTowerHealth(health, 1550);
+			
 			if(a.isActive()){
 				Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new BukkitRunnable(){
 					@Override
 					public void run() {
+						LoM_API.getLoM_Sign(sign.getSign()).setTowerHealth(health, 1550);
 						if(!isShooting){
 							for(Player p : a.getPlayers()){
 								if(!a.getTeam(p).equalsIgnoreCase(team)){

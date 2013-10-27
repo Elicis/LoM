@@ -40,6 +40,7 @@ import de.elicis.lom.champions.Champion;
 import de.elicis.lom.champions.skills.Skill;
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.data.InvSave;
+import de.elicis.lom.data.Tower;
 import de.elicis.lom.sign.LoM_Sign;
 import de.elicis.lom.sign.LoM_SignType;
 
@@ -334,12 +335,14 @@ public class L_Player implements Listener {
 		}
 		if(event.getLine(0).equalsIgnoreCase("[Tower]")){
 			if (player.hasPermission("lom.sign.tower")) {
-				if (!event.getLine(1).isEmpty()) {
+				if (!event.getLine(1).isEmpty() && !event.getLine(2).isEmpty()) {
 					String line2 = event.getLine(1);
+					String line3 = event.getLine(2);
 					LoM_Sign sign = new LoM_Sign("tower_"+ event.getBlock()
-							.getLocation().getWorld().getName() + line2.toLowerCase(),
+							.getLocation().getWorld().getName() + "_" + line2.toLowerCase() + "_" + line3.toLowerCase(),
 							LoM_SignType.TOWER, event.getBlock()
 									.getLocation());
+					addTowers(line2, line3, sign);
 					de.elicis.lom.Main.getPlugin().Signs.add(sign);
 					player.sendMessage(ChatColor.GREEN + "Succesfully created!");
 				}
@@ -412,6 +415,88 @@ public class L_Player implements Listener {
 						}
 					}
 					player.sendMessage(ChatColor.GOLD + "You are now ready.");
+				}
+			}
+		}
+	}
+	public void addTowers(String line2, String line3, LoM_Sign sign){
+		if(LoM_API.getArenaW(sign.getLocation().getLocation().getWorld()) != null){
+			Arena a = LoM_API.getArenaW(sign.getLocation().getLocation().getWorld());
+			if(line2.equalsIgnoreCase("red")){
+				switch(line3.toLowerCase()){
+				case "nexus_top":
+					a.setT_red_nexus_top(new Tower(line2, sign, line3));
+					break;
+				case "nexus_bot":
+					a.setT_red_nexus_bot(new Tower(line2, sign, line3));
+					break;
+				case "inhib_top":
+					a.setT_red_inhib_top(new Tower(line2, sign, line3));
+					break;
+				case "inhib_mid":
+					a.setT_red_inhib_mid(new Tower(line2, sign, line3));
+					break;
+				case "inhib_bot":
+					a.setT_red_inhib_bot(new Tower(line2, sign, line3));
+					break;
+				case "inner_top":
+					a.setT_red_inner_top(new Tower(line2, sign, line3));
+					break;
+				case "inner_mid":
+					a.setT_red_inner_mid(new Tower(line2, sign, line3));
+					break;
+				case "inner_bot":
+					a.setT_red_inner_bot(new Tower(line2, sign, line3));
+					break;
+				case "outer_top":
+					a.setT_red_outer_top(new Tower(line2, sign, line3));
+					break;
+				case "outer_mid":
+					a.setT_red_outer_mid(new Tower(line2, sign, line3));
+					break;
+				case "outer_bot":
+					a.setT_red_outer_bot(new Tower(line2, sign, line3));
+					break;
+				default:
+					break;
+				}
+			}else if(line2.equalsIgnoreCase("blue")){
+				switch(line3.toLowerCase()){
+				case "nexus_top":
+					a.setT_blue_nexus_top(new Tower(line2, sign, line3));
+					break;
+				case "nexus_bot":
+					a.setT_blue_nexus_bot(new Tower(line2, sign, line3));
+					break;
+				case "inhib_top":
+					a.setT_blue_inhib_top(new Tower(line2, sign, line3));
+					break;
+				case "inhib_mid":
+					a.setT_blue_inhib_mid(new Tower(line2, sign, line3));
+					break;
+				case "inhib_bot":
+					a.setT_blue_inhib_bot(new Tower(line2, sign, line3));
+					break;
+				case "inner_top":
+					a.setT_blue_inner_top(new Tower(line2, sign, line3));
+					break;
+				case "inner_mid":
+					a.setT_blue_inner_mid(new Tower(line2, sign, line3));
+					break;
+				case "inner_bot":
+					a.setT_blue_inner_bot(new Tower(line2, sign, line3));
+					break;
+				case "outer_top":
+					a.setT_blue_outer_top(new Tower(line2, sign, line3));
+					break;
+				case "outer_mid":
+					a.setT_blue_outer_mid(new Tower(line2, sign, line3));
+					break;
+				case "outer_bot":
+					a.setT_blue_outer_bot(new Tower(line2, sign, line3));
+					break;
+				default:
+					break;
 				}
 			}
 		}
