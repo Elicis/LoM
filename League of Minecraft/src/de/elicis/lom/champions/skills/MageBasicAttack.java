@@ -23,8 +23,10 @@ public class MageBasicAttack extends Skill {
 	@Override
 	public void useSkill() {
 		if (new Date().getTime() - lastlaunched <= 2000) {
-			player.launchProjectile(Snowball.class).setShooter(player);
-			lastlaunched = new Date().getTime();
+			if(hasMana()){
+				player.launchProjectile(Snowball.class).setShooter(player);
+				lastlaunched = new Date().getTime();
+			}
 		}
 	}
 
