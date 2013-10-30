@@ -72,6 +72,9 @@ public class L_Player implements Listener {
 			if (LoM_API.isLoM_Sign(sign)) {
 				de.elicis.lom.Main.getPlugin().Signs.remove(LoM_API.getLoM_Sign(sign));
 			}
+			if(LoM_API.isLoM_TowerSign(sign)){
+				de.elicis.lom.Main.getPlugin().towerSigns.remove(LoM_API.getLoM_Sign(sign));
+			}
 		}
 	}
 
