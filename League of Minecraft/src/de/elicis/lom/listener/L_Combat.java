@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
+import de.elicis.lom.champions.skills.MageBasicAttack;
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.sign.LoM_TowerSign;
 import de.elicis.lom.tower.Tower;
@@ -140,7 +141,31 @@ public class L_Combat implements Listener {
 			}
 		}
 	}
-
+	
+	/*
+	 * Will Improve this system at a later time!
+	 */
+	
+	@EventHandler
+	public void onEntityDamageByEntity(EntityDamageByEntityEvent event){
+		if(event.getDamager() instanceof Snowball){
+			Snowball snowball = (Snowball) event.getDamager();
+			if(snowball.getShooter() instanceof Player){
+				Player shooter = (Player) snowball.getShooter();
+				if(event.getEntity() instanceof Player){
+					Player target = (Player) event.getEntity();
+					if(LoM_API.isInArena(shooter) && LoM_API.isInArena(target)){
+						if(LoM_API.getArenaP(shooter) != null && LoM_API.getArenaP(target) != null){
+							if(LoM_API.getArenaP(shooter).getChamps().get(shooter).getBasicAttack() instanceof MageBasicAttack){
+								event.setDamage(2);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	public void addweapons() {
 		weapons.add(Material.IRON_HOE);
 		weapons.add(Material.IRON_SWORD);

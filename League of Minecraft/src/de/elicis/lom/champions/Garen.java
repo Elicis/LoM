@@ -1,9 +1,6 @@
 package de.elicis.lom.champions;
 
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class Garen extends Champion {
 	public Garen(Player player2) {
@@ -18,9 +15,6 @@ public class Garen extends Champion {
 		armor = (int) (19 + (level * 2.7) + itemarmor);
 		magicResist = (int) (30 + (level * 1.25) + itemmagicResist);
 		speed = 1 + itemspeed;
-		weapon = new ItemStack(Material.IRON_SWORD, 1);
-		weapon.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
-		getPlayer().getInventory().addItem(weapon);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);
 		getPlayer().setHealthScaled(true);

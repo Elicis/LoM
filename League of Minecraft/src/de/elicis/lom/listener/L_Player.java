@@ -29,6 +29,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -353,22 +354,33 @@ public class L_Player implements Listener {
 			}
 		}
 	}
+	
+	@EventHandler
+	public void onPlayerItemHeld(PlayerItemHeldEvent event){
+		Player player = event.getPlayer();
+		ItemStack i = player.getItemInHand();
+		
+		if(LoM_API.isInArena(player)){
+			if(LoM_API.getArenaP(player).getChamps().get(player) != null){
+				for(Skill skill: LoM_API.getArenaP(player).getChamps().get(player).getSkills()){
+					if(i == skill.getIconItem()){
+						skill.useSkill();
+					}
+					/*
+					 * This slot will be empty, if the user tries to scroll this will mean
+					 * they wont accidently pick a skill whilst scrolling and thus have to use the
+					 * keyboard keys 1-9.
+					 * This also resets the held item so that a skill does not get spammed.
+					 */
+					player.getInventory().setHeldItemSlot(7);
+				}
+			}
+		}
+	}
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		// Use Skill if right click on air or block
-		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
-			if(LoM_API.isInArena(player)){
-				if(LoM_API.getArenaP(player).getChamps().get(player) != null){
-					for(Skill skill: LoM_API.getArenaP(player).getChamps().get(player).getSkills()){
-						if(skill.getIconItem() == player.getItemInHand()){
-							skill.useSkill();
-						}
-					}
-				}
-			}
-		}
 		// Use Basic Attack if left click
 		if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
 			if(LoM_API.isInArena(player)){

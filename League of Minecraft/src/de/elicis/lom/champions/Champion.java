@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import de.elicis.lom.champions.skills.Skill;
 
@@ -34,8 +33,6 @@ public abstract class Champion {
 	int itemspeed;
 	ArrayList<Skill> skills;
 	Skill basicAttack;
-
-	ItemStack weapon;
 
 	public Champion() {
 		money = 400;
@@ -226,6 +223,16 @@ public abstract class Champion {
 	}
 
 	public void updateChamp() {
+	}
+	
+	public void addSkills(Player player2){
+		player2.getInventory().setHeldItemSlot(0);
+		player2.getInventory().setItemInHand(basicAttack.getIconItem());
+		
+		for(Skill skill: skills){
+			player2.getInventory().setHeldItemSlot(skill.getSlot());
+			player2.getInventory().setItemInHand(skill.getIconItem());
+		}
 	}
 
 }
