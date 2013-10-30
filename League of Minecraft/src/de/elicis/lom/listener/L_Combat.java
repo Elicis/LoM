@@ -6,14 +6,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.elicis.lom.api.LoM_API;
@@ -132,8 +130,10 @@ public class L_Combat implements Listener {
 				if(event.getEntity() instanceof Player){
 					Player target = (Player) event.getEntity();
 					if(LoM_API.isInArena(shooter) && LoM_API.isInArena(target)){
-						if(LoM_API.getArenaP(shooter).getChamps().get(shooter).getBasicAttack() instanceof MageBasicAttack){
-							event.setDamage(2);
+						if(LoM_API.getArenaP(shooter) != null && LoM_API.getArenaP(target) != null){
+							if(LoM_API.getArenaP(shooter).getChamps().get(shooter).getBasicAttack() instanceof MageBasicAttack){
+								event.setDamage(2);
+							}
 						}
 					}
 				}
