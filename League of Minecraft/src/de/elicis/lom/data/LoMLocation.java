@@ -27,4 +27,12 @@ public class LoMLocation implements Serializable {
 		Location loc = new Location(Bukkit.getWorld(world), x, y, z);
 		return loc;
 	}
+
+	public String getWorld() {
+		return world;
+	}
+
+	public void setWorld(String world) {
+		this.world = world;
+	}
 }

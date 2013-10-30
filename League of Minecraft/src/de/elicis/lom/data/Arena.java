@@ -3,7 +3,6 @@ package de.elicis.lom.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,6 +10,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import de.elicis.lom.champions.Champion;
+import de.elicis.lom.tower.Tower;
+import de.elicis.lom.tower.TowerType;
 
 public class Arena implements Serializable {
 
@@ -431,6 +432,43 @@ public class Arena implements Serializable {
 
 	public void setT_blue_outer_bot(Tower t_blue_11) {
 		this.t_blue_11 = t_blue_11;
+	}
+	public ArrayList<Tower> getTowers(){
+		ArrayList<Tower> list = new ArrayList<Tower>();
+		try{
+			list.add(t_blue_1);
+			list.add(t_blue_2);
+			list.add(t_blue_3);
+			list.add(t_blue_4);
+			list.add(t_blue_5);
+			list.add(t_blue_6);
+			list.add(t_blue_7);
+			list.add(t_blue_8);
+			list.add(t_blue_9);
+			list.add(t_blue_10);
+			list.add(t_blue_11);
+			list.add(t_red_1);
+			list.add(t_red_2);
+			list.add(t_red_3);
+			list.add(t_red_4);
+			list.add(t_red_5);
+			list.add(t_red_6);
+			list.add(t_red_7);
+			list.add(t_red_8);
+			list.add(t_red_9);
+			list.add(t_red_10);
+			list.add(t_red_11);
+		} catch(Exception e){
+		}
+		return list;
+	}
+	public Tower getTowerByType(TowerType type){
+		for(Tower t : getTowers()){
+			if(t.getType() == type){
+				return t;
+			}
+		}
+		return null;
 	}
 
 }

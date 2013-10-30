@@ -29,16 +29,17 @@ public class LoM_Sign implements Serializable{
 	//Just for SignType.Arena
 	int maxplayer;
 
-	public LoM_Sign(String name2, LoM_SignType type2, Location location) {
+	public LoM_Sign(String name2, LoM_SignType type, Location location) {
+		this.type = type;
 		Arena = Main.getPlugin().Arenas;
 		maxplayer = Main.getPlugin().getConfig().getInt("arena.maxPlayer");
-		if (Arena.containsKey(name2)) {
 			name = name2;
-			Arena a = Arena.get(name);
 			loc = new LoMLocation(location);
 			if (loc.getLocation().getBlock().getType() == Material.SIGN
 					|| loc.getLocation().getBlock().getType() == Material.SIGN_POST) {
 				if (type == LoM_SignType.ARENA) {
+					if (Arena.containsKey(name2)) {
+						Arena a = Arena.get(name);
 					String state;
 					if (a.isActive()) {
 						state =  "Running";
@@ -49,18 +50,14 @@ public class LoM_Sign implements Serializable{
 					line2 = name;
 					line3 = "[" + a.getPlayers().size() + "/"+ maxplayer +"]" + "[" + state
 							+ ChatColor.BLACK + "]";
+					}
 				} else if (type == LoM_SignType.CHAMPION) {
 					line1 = "[Champion]";
 					line2 = name;
 					line3 = "";
-				} else if(type == LoM_SignType.TOWER){
-					line1 = "[TOWER]";
-					line2 = "";
-					line3 = "";
 				}
 			}
-			type = type2;
-		}
+		
 	}
 
 	public void updateSign() {
@@ -89,9 +86,6 @@ public class LoM_Sign implements Serializable{
 				}
 
 			}
-			if(type.getType().equalsIgnoreCase(LoM_SignType.TOWER.getType())){
-				
-			}
 			Sign sign = (Sign) b.getState();
 			sign.setLine(0, line1);
 			sign.setLine(1, line2);
@@ -114,11 +108,6 @@ public class LoM_Sign implements Serializable{
 
 	public LoM_SignType getType() {
 		return type;
-	}
-	public void setTowerHealth(int health, int maxHealth){
-		if(this.getType() == LoM_SignType.TOWER){
-			this.line3 = health + "/" + maxHealth;
-		}
 	}
 
 	public String getLine1() {

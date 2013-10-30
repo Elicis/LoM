@@ -35,14 +35,17 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
+import de.elicis.lom.Main;
 import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.champions.skills.Skill;
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.data.InvSave;
-import de.elicis.lom.data.Tower;
 import de.elicis.lom.sign.LoM_Sign;
 import de.elicis.lom.sign.LoM_SignType;
+import de.elicis.lom.sign.LoM_TowerSign;
+import de.elicis.lom.tower.Tower;
+import de.elicis.lom.tower.TowerType;
 
 public class L_Player implements Listener {
 	FileConfiguration fconfig;
@@ -338,12 +341,10 @@ public class L_Player implements Listener {
 				if (!event.getLine(1).isEmpty() && !event.getLine(2).isEmpty()) {
 					String line2 = event.getLine(1);
 					String line3 = event.getLine(2);
-					LoM_Sign sign = new LoM_Sign("tower_"+ event.getBlock()
-							.getLocation().getWorld().getName() + "_" + line2.toLowerCase() + "_" + line3.toLowerCase(),
-							LoM_SignType.TOWER, event.getBlock()
-									.getLocation());
-					addTowers(line2, line3, sign);
-					de.elicis.lom.Main.getPlugin().Signs.add(sign);
+					Tower t = addTowers(line2, line3,event.getBlock()
+							.getLocation());
+					LoM_TowerSign sign = new LoM_TowerSign(t.getType().getType(), t);
+					Main.getPlugin().towerSigns.add(sign);
 					player.sendMessage(ChatColor.GREEN + "Succesfully created!");
 				}
 			}
@@ -419,43 +420,56 @@ public class L_Player implements Listener {
 			}
 		}
 	}
-	public void addTowers(String line2, String line3, LoM_Sign sign){
-		if(LoM_API.getArenaW(sign.getLocation().getLocation().getWorld()) != null){
-			Arena a = LoM_API.getArenaW(sign.getLocation().getLocation().getWorld());
+	public Tower addTowers(String line2, String line3, Location loc){
+		Tower t = null;
+		Arena a = null;
+		if(LoM_API.getArenaW(loc.getWorld()) != null){
+			a = LoM_API.getArenaW(loc.getWorld());
 			if(line2.equalsIgnoreCase("red")){
 				switch(line3.toLowerCase()){
 				case "nexus_top":
-					a.setT_red_nexus_top(new Tower(line2, sign, line3));
+					a.setT_red_nexus_top(new Tower(line2, loc, TowerType.NEXUSTOP));
+					t = a.getT_red_nexus_top();
 					break;
 				case "nexus_bot":
-					a.setT_red_nexus_bot(new Tower(line2, sign, line3));
+					a.setT_red_nexus_bot(new Tower(line2, loc, TowerType.NEXUSBOT));
+					t = a.getT_red_nexus_bot();
 					break;
 				case "inhib_top":
-					a.setT_red_inhib_top(new Tower(line2, sign, line3));
+					a.setT_red_inhib_top(new Tower(line2, loc, TowerType.INHIBTOP));
+					t = a.getT_red_inhib_top();
 					break;
 				case "inhib_mid":
-					a.setT_red_inhib_mid(new Tower(line2, sign, line3));
+					a.setT_red_inhib_mid(new Tower(line2, loc, TowerType.INHIBMID));
+					t = a.getT_red_inhib_mid();
 					break;
 				case "inhib_bot":
-					a.setT_red_inhib_bot(new Tower(line2, sign, line3));
+					a.setT_red_inhib_bot(new Tower(line2, loc, TowerType.INHIBBOT));
+					t = a.getT_red_inhib_bot();
 					break;
 				case "inner_top":
-					a.setT_red_inner_top(new Tower(line2, sign, line3));
+					a.setT_red_inner_top(new Tower(line2, loc, TowerType.INNERTOP));
+					t = a.getT_red_inner_top();
 					break;
 				case "inner_mid":
-					a.setT_red_inner_mid(new Tower(line2, sign, line3));
+					a.setT_red_inner_mid(new Tower(line2, loc, TowerType.INNERMID));
+					t = a.getT_red_inner_mid();
 					break;
 				case "inner_bot":
-					a.setT_red_inner_bot(new Tower(line2, sign, line3));
+					a.setT_red_inner_bot(new Tower(line2, loc, TowerType.INNERBOT));
+					t = a.getT_red_inner_bot();
 					break;
 				case "outer_top":
-					a.setT_red_outer_top(new Tower(line2, sign, line3));
+					a.setT_red_outer_top(new Tower(line2, loc, TowerType.OUTERTOP));
+					t = a.getT_red_outer_top();
 					break;
 				case "outer_mid":
-					a.setT_red_outer_mid(new Tower(line2, sign, line3));
+					a.setT_red_outer_mid(new Tower(line2, loc, TowerType.OUTERMID));
+					t = a.getT_red_outer_mid();
 					break;
 				case "outer_bot":
-					a.setT_red_outer_bot(new Tower(line2, sign, line3));
+					a.setT_red_outer_bot(new Tower(line2, loc, TowerType.OUTERBOT));
+					t = a.getT_red_outer_bot();
 					break;
 				default:
 					break;
@@ -463,43 +477,57 @@ public class L_Player implements Listener {
 			}else if(line2.equalsIgnoreCase("blue")){
 				switch(line3.toLowerCase()){
 				case "nexus_top":
-					a.setT_blue_nexus_top(new Tower(line2, sign, line3));
+					a.setT_blue_nexus_top(new Tower(line2, loc, TowerType.NEXUSTOP));
+					t = a.getT_blue_nexus_top();
 					break;
 				case "nexus_bot":
-					a.setT_blue_nexus_bot(new Tower(line2, sign, line3));
+					a.setT_blue_nexus_bot(new Tower(line2, loc, TowerType.NEXUSBOT));
+					t = a.getT_blue_nexus_bot();
 					break;
 				case "inhib_top":
-					a.setT_blue_inhib_top(new Tower(line2, sign, line3));
+					a.setT_blue_inhib_top(new Tower(line2, loc, TowerType.INHIBTOP));
+					t = a.getT_blue_inhib_top();
 					break;
 				case "inhib_mid":
-					a.setT_blue_inhib_mid(new Tower(line2, sign, line3));
+					a.setT_blue_inhib_mid(new Tower(line2, loc, TowerType.INHIBMID));
+					t = a.getT_blue_inhib_mid();
 					break;
 				case "inhib_bot":
-					a.setT_blue_inhib_bot(new Tower(line2, sign, line3));
+					a.setT_blue_inhib_bot(new Tower(line2, loc, TowerType.INHIBBOT));
+					t = a.getT_blue_inhib_bot();
 					break;
 				case "inner_top":
-					a.setT_blue_inner_top(new Tower(line2, sign, line3));
+					a.setT_blue_inner_top(new Tower(line2, loc, TowerType.INNERTOP));
+					t = a.getT_blue_inner_top();
 					break;
 				case "inner_mid":
-					a.setT_blue_inner_mid(new Tower(line2, sign, line3));
+					a.setT_blue_inner_mid(new Tower(line2, loc, TowerType.INNERMID));
+					t = a.getT_blue_inner_mid();
 					break;
 				case "inner_bot":
-					a.setT_blue_inner_bot(new Tower(line2, sign, line3));
+					a.setT_blue_inner_bot(new Tower(line2, loc, TowerType.INNERBOT));
+					t = a.getT_blue_inner_bot();
 					break;
 				case "outer_top":
-					a.setT_blue_outer_top(new Tower(line2, sign, line3));
+					a.setT_blue_outer_top(new Tower(line2, loc, TowerType.OUTERTOP));
+					t = a.getT_blue_outer_top();
 					break;
 				case "outer_mid":
-					a.setT_blue_outer_mid(new Tower(line2, sign, line3));
+					a.setT_blue_outer_mid(new Tower(line2, loc, TowerType.OUTERMID));
+					t = a.getT_blue_outer_mid();
 					break;
 				case "outer_bot":
-					a.setT_blue_outer_bot(new Tower(line2, sign, line3));
+					a.setT_blue_outer_bot(new Tower(line2, loc, TowerType.OUTERBOT));
+					t = a.getT_blue_outer_bot();
 					break;
 				default:
 					break;
 				}
 			}
 		}
+		Main.getPlugin().Arenas.put(a.getName(), a);
+		return t;
+		
 	}
 	
 }

@@ -1,7 +1,10 @@
-package de.elicis.lom.data;
+package de.elicis.lom.tower;
+
+import java.io.Serializable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -9,28 +12,34 @@ import org.bukkit.scheduler.BukkitRunnable;
 import de.elicis.lom.Main;
 import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
-import de.elicis.lom.sign.LoM_Sign;
+import de.elicis.lom.data.Arena;
+import de.elicis.lom.data.LoMLocation;
 
-public class Tower {
+public class Tower implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 741023570227318835L;
 	String team;
 	int range;
 	int damage;
 	int health;
 	int armor;
 	boolean isShooting;
-	LoM_Sign sign;
-
-	public Tower(String team, LoM_Sign sign, String type) {
+	TowerType type;
+	LoMLocation loc;
+	public Tower(String team, Location loc, TowerType type) {
 		super();
+		this.loc = new LoMLocation(loc);
 		this.team = team;
-		this.sign = sign;
 		isShooting = false;
 		damage = 150;
 		range = 15;
 		health = 1550;
+		armor = 90;
+		this.type = type;
 		startTower();
-		sign.setLine2(type);
 	}
 	
 	
@@ -57,10 +66,10 @@ public class Tower {
 		this.armor = armor;
 	}
 	public LoMLocation getLocation() {
-		return sign.getLocation();
+		return loc;
 	}
 	public World getWorld(){
-		return getLocation().getLocation().getWorld();
+		return Bukkit.getWorld(getLocation().getWorld());
 	}
 	public boolean isShooting() {
 		return isShooting;
@@ -76,7 +85,6 @@ public class Tower {
 				Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new BukkitRunnable(){
 					@Override
 					public void run() {
-						LoM_API.getLoM_Sign(sign.getSign()).setTowerHealth(health, 1550);
 						if(!isShooting){
 							for(Player p : a.getPlayers()){
 								if(!a.getTeam(p).equalsIgnoreCase(team)){
@@ -121,15 +129,6 @@ public class Tower {
 	public void setHealth(int health) {
 		this.health = health;
 	}
-
-	public LoM_Sign getSign() {
-		return sign;
-	}
-
-	public void setSign(LoM_Sign sign) {
-		this.sign = sign;
-	}
-
 	public void setTeam(String team) {
 		this.team = team;
 	}
@@ -139,6 +138,18 @@ public class Tower {
 		}else{
 			return false;
 		}
+	}
+
+
+
+	public TowerType getType() {
+		return type;
+	}
+
+
+
+	public void setType(TowerType type) {
+		this.type = type;
 	}
 	
 	

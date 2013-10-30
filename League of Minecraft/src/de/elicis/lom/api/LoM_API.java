@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.sign.LoM_Sign;
+import de.elicis.lom.sign.LoM_TowerSign;
+import de.elicis.lom.tower.TowerType;
 
 public class LoM_API {
 	/*
@@ -61,6 +63,19 @@ public class LoM_API {
 		}
 		return isSign;
 	}
+	/*
+	 * Checks if the Sign is a LoM_TowerSign
+	 */
+	public static boolean isLoM_TowerSign(Sign sign) {
+		boolean isSign = false;
+		Location loc = sign.getBlock().getLocation();
+		for (LoM_TowerSign lomSign : de.elicis.lom.Main.getPlugin().towerSigns) {
+			if (isSameLocation(loc, lomSign.getLocation())) {
+				isSign = true;
+			}
+		}
+		return isSign;
+	}
 
 	/*
 	 * Return the LoM_Sign for a Sign
@@ -69,6 +84,18 @@ public class LoM_API {
 		Location loc = sign.getBlock().getLocation();
 		for (LoM_Sign lomSign : de.elicis.lom.Main.getPlugin().Signs) {
 			if (isSameLocation(loc, lomSign.getLocation().getLocation())) {
+				return lomSign;
+			}
+		}
+		return null;
+	}
+	/*
+	 * Return the LoM_TowerSign for a Sign
+	 */
+	public static LoM_TowerSign getLoM_TowerSign(Sign sign) {
+		Location loc = sign.getBlock().getLocation();
+		for (LoM_TowerSign lomSign : de.elicis.lom.Main.getPlugin().towerSigns) {
+			if (isSameLocation(loc, lomSign.getLocation())) {
 				return lomSign;
 			}
 		}
@@ -92,7 +119,9 @@ public class LoM_API {
 		}
 		return isSame;
 	}
-
+	/*
+	 * Gets an arena by its world
+	 */
 	public static Arena getArenaW(World world) {
 		for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
 			if (arena.getWorld().getName() == world.getName()) {
@@ -101,5 +130,36 @@ public class LoM_API {
 			
 		}
 		return null;
+	}
+	/*
+	 * Returns a TowerType for a String
+	 */
+	public static TowerType getTowerType(String s){
+		switch(s){
+			case "nexus_top":
+				return TowerType.NEXUSTOP;
+			case "nexus_bot":
+				return TowerType.NEXUSBOT;
+			case "inhib_top":
+				return TowerType.INHIBTOP;
+			case "inhib_mid":
+				return TowerType.INHIBMID;
+			case "inhib_bot":
+				return TowerType.INHIBBOT;
+			case "inner_top":
+				return TowerType.INNERTOP;
+			case "inner_mid":
+				return TowerType.INNERMID;
+			case "inner_bot":
+				return TowerType.INNERBOT;
+			case "outer_top":
+				return TowerType.OUTERTOP;
+			case "outer_mid":
+				return TowerType.OUTERMID;
+			case "outer_bot":
+				return TowerType.OUTERBOT;
+			default:
+				return null;
+		}
 	}
 }

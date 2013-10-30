@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.sign.LoM_Sign;
+import de.elicis.lom.sign.LoM_TowerSign;
 
 public class Engine {
 	public void startEngine() {
@@ -64,6 +65,9 @@ public class Engine {
 			public void run() {
 				for (LoM_Sign sign : de.elicis.lom.Main.getPlugin().Signs) {
 					sign.setArenas(de.elicis.lom.Main.getPlugin().Arenas);
+					sign.updateSign();
+				}
+				for(LoM_TowerSign sign : de.elicis.lom.Main.getPlugin().towerSigns){
 					sign.updateSign();
 				}
 

@@ -3,6 +3,7 @@ package de.elicis.lom.listener;
 import java.util.ArrayList;
 
 import org.bukkit.Material;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -17,6 +18,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.data.Arena;
+import de.elicis.lom.sign.LoM_TowerSign;
+import de.elicis.lom.tower.Tower;
 
 public class L_Combat implements Listener {
 	ArrayList<Material> weapons = new ArrayList<Material>();
@@ -111,6 +114,28 @@ public class L_Combat implements Listener {
 			if (LoM_API.isInArena(player)) {
 				if (player.getItemInHand().getData().getItemType() == Material.GOLD_HOE) {
 
+				}
+			}
+		}
+		if(event.getAction() == Action.LEFT_CLICK_BLOCK){
+			if(event.getClickedBlock().getType() == Material.SIGN
+					|| event.getClickedBlock().getType() == Material.SIGN_POST){
+				Sign sign = (Sign) event.getClickedBlock();
+				if(LoM_API.isLoM_TowerSign(sign)){
+					LoM_TowerSign lsign = LoM_API.getLoM_TowerSign(sign);
+						if(LoM_API.getArenaW(sign.getWorld()) != null){
+								if(LoM_API.isInArena(player)){
+										Arena a = LoM_API.getArenaW(sign.getWorld());
+									if(a.getChamps().get(player.getName()) != null){
+										Tower t = lsign.getTower();
+										Champion c = a.getChamps().get(player.getName());
+										t.setHealth(t.getHealth()-(c.getDamage()* (100/100 + t.getArmor())));
+									}
+								
+							}
+								
+						
+					}
 				}
 			}
 		}

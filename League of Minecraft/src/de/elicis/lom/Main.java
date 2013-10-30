@@ -22,10 +22,12 @@ import de.elicis.lom.listener.L_Combat;
 import de.elicis.lom.listener.L_Player;
 import de.elicis.lom.shop.Shop;
 import de.elicis.lom.sign.LoM_Sign;
+import de.elicis.lom.sign.LoM_TowerSign;
 
 public class Main extends JavaPlugin {
 	public HashMap<String, Arena> Arenas = new HashMap<String, Arena>();
 	public ArrayList<LoM_Sign> Signs = new ArrayList<LoM_Sign>();
+	public ArrayList<LoM_TowerSign> towerSigns = new ArrayList<LoM_TowerSign>();
 	public Shop shop = new Shop();
 	public ArrayList<String> champions = new ArrayList<String>();
 	private Config inventorys = new Config();
@@ -56,7 +58,6 @@ public class Main extends JavaPlugin {
 			Metrics metric = new Metrics(this);
 			metric.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		loadEngine();
