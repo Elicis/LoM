@@ -18,9 +18,6 @@ public class Jax extends Champion {
 		armor = (int) (18 + (level * 3.5) + itemarmor);
 		magicResist = (int) (30 + (level * 1.25) + itemmagicResist);
 		speed = 1 + itemspeed;
-		weapon = new ItemStack(Material.IRON_HOE, 1);
-		weapon.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
-		getPlayer().getInventory().addItem(weapon);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);
 		getPlayer().setHealthScaled(true);

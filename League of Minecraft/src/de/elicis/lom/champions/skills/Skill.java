@@ -29,6 +29,10 @@ public abstract class Skill {
 		return false;
 	}
 	
+	public int getSlot(){
+		return slot;
+	}
+	
 	public ItemStack getIconItem(){
 		return iconItem;
 	}

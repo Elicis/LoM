@@ -29,5 +29,4 @@ public class MageBasicAttack extends Skill {
 			}
 		}
 	}
-
 }

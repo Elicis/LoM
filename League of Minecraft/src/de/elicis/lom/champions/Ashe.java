@@ -18,10 +18,6 @@ public class Ashe extends Champion {
 		armor = (int) (11.5 + (level * 3.4) + itemarmor);
 		magicResist = 30 + itemmagicResist;
 		speed = 1 + itemspeed;
-		weapon = new ItemStack(Material.BOW, 1);
-		weapon.addEnchantment(Enchantment.ARROW_INFINITE, 1);
-		weapon.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
-		getPlayer().getInventory().addItem(weapon);
 		getPlayer().getInventory().addItem(new ItemStack(Material.ARROW, 1));
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);
