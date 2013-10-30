@@ -16,6 +16,12 @@ public abstract class Skill {
 		manaCost = mana;
 		this.iconItem = iconItem;
 		this.slot = slot;
+		if(this.slot > 8){
+			this.slot = 8;
+		}
+		if(this.slot < 0){
+			this.slot = 0;
+		}
 	}
 
 	public abstract void useSkill();
