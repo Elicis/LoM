@@ -1,9 +1,6 @@
 package de.elicis.lom.champions;
 
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class Garen extends Champion {
 	public Garen(Player player2) {

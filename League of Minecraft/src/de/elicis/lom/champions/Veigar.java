@@ -1,12 +1,8 @@
 package de.elicis.lom.champions;
 
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import de.elicis.lom.champions.skills.MageBasicAttack;
-import de.elicis.lom.champions.skills.Skill;
 
 public class Veigar extends Champion {
 	public Veigar(Player player2) {
