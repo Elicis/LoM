@@ -49,6 +49,7 @@ public class Main extends JavaPlugin {
 			verzeichnis.mkdirs();
 			Arenas = SL.load(this.getDataFolder().getPath() + "/data/arenas.bin");
 			Signs = SL.load(this.getDataFolder().getPath() + "/data/signs.bin");
+			towerSigns = SL.load(this.getDataFolder().getPath() + "/data/towers.bin");
 		} catch (Exception e) {
 			e.printStackTrace();
 			
@@ -72,6 +73,7 @@ public class Main extends JavaPlugin {
 		try {
 			SL.save(Arenas, this.getDataFolder().getPath() + "/data/arenas.bin");
 			SL.save(Signs, this.getDataFolder().getPath() + "/data/signs.bin");
+			SL.save(towerSigns, this.getDataFolder().getPath() + "/data/towers.bin");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

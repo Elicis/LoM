@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -32,6 +33,7 @@ public class Arena implements Serializable {
 	HashMap<String, Champion> Champs = new HashMap<String, Champion>();
 	ArrayList<String> ChampsRed = new ArrayList<String>();
 	ArrayList<String> ChampsBlue = new ArrayList<String>();
+	Nexus nexus;
 	Tower t_red_1, t_red_2,t_red_3,t_red_4,t_red_5,t_red_6,t_red_7,t_red_8,t_red_9,t_red_10,t_red_11;
 	Tower t_blue_1,t_blue_2,t_blue_3,t_blue_4,t_blue_5,t_blue_6,t_blue_7,t_blue_8,t_blue_9,t_blue_10,t_blue_11;
 	
@@ -469,6 +471,34 @@ public class Arena implements Serializable {
 			}
 		}
 		return null;
+	}
+
+	public Nexus getNexus() {
+		return nexus;
+	}
+
+	public void setNexus(Nexus nexus) {
+		this.nexus = nexus;
+	}
+	public void endGame(){
+		for(Player player: getPlayers()){
+			player.setMaxHealth(20);
+			player.setHealth(player.getMaxHealth());
+			player.setFoodLevel(20);
+			player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+			InvSave.reloadInventory(player);
+			player.setGameMode(GameMode.SURVIVAL);
+		}
+		Players.clear();
+		TeamRed.clear();
+		TeamBlue.clear();
+		Champs.clear();
+		ChampsRed.clear();
+		ChampsBlue.clear();
+		for(Tower t : getTowers()){
+			t.setHealth(1550);
+		}
+		nexus.setHealth(4000);
 	}
 
 }

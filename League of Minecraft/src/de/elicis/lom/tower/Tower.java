@@ -108,6 +108,7 @@ public class Tower implements Serializable{
 					isShooting = false;
 					cancel();
 				}else{
+					if(!isDestroyed()){
 					if(LoM_API.isInArena(player)){
 						Arena a = LoM_API.getArenaP(player);
 						if(a.isActive()){
@@ -117,6 +118,7 @@ public class Tower implements Serializable{
 							c.setHealth(c.getHealth() - (damage* (100 / (100 + c.getArmor()))));
 							
 						}
+					}
 					}
 				}
 			}
