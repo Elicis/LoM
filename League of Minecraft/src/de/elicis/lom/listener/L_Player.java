@@ -364,6 +364,7 @@ public class L_Player implements Listener {
 			if(LoM_API.getArenaP(player).getChamps().get(player) != null){
 				for(Skill skill: LoM_API.getArenaP(player).getChamps().get(player).getSkills()){
 					if(i == skill.getIconItem()){
+						// Use Skill and then set item to an empty slot.
 						skill.useSkill();
 					}
 					/*

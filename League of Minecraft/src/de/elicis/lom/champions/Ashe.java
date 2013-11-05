@@ -18,10 +18,10 @@ public class Ashe extends Champion {
 		magicResist = 30 + itemmagicResist;
 		speed = 1 + itemspeed;
 		basicAttack = new RangedBasicAttack(player2, 0, 7);
+		addSkills(player2);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);
 		getPlayer().setHealthScaled(true);
-
 	}
 
 	@Override
