@@ -1,8 +1,8 @@
 package de.elicis.lom.champions;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+
+import de.elicis.lom.champions.skills.RangedBasicAttack;
 
 public class Ashe extends Champion {
 	public Ashe(Player player2) {
@@ -17,7 +17,7 @@ public class Ashe extends Champion {
 		armor = (int) (11.5 + (level * 3.4) + itemarmor);
 		magicResist = 30 + itemmagicResist;
 		speed = 1 + itemspeed;
-		getPlayer().getInventory().addItem(new ItemStack(Material.ARROW, 1));
+		basicAttack = new RangedBasicAttack(player2, 0, 7);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);
 		getPlayer().setHealthScaled(true);
