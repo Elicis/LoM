@@ -1,9 +1,0 @@
-#ConfigurationFile for "League of Minecraft"
-arena:
-  #Minimum Team size (min. 2)
-  minPlayer: 6
-  #Maximum Team size (max. 10)
-  maxPlayer: 10
-  #This is how many blocks you can walk away from spawn. (So not
-  #too many chunks get generated)        
-  radius: 1000

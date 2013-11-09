@@ -28,7 +28,7 @@ public abstract class Skill {
 	
 	public boolean hasMana(){
 		if(LoM_API.isInArena(player)){
-			if(LoM_API.getArenaP(player).getChamps().get(player).getMana() >= manaCost){
+			if(LoM_API.getArenaP(player).getChamps().get(player.getName()).getMana() >= manaCost){
 				return true;
 			}
 		}

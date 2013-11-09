@@ -32,6 +32,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
@@ -115,6 +116,13 @@ public class L_Player implements Listener {
 	public void onExpPickUp(PlayerExpChangeEvent event) {
 		if (LoM_API.isInArena(event.getPlayer())) {
 			event.setAmount(0);
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerPickup(PlayerPickupItemEvent event){
+		if(LoM_API.isInArena(event.getPlayer())){
+			event.setCancelled(true);
 		}
 	}
 
@@ -358,23 +366,28 @@ public class L_Player implements Listener {
 	@EventHandler
 	public void onPlayerItemHeld(PlayerItemHeldEvent event){
 		Player player = event.getPlayer();
-		ItemStack i = player.getItemInHand();
+		int newSlot = event.getNewSlot();
 		
 		if(LoM_API.isInArena(player)){
-			if(LoM_API.getArenaP(player).getChamps().get(player) != null){
-				for(Skill skill: LoM_API.getArenaP(player).getChamps().get(player).getSkills()){
-					if(i == skill.getIconItem()){
+			if(LoM_API.getArenaP(player).getChamps().get(player.getName()) != null){
+				if(newSlot == LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot()){
+					LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().useSkill();
+					System.out.println("Used Basic attack");
+				}
+				for(Skill skill: LoM_API.getArenaP(player).getChamps().get(player.getName()).getSkills()){
+					if(newSlot == skill.getSlot()){
 						// Use Skill and then set item to an empty slot.
 						skill.useSkill();
+						System.out.println(player.getName() + " used skill");
 					}
-					/*
-					 * This slot will be empty, if the user tries to scroll this will mean
-					 * they wont accidently pick a skill whilst scrolling and thus have to use the
-					 * keyboard keys 1-9.
-					 * This also resets the held item so that a skill does not get spammed.
-					 */
-					player.getInventory().setHeldItemSlot(7);
 				}
+				/*
+				 * This slot will be empty, if the user tries to scroll this will mean
+				 * they wont accidently pick a skill whilst scrolling and thus have to use the
+				 * keyboard keys 1-9.
+				 * This also resets the held item so that a skill does not get spammed.
+				 */
+				player.getInventory().setHeldItemSlot(8);
 			}
 		}
 	}

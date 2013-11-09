@@ -3,6 +3,7 @@ package de.elicis.lom.champions;
 import org.bukkit.entity.Player;
 
 import de.elicis.lom.champions.skills.MageBasicAttack;
+import de.elicis.lom.champions.skills.RangedBasicAttack;
 
 public class Veigar extends Champion {
 	public Veigar(Player player2) {
@@ -18,6 +19,7 @@ public class Veigar extends Champion {
 		magicResist = 30 + (level * 0) + itemmagicResist;
 		speed = 1 + itemspeed;
 		basicAttack = new MageBasicAttack(player2, 0, 7);
+		skills.add(new RangedBasicAttack(player2, 0, 1));
 		addSkills(player2);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);

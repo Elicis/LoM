@@ -22,12 +22,11 @@ public class RangedBasicAttack extends Skill {
 
 	@Override
 	public void useSkill() {
-		if (new Date().getTime() - lastlaunched <= 2000) {
-			if(hasMana()){
-				// Note to self: try spawning arrow as entity so we can change the damage of the snowball
-				player.launchProjectile(Arrow.class).setShooter(player);
-				lastlaunched = new Date().getTime();
-			}
-		}
+		//if (new Date().getTime() - lastlaunched <= 2000) {
+			// Note to self: try spawning arrow as entity so we can change the damage of the snowball
+			player.launchProjectile(Arrow.class).setShooter(player);
+			lastlaunched = new Date().getTime();
+			System.out.println("DERRRRRRRRRRPPPPP");
+		//}
 	}
 }

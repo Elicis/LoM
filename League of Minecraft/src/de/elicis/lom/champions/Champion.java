@@ -45,6 +45,7 @@ public abstract class Champion {
 		itemmagicResist = 0;
 		itemspeed = 0;
 		isReady = false;
+		skills = new ArrayList<Skill>();
 	}
 
 	public String getName() {
@@ -226,7 +227,7 @@ public abstract class Champion {
 	}
 	
 	public void addSkills(Player player2){
-		player2.getInventory().setHeldItemSlot(0);
+		player2.getInventory().setHeldItemSlot(basicAttack.getSlot());
 		player2.getInventory().setItemInHand(basicAttack.getIconItem());
 		
 		for(Skill skill: skills){
