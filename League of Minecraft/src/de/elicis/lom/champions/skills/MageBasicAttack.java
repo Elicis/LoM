@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class MageBasicAttack extends Skill {
 	long lastlaunched = 0;
@@ -16,8 +17,10 @@ public class MageBasicAttack extends Skill {
 	}
 	
 	public void setItemSlot(){
+		ItemMeta im = iconItem.getItemMeta();
+		im.setDisplayName("Mage Basic Attack");
+		iconItem.setItemMeta(im);
 		player.getInventory().setItem(slot, iconItem);
-		player.getInventory().getItem(slot).getItemMeta().setDisplayName("Mage Basic Attack");
 	}
 
 	@Override
