@@ -3,7 +3,9 @@ package de.elicis.lom.champions;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import de.elicis.lom.champions.skills.Skill;
 
@@ -234,6 +236,11 @@ public abstract class Champion {
 			player2.getInventory().setHeldItemSlot(skill.getSlot());
 			player2.getInventory().setItemInHand(skill.getIconItem());
 		}
+		/*
+		 * Temporary!
+		 */
+		player2.getInventory().setHeldItemSlot(8);
+		player2.getInventory().setItemInHand(new ItemStack(Material.BLAZE_ROD));
 	}
 
 }

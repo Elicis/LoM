@@ -416,14 +416,15 @@ public class L_Player implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		// Use Basic Attack if left click
-		if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+		/*
+		 * Use basic attack when right clicking
+		 */
+		if(event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
 			if(LoM_API.isInArena(player)){
-				if(LoM_API.getArenaP(player).getChamps().get(player) != null){
-					LoM_API.getArenaP(player).getChamps().get(player).getBasicAttack().useSkill();
-				}
+				player.getInventory().setHeldItemSlot(LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot());
 			}
 		}
+		
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			Block b = event.getClickedBlock();
 			if (b.getType() == Material.SIGN_POST
