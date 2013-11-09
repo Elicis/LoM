@@ -33,7 +33,7 @@ public class Arena implements Serializable {
 	HashMap<String, Champion> Champs = new HashMap<String, Champion>();
 	ArrayList<String> ChampsRed = new ArrayList<String>();
 	ArrayList<String> ChampsBlue = new ArrayList<String>();
-	Nexus nexus;
+	Nexus nexusred, nexusblue;
 	Tower t_red_1, t_red_2,t_red_3,t_red_4,t_red_5,t_red_6,t_red_7,t_red_8,t_red_9,t_red_10,t_red_11;
 	Tower t_blue_1,t_blue_2,t_blue_3,t_blue_4,t_blue_5,t_blue_6,t_blue_7,t_blue_8,t_blue_9,t_blue_10,t_blue_11;
 	
@@ -473,14 +473,21 @@ public class Arena implements Serializable {
 		return null;
 	}
 
-	public Nexus getNexus() {
-		return nexus;
+	public Nexus getNexusRed() {
+		return nexusred;
+	}
+	
+	public Nexus getNexusBlue() {
+		return nexusblue;
 	}
 
-	public void setNexus(Nexus nexus) {
-		this.nexus = nexus;
+	public void setNexusRed(Nexus nexus) {
+		this.nexusred = nexus;
 	}
-	public void endGame(){
+	public void setNexusBlue(Nexus nexus){
+		this.nexusblue = nexus;
+	}
+	public void endGame(String winner){
 		for(Player player: getPlayers()){
 			player.setMaxHealth(20);
 			player.setHealth(player.getMaxHealth());
@@ -488,6 +495,21 @@ public class Arena implements Serializable {
 			player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
 			InvSave.reloadInventory(player);
 			player.setGameMode(GameMode.SURVIVAL);
+		}
+		if(winner.equalsIgnoreCase("red")){
+			for(Player player : getTeamRed()){
+				player.sendMessage(ChatColor.GOLD + "Victory!");
+			}
+			for(Player player : getTeamBlue()){
+				player.sendMessage(ChatColor.GOLD + "Defeat!");
+			}
+		}else{
+			for(Player player : getTeamBlue()){
+				player.sendMessage(ChatColor.GOLD + "Victory!");
+			}
+			for(Player player : getTeamRed()){
+				player.sendMessage(ChatColor.GOLD + "Defeat!");
+			}
 		}
 		Players.clear();
 		TeamRed.clear();
@@ -498,7 +520,9 @@ public class Arena implements Serializable {
 		for(Tower t : getTowers()){
 			t.setHealth(1550);
 		}
-		nexus.setHealth(4000);
+		nexusred.setHealth(4000);
+		nexusblue.setHealth(4000);
+		
 	}
 
 }

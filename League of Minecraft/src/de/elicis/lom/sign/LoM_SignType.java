@@ -4,7 +4,7 @@ public enum LoM_SignType{
 	
 	
 	
-	ARENA("arena"), CHAMPION("champion");
+	ARENA("arena"), CHAMPION("champion"), NEXUS("nexus");
 
 	String name;
 

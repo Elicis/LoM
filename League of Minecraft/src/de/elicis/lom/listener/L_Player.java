@@ -43,6 +43,7 @@ import de.elicis.lom.champions.Champion;
 import de.elicis.lom.champions.skills.Skill;
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.data.InvSave;
+import de.elicis.lom.data.Nexus;
 import de.elicis.lom.sign.LoM_Sign;
 import de.elicis.lom.sign.LoM_SignType;
 import de.elicis.lom.sign.LoM_TowerSign;
@@ -361,6 +362,26 @@ public class L_Player implements Listener {
 				}
 			}
 		}
+		if(event.getLine(0).equalsIgnoreCase("[Nexus]")){
+			if (player.hasPermission("lom.sign.nexus")) {
+				if (!event.getLine(1).isEmpty()){
+					if(event.getLine(1).equalsIgnoreCase("red") || event.getLine(1).equalsIgnoreCase("blue")){
+						String line2 = event.getLine(1);
+						Location loc = event.getBlock().getLocation();
+						LoM_Sign sign = new LoM_Sign("nexus_" + line2.toLowerCase(),
+								LoM_SignType.NEXUS, event.getBlock()
+										.getLocation());
+						Arena a = LoM_API.getArenaW(loc.getWorld());
+						if(event.getLine(1).equalsIgnoreCase("red")){
+							a.setNexusRed(new Nexus(line2, loc));
+						}else{
+							a.setNexusBlue(new Nexus(line2, loc));
+						}
+						de.elicis.lom.Main.getPlugin().Signs.add(sign);
+					}
+				}
+			}
+		}
 	}
 	
 	@EventHandler
@@ -418,6 +439,7 @@ public class L_Player implements Listener {
 							.equalsIgnoreCase(LoM_SignType.CHAMPION.getType())) {
 						player.performCommand("lom choose " + sign.getLine(1));
 					}
+					
 				}
 			}
 			if(b.getType().equals(Material.IRON_BLOCK)){

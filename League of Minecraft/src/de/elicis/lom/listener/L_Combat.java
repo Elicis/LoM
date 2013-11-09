@@ -19,6 +19,9 @@ import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.champions.skills.MageBasicAttack;
 import de.elicis.lom.data.Arena;
+import de.elicis.lom.data.Nexus;
+import de.elicis.lom.sign.LoM_Sign;
+import de.elicis.lom.sign.LoM_SignType;
 import de.elicis.lom.sign.LoM_TowerSign;
 import de.elicis.lom.tower.Tower;
 
@@ -110,14 +113,7 @@ public class L_Combat implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		if (event.getAction() == (Action.LEFT_CLICK_AIR)
-				|| event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-			if (LoM_API.isInArena(player)) {
-				if (player.getItemInHand().getData().getItemType() == Material.GOLD_HOE) {
-
-				}
-			}
-		}
+		
 		if(event.getAction() == Action.LEFT_CLICK_BLOCK){
 			if(event.getClickedBlock().getType() == Material.SIGN
 					|| event.getClickedBlock().getType() == Material.SIGN_POST){
@@ -136,6 +132,37 @@ public class L_Combat implements Listener {
 							}
 								
 						
+					}
+				}
+				if(LoM_API.isLoM_Sign(sign)){
+					LoM_Sign lomSign = LoM_API.getLoM_Sign(sign);
+					if(LoM_API.isInArena(player)){
+						Arena a = LoM_API.getArenaP(player);
+						if(a.isActive()){
+							Champion c = a.getChamps().get(player.getName());
+							if(lomSign.getType().getType()
+									.equalsIgnoreCase(LoM_SignType.NEXUS.getType())){
+									String team = sign.getLine(1);
+									int damage = c.getDamage() * (100/100 + 50);
+									Nexus nex;
+									if(team.equalsIgnoreCase("red")){
+										nex = a.getNexusRed();
+									}else{
+										nex = a.getNexusBlue();;
+									}
+									String winner;
+									if(team.equalsIgnoreCase("red")){
+										winner = "blue";
+									}else{
+										winner = "red";
+									}
+								if(nex.getHealth() - damage <= 0){
+									a.endGame(winner);
+								}else{
+									nex.setHealth(nex.getHealth() - damage);
+								}
+							}
+						}
 					}
 				}
 			}
