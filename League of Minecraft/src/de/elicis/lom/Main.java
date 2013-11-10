@@ -11,6 +11,8 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.ce.CE_LoM;
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.data.Config;
@@ -66,6 +68,25 @@ public class Main extends JavaPlugin {
 		}
 		loadEngine();
 		
+		
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+
+			@Override
+			public void run() {
+				for(Player player: Bukkit.getOnlinePlayers()){
+					if(LoM_API.isInArena(player)){
+						for(int i=0; i <= 8; i++){
+							if(player.getInventory().getItem(i) != null){
+								if(player.getInventory().getItem(i).getAmount() > 1){
+									player.getInventory().getItem(i).setAmount(player.getInventory().getItem(i).getAmount() - 1);
+								}
+							}
+						}
+					}
+				}
+			}
+			
+		}, 10, 20);
 	}
 
 	@Override

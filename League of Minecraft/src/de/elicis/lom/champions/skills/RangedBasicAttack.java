@@ -12,7 +12,7 @@ public class RangedBasicAttack extends Skill {
 	long lastlaunched = 0;
 
 	public RangedBasicAttack(Player player2, int mana, int slot) {
-		super(player2, mana, new ItemStack(Material.ARROW), slot, 2);
+		super(player2, mana, new ItemStack(Material.ARROW), slot, 15);
 		setItemSlot();
 	}
 	
