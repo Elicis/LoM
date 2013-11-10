@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -13,9 +15,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import de.elicis.lom.api.LoM_API;
+import de.elicis.lom.champions.Ashe;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.champions.skills.MageBasicAttack;
 import de.elicis.lom.data.Arena;
@@ -37,6 +44,19 @@ public class L_Combat implements Listener {
 			Player player1 = (Player) event.getEntity();
 			if (LoM_API.isInArena(player1)) {
 				Arena arena = LoM_API.getArenaP(player1);
+				
+				if(event.getDamager() instanceof Snowball){
+					Snowball snowball = (Snowball) event.getDamager();
+					if(snowball.getShooter() instanceof Player){
+						Player player = (Player) snowball.getShooter();
+						if(LoM_API.isInArena(player)){
+							if(LoM_API.getArenaP(player).getChamps().get(player.getName()) instanceof Ashe){
+								PotionEffect potionEffect = new PotionEffect(PotionEffectType.SLOW, 60, 2); //Replace this with your potion effect of choice
+				                player.addPotionEffect(potionEffect);
+							}
+						}
+					}
+				}
 
 				if (event.getDamager().getType() == (EntityType.PLAYER)) {
 					if (weapons.contains(player1.getItemInHand().getData().getItemType())) {
@@ -200,5 +220,23 @@ public class L_Combat implements Listener {
 		weapons.add(Material.BONE);
 		weapons.add(Material.GOLD_SWORD);
 		weapons.add(Material.DIAMOND_SWORD);
+	}
+	
+	@EventHandler
+	public void onEntityExplode(EntityExplodeEvent event) {
+		Entity ent = event.getEntity();
+		
+		if (ent instanceof Fireball) {
+			event.setCancelled(true); //Removes block damage
+		}
+	}
+	
+	@EventHandler
+	public void onExplosionPrime(ExplosionPrimeEvent event) {
+		event.setFire(false); //Only really needed for fireballs
+		
+		Entity ent = event.getEntity();
+		if (ent instanceof Fireball)
+			event.setRadius(2); //Increased from default(1), since the fireball now don't cause fire
 	}
 }
