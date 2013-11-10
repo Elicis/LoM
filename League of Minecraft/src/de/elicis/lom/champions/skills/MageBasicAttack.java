@@ -12,7 +12,7 @@ public class MageBasicAttack extends Skill {
 	long lastlaunched = 0;
 
 	public MageBasicAttack(Player player2, int mana, int slot) {
-		super(player2, mana, new ItemStack(Material.SNOW_BALL), slot);
+		super(player2, mana, new ItemStack(Material.SNOW_BALL), slot, 2);
 		setItemSlot();
 	}
 	

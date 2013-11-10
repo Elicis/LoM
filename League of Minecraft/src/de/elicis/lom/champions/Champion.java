@@ -242,5 +242,18 @@ public abstract class Champion {
 		player2.getInventory().setHeldItemSlot(8);
 		player2.getInventory().setItemInHand(new ItemStack(Material.BLAZE_ROD));
 	}
+	
+	public void setCooldown(Player player2, int slotID){
+		if(basicAttack.getSlot() == slotID){
+			player2.getInventory().getItem(basicAttack.getSlot()).setAmount(basicAttack.getCooldown());
+			System.out.println("Basic Attack Cooldown applied");
+		}
+		for(Skill skill: skills){
+			if(skill.getSlot() == slotID){
+				player2.getInventory().getItem(skill.getSlot()).setAmount(skill.getCooldown());
+				System.out.println("Skill Cooldown Applied");
+			}
+		}
+	}
 
 }
