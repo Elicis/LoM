@@ -3,7 +3,9 @@ package de.elicis.lom.champions;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import de.elicis.lom.champions.skills.Skill;
 
@@ -233,6 +235,24 @@ public abstract class Champion {
 		for(Skill skill: skills){
 			player2.getInventory().setHeldItemSlot(skill.getSlot());
 			player2.getInventory().setItemInHand(skill.getIconItem());
+		}
+		/*
+		 * Temporary!
+		 */
+		player2.getInventory().setHeldItemSlot(8);
+		player2.getInventory().setItemInHand(new ItemStack(Material.BLAZE_ROD));
+	}
+	
+	public void setCooldown(Player player2, int slotID){
+		if(basicAttack.getSlot() == slotID){
+			player2.getInventory().getItem(basicAttack.getSlot()).setAmount(basicAttack.getCooldown());
+			System.out.println("Basic Attack Cooldown applied");
+		}
+		for(Skill skill: skills){
+			if(skill.getSlot() == slotID){
+				player2.getInventory().getItem(skill.getSlot()).setAmount(skill.getCooldown());
+				System.out.println("Skill Cooldown Applied");
+			}
 		}
 	}
 

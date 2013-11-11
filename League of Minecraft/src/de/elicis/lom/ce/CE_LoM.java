@@ -122,14 +122,14 @@ public class CE_LoM implements CommandExecutor {
 							if (args[1].equalsIgnoreCase("red")) {
 								arena.setLobbyRed(player.getLocation());
 								de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
-								sender.sendMessage(ChatColor.GREEN
+								sender.sendMessage(ChatColor.RED + "RED " + ChatColor.GREEN
 										+ "Lobby set!");
 								return true;
 							}
 							if (args[1].equalsIgnoreCase("blue")) {
 								arena.setLobbyBlue(player.getLocation());
 								de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
-								sender.sendMessage(ChatColor.GREEN
+								sender.sendMessage(ChatColor.BLUE + "BLUE " + ChatColor.GREEN
 										+ "Lobby set!");
 								return true;
 							}
@@ -155,14 +155,14 @@ public class CE_LoM implements CommandExecutor {
 							if (args[1].equalsIgnoreCase("red")) {
 								arena.setSpawnRed(player.getLocation());
 								de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
-								sender.sendMessage(ChatColor.GREEN
+								sender.sendMessage(ChatColor.RED + "RED " + ChatColor.GREEN
 										+ "Spawn set!");
 								return true;
 							}
 							if (args[1].equalsIgnoreCase("blue")) {
 								arena.setSpawnBlue(player.getLocation());
 								de.elicis.lom.Main.getPlugin().Arenas.put(arena.getName(), arena);
-								sender.sendMessage(ChatColor.GREEN
+								sender.sendMessage(ChatColor.BLUE + "BLUE " + ChatColor.GREEN
 										+ "Spawn set!");
 								return true;
 							}

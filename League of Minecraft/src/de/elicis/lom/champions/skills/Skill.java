@@ -10,8 +10,9 @@ public abstract class Skill {
 	int manaCost;
 	ItemStack iconItem;
 	int slot;
+	int cooldown;
 
-	public Skill(Player player2, int mana, ItemStack iconItem, int slot) {
+	public Skill(Player player2, int mana, ItemStack iconItem, int slot, int cooldown) {
 		player = player2;
 		manaCost = mana;
 		this.iconItem = iconItem;
@@ -22,6 +23,7 @@ public abstract class Skill {
 		if(this.slot < 0){
 			this.slot = 0;
 		}
+		this.cooldown = cooldown;
 	}
 
 	public abstract void useSkill();
@@ -37,6 +39,10 @@ public abstract class Skill {
 	
 	public int getSlot(){
 		return slot;
+	}
+	
+	public int getCooldown(){
+		return cooldown;
 	}
 	
 	public ItemStack getIconItem(){

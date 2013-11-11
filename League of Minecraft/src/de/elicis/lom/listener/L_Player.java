@@ -392,14 +392,23 @@ public class L_Player implements Listener {
 		if(LoM_API.isInArena(player)){
 			if(LoM_API.getArenaP(player).getChamps().get(player.getName()) != null){
 				if(newSlot == LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot()){
-					LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().useSkill();
-					System.out.println("Used Basic attack");
+					if(player.getInventory().getItem(newSlot).getAmount() == 1){
+						LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().useSkill();
+						LoM_API.getArenaP(player).getChamps().get(player.getName()).setCooldown(player, LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot());
+						System.out.println("Used Basic attack");
+					}else{
+						player.sendMessage(ChatColor.RED + "This skill is still on cooldown");
+					}
 				}
 				for(Skill skill: LoM_API.getArenaP(player).getChamps().get(player.getName()).getSkills()){
 					if(newSlot == skill.getSlot()){
-						// Use Skill and then set item to an empty slot.
-						skill.useSkill();
-						System.out.println(player.getName() + " used skill");
+						// Use Skill and then set Cooldown of that skill
+						if(player.getInventory().getItem(newSlot).getAmount() == 1){
+							skill.useSkill();
+							LoM_API.getArenaP(player).getChamps().get(player.getName()).setCooldown(player, skill.getSlot());
+						}else{
+							player.sendMessage(ChatColor.RED + "This skill is still on cooldown");
+						}
 					}
 				}
 				/*
@@ -416,14 +425,15 @@ public class L_Player implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		// Use Basic Attack if left click
-		if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+		/*
+		 * Use basic attack when right clicking
+		 */
+		if(event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
 			if(LoM_API.isInArena(player)){
-				if(LoM_API.getArenaP(player).getChamps().get(player) != null){
-					LoM_API.getArenaP(player).getChamps().get(player).getBasicAttack().useSkill();
-				}
+				player.getInventory().setHeldItemSlot(LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot());
 			}
 		}
+		
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			Block b = event.getClickedBlock();
 			if (b.getType() == Material.SIGN_POST
