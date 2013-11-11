@@ -55,7 +55,11 @@ public class LoM_Sign implements Serializable{
 					line1 = "[Champion]";
 					line2 = name;
 					line3 = "";
+				} else if (type == LoM_SignType.NEXUS){
+					line1 = "[Nexus]";
+					line2 = getSign().getLine(1);
 				}
+					
 			}
 		
 	}
