@@ -2,6 +2,7 @@ package de.elicis.lom.champions;
 
 import org.bukkit.entity.Player;
 
+import de.elicis.lom.champions.skills.Volley;
 import de.elicis.lom.champions.skills.RangedBasicAttack;
 
 public class Ashe extends Champion {
@@ -18,6 +19,7 @@ public class Ashe extends Champion {
 		magicResist = 30 + itemmagicResist;
 		speed = 1 + itemspeed;
 		basicAttack = new RangedBasicAttack(player2, 0, 7);
+		skills.add(new Volley(player2, 60, 1, 16));
 		addSkills(player2);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);

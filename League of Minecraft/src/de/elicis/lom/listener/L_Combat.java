@@ -45,13 +45,13 @@ public class L_Combat implements Listener {
 			if (LoM_API.isInArena(player1)) {
 				Arena arena = LoM_API.getArenaP(player1);
 				
-				if(event.getDamager() instanceof Snowball){
-					Snowball snowball = (Snowball) event.getDamager();
-					if(snowball.getShooter() instanceof Player){
-						Player player = (Player) snowball.getShooter();
+				if(event.getDamager() instanceof Arrow){
+					Arrow arrow = (Arrow) event.getDamager();
+					if(arrow.getShooter() instanceof Player){
+						Player player = (Player) arrow.getShooter();
 						if(LoM_API.isInArena(player)){
 							if(LoM_API.getArenaP(player).getChamps().get(player.getName()) instanceof Ashe){
-								PotionEffect potionEffect = new PotionEffect(PotionEffectType.SLOW, 60, 2); //Replace this with your potion effect of choice
+								PotionEffect potionEffect = new PotionEffect(PotionEffectType.SLOW, 60, 2);
 				                player.addPotionEffect(potionEffect);
 							}
 						}
