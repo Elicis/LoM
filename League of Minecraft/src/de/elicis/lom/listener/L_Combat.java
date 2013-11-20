@@ -57,6 +57,16 @@ public class L_Combat implements Listener {
 						}
 					}
 				}
+				
+				if(event.getDamager() instanceof Player){
+					Player damager = (Player)event.getDamager();
+					if(event.getEntity() instanceof Player){
+						Player player = (Player)event.getDamager();
+					}
+					if(damager.getInventory().getItemInHand().getType() == Material.BLAZE_ROD){
+						event.setCancelled(true);
+					}
+				}
 
 				if (event.getDamager().getType() == (EntityType.PLAYER)) {
 					if (weapons.contains(player1.getItemInHand().getData().getItemType())) {
