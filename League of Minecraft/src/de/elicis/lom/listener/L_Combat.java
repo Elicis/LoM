@@ -39,6 +39,17 @@ public class L_Combat implements Listener {
 	
 	@EventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
+		
+		//TODO: Fiddle with metadata to customise arrows.
+		
+		if(event.getDamager() instanceof Arrow){
+			if(event.getDamager().hasMetadata("Label")){
+				if(event.getDamager().getMetadata("Label").toString().equals("Hawkshot")){
+					System.out.println("Testing metadata");
+				}
+			}
+		}
+		
 		if (event.getEntityType() == (EntityType.PLAYER)) {
 			Player player1 = (Player) event.getEntity();
 			if (LoM_API.isInArena(player1)) {

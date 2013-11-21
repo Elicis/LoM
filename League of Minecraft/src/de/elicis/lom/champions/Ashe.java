@@ -2,8 +2,9 @@ package de.elicis.lom.champions;
 
 import org.bukkit.entity.Player;
 
-import de.elicis.lom.champions.skills.Volley;
+import de.elicis.lom.champions.skills.Hawkshot;
 import de.elicis.lom.champions.skills.RangedBasicAttack;
+import de.elicis.lom.champions.skills.Volley;
 
 public class Ashe extends Champion {
 	public Ashe(Player player2) {
@@ -21,6 +22,7 @@ public class Ashe extends Champion {
 		//TODO: Finish rest of ashes skills
 		basicAttack = new RangedBasicAttack(player2, 0, 7);
 		skills.add(new Volley(player2, 60, 1, 16));
+		skills.add(new Hawkshot(player2, 0, 2, 60));
 		addSkills(player2);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);
