@@ -18,6 +18,7 @@ public class Ashe extends Champion {
 		armor = (int) (11.5 + (level * 3.4) + itemarmor);
 		magicResist = 30 + itemmagicResist;
 		speed = 1 + itemspeed;
+		//TODO: Finish rest of ashes skills
 		basicAttack = new RangedBasicAttack(player2, 0, 7);
 		skills.add(new Volley(player2, 60, 1, 16));
 		addSkills(player2);

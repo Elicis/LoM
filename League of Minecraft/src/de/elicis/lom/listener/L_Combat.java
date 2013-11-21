@@ -18,11 +18,8 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import de.elicis.lom.api.LoM_API;
-import de.elicis.lom.champions.Ashe;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.champions.skills.MageBasicAttack;
 import de.elicis.lom.data.Arena;
@@ -38,6 +35,8 @@ public class L_Combat implements Listener {
 		addweapons();
 	}
 
+	//TODO: Make improvements to combat system
+	
 	@EventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
 		if (event.getEntityType() == (EntityType.PLAYER)) {
@@ -45,24 +44,8 @@ public class L_Combat implements Listener {
 			if (LoM_API.isInArena(player1)) {
 				Arena arena = LoM_API.getArenaP(player1);
 				
-				if(event.getDamager() instanceof Arrow){
-					Arrow arrow = (Arrow) event.getDamager();
-					if(arrow.getShooter() instanceof Player){
-						Player player = (Player) arrow.getShooter();
-						if(LoM_API.isInArena(player)){
-							if(LoM_API.getArenaP(player).getChamps().get(player.getName()) instanceof Ashe){
-								PotionEffect potionEffect = new PotionEffect(PotionEffectType.SLOW, 60, 2);
-				                player.addPotionEffect(potionEffect);
-							}
-						}
-					}
-				}
-				
 				if(event.getDamager() instanceof Player){
 					Player damager = (Player)event.getDamager();
-					if(event.getEntity() instanceof Player){
-						Player player = (Player)event.getDamager();
-					}
 					if(damager.getInventory().getItemInHand().getType() == Material.BLAZE_ROD){
 						event.setCancelled(true);
 					}
