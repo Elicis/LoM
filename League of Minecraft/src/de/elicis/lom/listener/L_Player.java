@@ -393,9 +393,11 @@ public class L_Player implements Listener {
 			if(LoM_API.getArenaP(player).getChamps().get(player.getName()) != null){
 				if(newSlot == LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot()){
 					if(player.getInventory().getItem(newSlot).getAmount() == 1){
-						LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().useSkill();
-						LoM_API.getArenaP(player).getChamps().get(player.getName()).setCooldown(player, LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot());
-						System.out.println("Used Basic attack");
+						if(LoM_API.getArenaP(player).isActive()){
+							LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().useSkill();
+							LoM_API.getArenaP(player).getChamps().get(player.getName()).setCooldown(player, LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot());
+							System.out.println("Used Basic attack");
+						}
 					}else{
 						player.sendMessage(ChatColor.RED + "This skill is still on cooldown");
 					}
@@ -404,8 +406,10 @@ public class L_Player implements Listener {
 					if(newSlot == skill.getSlot()){
 						// Use Skill and then set Cooldown of that skill
 						if(player.getInventory().getItem(newSlot).getAmount() == 1){
-							skill.useSkill();
-							LoM_API.getArenaP(player).getChamps().get(player.getName()).setCooldown(player, skill.getSlot());
+							if(LoM_API.getArenaP(player).isActive()){
+								skill.useSkill();
+								LoM_API.getArenaP(player).getChamps().get(player.getName()).setCooldown(player, skill.getSlot());
+							}
 						}else{
 							player.sendMessage(ChatColor.RED + "This skill is still on cooldown");
 						}
