@@ -1,5 +1,6 @@
 package de.elicis.lom.champions.skills;
 
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -24,8 +25,9 @@ public class Hawkshot extends Skill {
 
 	@Override
 	public void useSkill() {
-		Arrow arrow1 = (Arrow)player.launchProjectile(Arrow.class);
-		arrow1.setMetadata("Label", new FixedMetadataValue(Main.instance, "Hawkshot"));
+		Arrow arrow = (Arrow)player.launchProjectile(Arrow.class);
+		arrow.setMetadata("Hawkshot", new FixedMetadataValue(Main.instance, "Hawkshot"));
+		arrow.getWorld().playEffect(arrow.getLocation(), Effect.SMOKE, 1);
 		setItemSlot();
 	}
 

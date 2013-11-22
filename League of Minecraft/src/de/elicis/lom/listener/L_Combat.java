@@ -18,6 +18,8 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
@@ -43,9 +45,13 @@ public class L_Combat implements Listener {
 		//TODO: Fiddle with metadata to customise arrows.
 		
 		if(event.getDamager() instanceof Arrow){
-			if(event.getDamager().hasMetadata("Label")){
-				if(event.getDamager().getMetadata("Label").toString().equals("Hawkshot")){
-					System.out.println("Testing metadata");
+			if(event.getDamager().hasMetadata("Hawkshot")){
+				Entity entity = event.getEntity();
+				for(Entity e: entity.getNearbyEntities(3,3,3)){
+					if(e instanceof Player){
+						Player player = (Player) e;
+						player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 7, 10));
+					}
 				}
 			}
 		}
