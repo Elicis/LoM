@@ -31,16 +31,14 @@ public class Engine {
 									champ.updateChamp();
 									champ.setMoney((int) (champ.getMoney() + 1 + champ
 											.getGoldRegen()));
-									if(champ.getPlayer().getInventory().getItem(44).getData().getItemType() == Material.GOLD_INGOT){
-										player.getInventory().setItem(44, new ItemStack(Material.GOLD_INGOT));
-									}
-									ItemStack ingot = player.getInventory().getItem(44);
+									player.getInventory().setItem(35, new ItemStack(Material.GOLD_INGOT));
+									ItemStack ingot = player.getInventory().getItem(35);
 									ItemMeta meta = ingot.getItemMeta();
 									List<String> list = new ArrayList<String>();
 									list.add((String) "" + champ.getMoney());
 									meta.setLore(list);
 									ingot.setItemMeta(meta);
-									player.getInventory().setItem(44, ingot);
+									player.getInventory().setItem(35, ingot);
 									if ((champ.getMana() + champ.getManaRegen()) <= champ
 											.getMaxMana()) {
 										champ.setMana((int) (champ.getMana() + champ

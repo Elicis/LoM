@@ -45,14 +45,29 @@ public class L_Combat implements Listener {
 		//TODO: Fiddle with metadata to customise arrows.
 		
 		if(event.getDamager() instanceof Arrow){
+			Arrow arrow = (Arrow) event.getDamager();
 			if(event.getDamager().hasMetadata("Hawkshot")){
-				Entity entity = event.getEntity();
-				for(Entity e: entity.getNearbyEntities(10,10,10)){
-					System.out.println("Entity Found");
-					if(e instanceof Player){
-						Player player = (Player) e;
-						player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 7, 1));
-						System.out.println("Potion Effect Added to Player: " + player.getName());
+				if(arrow.getShooter() instanceof Player){
+					Player player = (Player) arrow.getShooter();
+					if(LoM_API.getArenaP(player).getTeam(player) == "blue"){
+						for(Entity e: arrow.getNearbyEntities(3, 3, 3)){
+							if(e instanceof Player){
+								Player p2 = (Player) e;
+								if(LoM_API.getArenaP(player).getTeamRed().contains(p2)){
+									p2.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1));
+								}
+							}
+						}
+					}
+					if(LoM_API.getArenaP(player).getTeam(player) == "red"){
+						for(Entity e: arrow.getNearbyEntities(3, 3, 3)){
+							if(e instanceof Player){
+								Player p2 = (Player) e;
+								if(LoM_API.getArenaP(player).getTeamBlue().contains(p2)){
+									p2.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1));
+								}
+							}
+						}
 					}
 				}
 			}

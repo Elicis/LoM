@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import de.elicis.lom.Main;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.tower.Tower;
 import de.elicis.lom.tower.TowerType;
@@ -28,6 +29,7 @@ public class Arena implements Serializable {
 	LoMLocation SpawnRed;
 	LoMLocation SpawnBlue;
 	Boolean active = false;
+	Boolean countdownStarted = false;
 	public ArrayList<String> Players = new ArrayList<String>();
 	private ArrayList<String> TeamRed = new ArrayList<String>();
 	private ArrayList<String> TeamBlue = new ArrayList<String>();
@@ -38,6 +40,8 @@ public class Arena implements Serializable {
 	Nexus nexusred, nexusblue;
 	Tower t_red_1, t_red_2,t_red_3,t_red_4,t_red_5,t_red_6,t_red_7,t_red_8,t_red_9,t_red_10,t_red_11;
 	Tower t_blue_1,t_blue_2,t_blue_3,t_blue_4,t_blue_5,t_blue_6,t_blue_7,t_blue_8,t_blue_9,t_blue_10,t_blue_11;
+	
+	public int gameCountdownTimer;
 	
 	
 
@@ -224,6 +228,11 @@ public class Arena implements Serializable {
 				}
 			}
 		}
+		
+		if(Champs.size() >= 1 && countdownStarted == false && !isActive()){
+			countdownStarted = true;
+			startCountdown();
+		}
 	}
 
 	public void removeChamp(Player player) {
@@ -245,12 +254,105 @@ public class Arena implements Serializable {
 		SpawnBlue = new LoMLocation(loc);
 	}
 
+	public void startCountdown(){
+		
+		gameCountdownTimer = Main.getPlugin().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new Runnable(){
+			
+			int countdown = 61;
+			
+			public void run(){
+				countdown --;
+				if(countdown == 60){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "1 minute");
+					}
+				}
+				else if(countdown == 30){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "30 seconds");
+					}
+				}
+				
+				else if(countdown == 10){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "10 seconds");
+					}
+				}
+				
+				else if(countdown == 9){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "9 seconds");
+					}
+				}
+				
+				else if(countdown == 8){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "8 seconds");
+					}
+				}
+				
+				else if(countdown == 7){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "7 seconds");
+					}
+				}
+				
+				else if(countdown == 6){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "6 seconds");
+					}
+				}
+				
+				else if(countdown == 5){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "5 seconds");
+					}
+				}
+				
+				else if(countdown == 4){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "4 seconds");
+					}
+				}
+				
+				else if(countdown == 3){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "3 seconds");
+					}
+				}
+				
+				else if(countdown == 2){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "2 seconds");
+					}
+				}
+				
+				else if(countdown == 1){
+					for(Player player: getPlayers()){
+						player.sendMessage(ChatColor.GREEN + "Game starts in " + ChatColor.GOLD + "1 second");
+					}
+				}
+				
+				else if(countdown == 0){
+					stopCountdown();
+					startGame();
+				}
+				System.out.println("Time: " + countdown);
+			}
+		}, 0, 20L);
+	}
+	
+	public void stopCountdown(){
+		Main.getPlugin().getServer().getScheduler().cancelTask(gameCountdownTimer);
+		countdownStarted = false;
+	}
+	
 	public void startGame() {
 		active = true;
 		for (Player player : getPlayers()) {
 			if (getTeam(player).equalsIgnoreCase("red")) {
 				player.teleport(SpawnRed.getLocation());
-			} else if (getTeam(player).equalsIgnoreCase("blau")) {
+			} else if (getTeam(player).equalsIgnoreCase("blue")) {
 				player.teleport(SpawnBlue.getLocation());
 			}
 			player.sendMessage(ChatColor.GREEN

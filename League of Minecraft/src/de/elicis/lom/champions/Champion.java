@@ -37,6 +37,7 @@ public abstract class Champion {
 	Skill basicAttack;
 
 	public Champion() {
+		System.out.println("Champion Setup");
 		money = 400;
 		itemhealth = (double) 0;
 		itemmana = 0;

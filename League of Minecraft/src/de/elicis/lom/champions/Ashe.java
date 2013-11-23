@@ -18,6 +18,7 @@ public class Ashe extends Champion {
 		abilityPower = 0 * level + itemabilityPower;
 		armor = (int) (11.5 + (level * 3.4) + itemarmor);
 		magicResist = 30 + itemmagicResist;
+		goldregen = 1.0D; // Test
 		speed = 1 + itemspeed;
 		//TODO: Finish rest of ashes skills
 		basicAttack = new RangedBasicAttack(player2, 0, 7);
