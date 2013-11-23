@@ -3,6 +3,7 @@ package de.elicis.lom.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -33,6 +34,7 @@ public class Arena implements Serializable {
 	HashMap<String, Champion> Champs = new HashMap<String, Champion>();
 	ArrayList<String> ChampsRed = new ArrayList<String>();
 	ArrayList<String> ChampsBlue = new ArrayList<String>();
+	int minChamps;
 	Nexus nexusred, nexusblue;
 	Tower t_red_1, t_red_2,t_red_3,t_red_4,t_red_5,t_red_6,t_red_7,t_red_8,t_red_9,t_red_10,t_red_11;
 	Tower t_blue_1,t_blue_2,t_blue_3,t_blue_4,t_blue_5,t_blue_6,t_blue_7,t_blue_8,t_blue_9,t_blue_10,t_blue_11;
@@ -42,6 +44,7 @@ public class Arena implements Serializable {
 	public Arena(String name2) {
 		world = name2;
 		name = name2;
+		minChamps = 1;
 	}
 
 	public String getName() {

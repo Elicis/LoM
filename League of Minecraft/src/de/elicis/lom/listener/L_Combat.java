@@ -47,10 +47,12 @@ public class L_Combat implements Listener {
 		if(event.getDamager() instanceof Arrow){
 			if(event.getDamager().hasMetadata("Hawkshot")){
 				Entity entity = event.getEntity();
-				for(Entity e: entity.getNearbyEntities(3,3,3)){
+				for(Entity e: entity.getNearbyEntities(10,10,10)){
+					System.out.println("Entity Found");
 					if(e instanceof Player){
 						Player player = (Player) e;
-						player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 7, 10));
+						player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 7, 1));
+						System.out.println("Potion Effect Added to Player: " + player.getName());
 					}
 				}
 			}

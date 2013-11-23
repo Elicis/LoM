@@ -393,6 +393,7 @@ public class L_Player implements Listener {
 			if(LoM_API.getArenaP(player).getChamps().get(player.getName()) != null){
 				if(newSlot == LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot()){
 					if(player.getInventory().getItem(newSlot).getAmount() == 1){
+						// Check game has started
 						if(LoM_API.getArenaP(player).isActive()){
 							LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().useSkill();
 							LoM_API.getArenaP(player).getChamps().get(player.getName()).setCooldown(player, LoM_API.getArenaP(player).getChamps().get(player.getName()).getBasicAttack().getSlot());
