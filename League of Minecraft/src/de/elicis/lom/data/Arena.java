@@ -48,7 +48,7 @@ public class Arena implements Serializable {
 	public Arena(String name2) {
 		world = name2;
 		name = name2;
-		minChamps = 1;
+		minChamps = 1; // As a test
 	}
 
 	public String getName() {
@@ -214,6 +214,14 @@ public class Arena implements Serializable {
 			removePlayerBlue(player);
 			removeChamp(player);
 		}
+		if(isActive()){
+			if(isRedTeamEmpty()){
+				endGame("blue");
+			}
+			if(isBlueTeamEmpty()){
+				endGame("red");
+			}
+		}
 	}
 
 	public void addChamp(Player player, Champion champ) {
@@ -229,9 +237,12 @@ public class Arena implements Serializable {
 			}
 		}
 		
-		if(Champs.size() >= 1 && countdownStarted == false && !isActive()){
-			countdownStarted = true;
+		System.out.println("Champs Size: " + Champs.size());
+		
+		if(Champs.size() >= minChamps){
 			startCountdown();
+			countdownStarted = true;
+			System.out.println("Test");
 		}
 	}
 
@@ -244,6 +255,20 @@ public class Arena implements Serializable {
 			}
 			Champs.remove(player.getName());
 		}
+	}
+	
+	public boolean isRedTeamEmpty(){
+		if(getTeamRed().size() <= 0){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isBlueTeamEmpty(){
+		if(getTeamBlue().size() <= 0){
+			return true;
+		}
+		return false;
 	}
 
 	public void setSpawnRed(Location loc) {
@@ -359,6 +384,14 @@ public class Arena implements Serializable {
 					+ "The game has started. Go get them " + ChatColor.GOLD
 					+ getChamps().get(player.getName()).getName());
 			continue;
+		}
+		
+		if(isRedTeamEmpty()){
+			endGame("blue");
+		}
+		
+		if(isBlueTeamEmpty()){
+			endGame("red");
 		}
 	}
 	public void clearTeams(){
@@ -622,11 +655,17 @@ public class Arena implements Serializable {
 		Champs.clear();
 		ChampsRed.clear();
 		ChampsBlue.clear();
-		for(Tower t : getTowers()){
-			t.setHealth(1550);
+		// TODO: Null Pointer Exception when setting towers health at end of game.
+		/*if(getTowers().size() > 0){
+			for(Tower t : getTowers()){
+				t.setHealth(t.getMaxHealth());
+			}
+		}*/
+		if(nexusred != null && nexusblue != null){
+			nexusred.setHealth(4000);
+			nexusblue.setHealth(4000);
 		}
-		nexusred.setHealth(4000);
-		nexusblue.setHealth(4000);
+		active = false;
 		
 	}
 

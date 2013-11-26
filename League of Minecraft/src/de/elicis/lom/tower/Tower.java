@@ -25,6 +25,7 @@ public class Tower implements Serializable{
 	int range;
 	int damage;
 	int health;
+	int maxHealth;
 	int armor;
 	boolean isShooting;
 	TowerType type;
@@ -36,7 +37,7 @@ public class Tower implements Serializable{
 		isShooting = false;
 		damage = 150;
 		range = 15;
-		health = 1550;
+		health = maxHealth = 1550;
 		armor = 90;
 		this.type = type;
 		startTower();
@@ -126,6 +127,10 @@ public class Tower implements Serializable{
 	}
 	public int getHealth() {
 		return health;
+	}
+	
+	public int getMaxHealth(){
+		return maxHealth;
 	}
 
 	public void setHealth(int health) {

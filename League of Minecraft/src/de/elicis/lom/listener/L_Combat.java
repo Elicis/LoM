@@ -42,8 +42,7 @@ public class L_Combat implements Listener {
 	@EventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
 		
-		//TODO: Fiddle with metadata to customise arrows.
-		
+		//TODO: Test Potion Effect (Blindness) for Hawkshot
 		if(event.getDamager() instanceof Arrow){
 			Arrow arrow = (Arrow) event.getDamager();
 			if(event.getDamager().hasMetadata("Hawkshot")){

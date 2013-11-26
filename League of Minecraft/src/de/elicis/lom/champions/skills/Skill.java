@@ -11,8 +11,6 @@ public abstract class Skill {
 	ItemStack iconItem;
 	int slot;
 	int cooldown;
-
-	// TODO: Implement way of showing player their current mana
 	
 	public Skill(Player player2, int mana, ItemStack iconItem, int slot, int cooldown) {
 		player = player2;
