@@ -3,6 +3,7 @@ package de.elicis.lom.champions;
 import org.bukkit.entity.Player;
 
 import de.elicis.lom.champions.skills.RangedBasicAttack;
+import de.elicis.lom.champions.skills.ashe.EnchantedCrystalArrow;
 import de.elicis.lom.champions.skills.ashe.Hawkshot;
 import de.elicis.lom.champions.skills.ashe.Volley;
 
@@ -24,6 +25,7 @@ public class Ashe extends Champion {
 		basicAttack = new RangedBasicAttack(player2, 0, 7);
 		skills.add(new Volley(player2, 60, 1, 16));
 		skills.add(new Hawkshot(player2, 0, 2, 60));
+		skills.add(new EnchantedCrystalArrow(player2, 100, 4, 100));
 		addSkills(player2);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);
