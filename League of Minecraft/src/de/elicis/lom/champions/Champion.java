@@ -227,6 +227,10 @@ public abstract class Champion {
 	public void setitemSpeed(int newint) {
 		itemspeed = newint;
 	}
+	public Double getItemHealth() {
+		return itemhealth;
+	}
+
 
 	public void updateChamp() {
 	}
@@ -259,4 +263,5 @@ public abstract class Champion {
 		}
 	}
 
+	
 }
