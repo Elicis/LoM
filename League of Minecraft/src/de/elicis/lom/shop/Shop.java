@@ -37,7 +37,7 @@ public class Shop implements Listener{
 			}
 			if(!event.getInventory().getName().equalsIgnoreCase("LoM Shop")){
 				ShopItem item = (ShopItem) event.getCurrentItem();
-				ShopBuyEvent event1 = new ShopBuyEvent(player, item, item.getPrice());
+				ShopBuyEvent event1 = new ShopBuyEvent(player, item, item.getPrice(player));
 				if(!event1.isCancelled()){
 					if(LoM_API.isInArena(player)){
 						Arena a = LoM_API.getArenaP(player);
@@ -164,7 +164,35 @@ public class Shop implements Listener{
 		list.add("Health +380");
 		giant.getItemMeta().setLore(list);
 		inv.addItem(giant);
-		//
+		//TODO: Add more Items
+		sites.add(inv);
+	}
+	public void createArmorPage(){
+		List<String> list = new ArrayList<String>();
+		Inventory inv = Bukkit.createInventory(null, 54, "Armor");
+		//TODO: Add more Items
+		
+		sites.add(inv);
+	}
+	public void createMagicResistPage(){
+		List<String> list = new ArrayList<String>();
+		Inventory inv = Bukkit.createInventory(null, 54, "Magicresistance");
+		//TODO: Add more Items
+		
+		sites.add(inv);
+	}
+	public void createDamagePage(){
+		List<String> list = new ArrayList<String>();
+		Inventory inv = Bukkit.createInventory(null, 54, "Damage");
+		//TODO: Add more Items
+		
+		sites.add(inv);
+	}
+	public void createAbilityPPage(){
+		List<String> list = new ArrayList<String>();
+		Inventory inv = Bukkit.createInventory(null, 54, "Abilitypower");
+		//TODO: Add more Items
+		
 		sites.add(inv);
 	}
 }
