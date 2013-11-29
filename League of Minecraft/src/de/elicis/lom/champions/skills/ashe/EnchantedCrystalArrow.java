@@ -12,6 +12,7 @@ public class EnchantedCrystalArrow extends Skill{
 
 	public EnchantedCrystalArrow(Player player2, int mana, int slot, int cooldown) {
 		super(player2, mana, new ItemStack(Material.ARROW), slot, cooldown);
+		setItemSlot();
 	}
 	
 	public void setItemSlot(){
