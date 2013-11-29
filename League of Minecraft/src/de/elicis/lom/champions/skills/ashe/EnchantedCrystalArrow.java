@@ -19,7 +19,6 @@ public class EnchantedCrystalArrow extends Skill{
 		im.setDisplayName("Enchanted Crystal Arrow");
 		im.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
 		getIconItem().setItemMeta(im);
-		getIconItem().removeEnchantment(Enchantment.ARROW_DAMAGE);
 		getPlayer().getInventory().setItem(getSlot(), getIconItem());
 	}
 

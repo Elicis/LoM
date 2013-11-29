@@ -15,6 +15,7 @@ public class Hawkshot extends Skill {
 	
 	public Hawkshot(Player player2, int mana, int slot, int cooldown) {
 		super(player2, mana, new ItemStack(Material.POTION), slot, cooldown);
+		setItemSlot();
 	}
 	
 	public void setItemSlot(){

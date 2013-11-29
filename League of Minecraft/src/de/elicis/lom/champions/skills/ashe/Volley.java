@@ -13,6 +13,7 @@ public class Volley extends Skill{
 
 	public Volley(Player player2, int mana, int slot, int cooldown) {
 		super(player2, mana, new ItemStack(Material.ARROW), slot, cooldown);
+		setItemSlot();
 	}
 
 	public void setItemSlot(){
