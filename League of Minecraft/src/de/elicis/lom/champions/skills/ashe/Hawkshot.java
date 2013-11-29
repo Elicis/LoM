@@ -28,7 +28,7 @@ public class Hawkshot extends Skill {
 	@Override
 	public void useSkill() {
 		Arrow arrow = (Arrow)getPlayer().launchProjectile(Arrow.class);
-		arrow.setMetadata("Hawkshot", new FixedMetadataValue(Main.instance, "Hawkshot"));
+		arrow.setMetadata("Hawkshot", new FixedMetadataValue(Main.getPlugin(), "Hawkshot"));
 		arrow.getWorld().playEffect(arrow.getLocation(), Effect.SMOKE, 1);
 		setItemSlot();
 	}

@@ -53,7 +53,7 @@ public class L_Combat implements Listener {
 							if(e instanceof Player){
 								Player p2 = (Player) e;
 								if(LoM_API.getArenaP(player).getTeamRed().contains(p2)){
-									p2.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1));
+									p2.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 3, 1));
 								}
 							}
 						}
@@ -63,8 +63,51 @@ public class L_Combat implements Listener {
 							if(e instanceof Player){
 								Player p2 = (Player) e;
 								if(LoM_API.getArenaP(player).getTeamBlue().contains(p2)){
-									p2.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1));
+									p2.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 3, 1));
 								}
+							}
+						}
+					}
+				}
+			}
+			if(event.getDamager().hasMetadata("EnchantedCrystalArrow")){
+				if(arrow.getShooter() instanceof Player){
+					Player player = (Player)arrow.getShooter();
+					if(LoM_API.getArenaP(player).getTeam(player) == "blue"){
+						if(event.getEntity() instanceof Player){
+							Player damaged = (Player)event.getEntity();
+							if(LoM_API.getArenaP(damaged).getTeam(damaged) == "red"){
+								damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5, 2));
+								damaged.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2, 1));
+								for(Entity e: damaged.getNearbyEntities(3, 3, 3)){
+									if(e instanceof Player){
+										Player p2 = (Player) e;
+										if(LoM_API.getArenaP(p2).getTeam(p2) == "red"){
+											damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1));
+											// TODO: Take half health for team mates nearby
+										}
+									}
+								}
+								// TODO: Take health from damaged player
+							}
+						}
+					}
+					if(LoM_API.getArenaP(player).getTeam(player) == "red"){
+						if(event.getEntity() instanceof Player){
+							Player damaged = (Player)event.getEntity();
+							if(LoM_API.getArenaP(damaged).getTeam(damaged) == "blue"){
+								damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5, 2));
+								damaged.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2, 1));
+								for(Entity e: damaged.getNearbyEntities(3, 3, 3)){
+									if(e instanceof Player){
+										Player p2 = (Player) e;
+										if(LoM_API.getArenaP(p2).getTeam(p2) == "blue"){
+											damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1));
+											// TODO: Take half health for team mates nearby
+										}
+									}
+								}
+								// TODO: Take health from damaged player
 							}
 						}
 					}
