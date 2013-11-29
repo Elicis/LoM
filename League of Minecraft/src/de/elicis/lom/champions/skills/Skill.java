@@ -41,6 +41,10 @@ public abstract class Skill {
 		return slot;
 	}
 	
+	public Player getPlayer(){
+		return player;
+	}
+	
 	public int getCooldown(){
 		return cooldown;
 	}

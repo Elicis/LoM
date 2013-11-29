@@ -2,9 +2,9 @@ package de.elicis.lom.champions;
 
 import org.bukkit.entity.Player;
 
-import de.elicis.lom.champions.skills.Hawkshot;
 import de.elicis.lom.champions.skills.RangedBasicAttack;
-import de.elicis.lom.champions.skills.Volley;
+import de.elicis.lom.champions.skills.ashe.Hawkshot;
+import de.elicis.lom.champions.skills.ashe.Volley;
 
 public class Ashe extends Champion {
 	public Ashe(Player player2) {
