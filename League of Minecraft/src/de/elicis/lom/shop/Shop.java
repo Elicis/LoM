@@ -73,13 +73,46 @@ public class Shop implements Listener{
 					}
 				}
 			}else{
-				//TODO:Call the different InventoryViews
+				ItemStack item = event.getCurrentItem();
+				switch(item.getType()){
+				case REDSTONE_BLOCK:
+					player.openInventory(sites.get(1));
+					break;
+				case IRON_CHESTPLATE:
+					player.openInventory(sites.get(2));
+					break;
+				case LEATHER_CHESTPLATE:
+					player.openInventory(sites.get(3));
+					break;
+				case IRON_SWORD:
+					player.openInventory(sites.get(4));
+					break;
+				case DIAMOND_HOE:
+					player.openInventory(sites.get(5));
+					break;
+				case LAPIS_BLOCK:
+					player.openInventory(sites.get(7));
+					break;
+				case POTION:
+					player.openInventory(sites.get(6));
+					break;
+				default:
+					player.openInventory(sites.get(0));
+					break;
+				}
 			}
 		}
 	} 
 	
 	public void createShop() {
 		createMainPage();
+		createHealthPage();
+		createArmorPage();
+		createMagicResistPage();
+		createDamagePage();
+		createAbilityPPage();
+		createConsumePage();
+		createManaPage();
 	}
 
 	public int getNumPages() {
@@ -191,6 +224,20 @@ public class Shop implements Listener{
 	public void createAbilityPPage(){
 		List<String> list = new ArrayList<String>();
 		Inventory inv = Bukkit.createInventory(null, 54, "Abilitypower");
+		//TODO: Add more Items
+		
+		sites.add(inv);
+	}
+	public void createManaPage(){
+		List<String> list = new ArrayList<String>();
+		Inventory inv = Bukkit.createInventory(null, 54, "Mana");
+		//TODO: Add more Items
+		
+		sites.add(inv);
+	}
+	public void createConsumePage(){
+		List<String> list = new ArrayList<String>();
+		Inventory inv = Bukkit.createInventory(null, 54, "Consume");
 		//TODO: Add more Items
 		
 		sites.add(inv);
