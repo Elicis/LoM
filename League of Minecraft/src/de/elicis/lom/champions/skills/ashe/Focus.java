@@ -23,7 +23,10 @@ public class Focus extends Skill {
 	
 	@Override
 	public void useSkill() {
-		// Passive Ability
+		/*
+		 * This is a passive ability and so not much will happen
+		 * The message is mostly just a test.
+		 */
 		getPlayer().sendMessage(ChatColor.GOLD + "Focus " + ChatColor.RED + "is a passive skill");
 	}
 
