@@ -12,20 +12,39 @@ public class ShopItem extends ItemStack{
 	int price;
 	boolean hasParts;
 	ArrayList<ShopItem> parts = new ArrayList<ShopItem>();
-	public ShopItem(Material mat, ShopItemType type, int effect, int price){
+	public ShopItem(String name, Material mat, ShopItemType type, int effect, int price){
 		super(mat);
 		shoptype.add(type);
 		this.effect.add(effect);
 		this.price = price;
 		this.hasParts = false;
+		this.getItemMeta().setDisplayName(name);
 	}
-	public ShopItem(Material mat, ShopItemType type, int effect, int price, ArrayList<ShopItem> parts){
+	public ShopItem(String name, Material mat, ShopItemType type, int effect, int price, ArrayList<ShopItem> parts){
 		super(mat);
 		shoptype.add(type);
 		this.effect.add(effect);
 		this.price = price;
 		this.parts = parts;
 		this.hasParts = true;
+		this.getItemMeta().setDisplayName(name);
+	} 
+	public ShopItem(String name, Material mat, ArrayList<ShopItemType> type, int effect, int price){
+		super(mat);
+		shoptype = type;
+		this.effect.add(effect);
+		this.price = price;
+		this.hasParts = false;
+		this.getItemMeta().setDisplayName(name);
+	}
+	public ShopItem(String name, Material mat, ArrayList<ShopItemType> type, int effect, int price, ArrayList<ShopItem> parts){
+		super(mat);
+		shoptype = type;
+		this.effect.add(effect);
+		this.price = price;
+		this.parts = parts;
+		this.hasParts = true;
+		this.getItemMeta().setDisplayName(name);
 	} 
 	
 	public ArrayList<ShopItemType> getItemType() {

@@ -1,7 +1,7 @@
 package de.elicis.lom.shop;
 
 public enum ShopItemType {
-	HEALTH(), DAMAGE(), MAGICRESISTANCE(),ARMOR(),MANA();
+	HEALTH(), DAMAGE(), MAGICRESISTANCE(),ARMOR(),MANA(), ABILITYPOWER();
 	
 	ShopItemType(){
 	}
