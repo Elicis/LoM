@@ -3,6 +3,7 @@ package de.elicis.lom.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,6 +13,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import de.elicis.lom.Main;
+import de.elicis.lom.champions.Alistar;
+import de.elicis.lom.champions.Ashe;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.tower.Tower;
 import de.elicis.lom.tower.TowerType;
@@ -256,6 +259,11 @@ public class Arena implements Serializable {
 			}
 			Champs.remove(player.getName());
 		}
+		if(Champs.size() < minChamps){
+			if(countdownStarted){
+				stopCountdown();
+			}
+		}
 	}
 	
 	public boolean isRedTeamEmpty(){
@@ -360,10 +368,22 @@ public class Arena implements Serializable {
 				}
 				
 				else if(countdown == 0){
+					for(String player: Players){
+						if(!getChamps().containsKey(player)){
+							Random rand = new Random();
+							// TODO: Edit when more champions are added
+							int randChamp = rand.nextInt(2);
+							if(randChamp <= 1){
+								addChamp(Main.getPlugin().getServer().getPlayer(player), new Ashe(Main.getPlugin().getServer().getPlayer(player)));
+							}
+							if(randChamp == 2){
+								addChamp(Main.getPlugin().getServer().getPlayer(player), new Alistar(Main.getPlugin().getServer().getPlayer(player)));
+							}
+						}
+					}
 					stopCountdown();
 					startGame();
 				}
-				System.out.println("Time: " + countdown);
 			}
 		}, 0, 20L);
 	}
