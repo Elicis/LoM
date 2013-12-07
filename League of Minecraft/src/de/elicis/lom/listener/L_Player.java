@@ -378,6 +378,7 @@ public class L_Player implements Listener {
 							a.setNexusBlue(new Nexus(line2, loc));
 						}
 						de.elicis.lom.Main.getPlugin().Signs.add(sign);
+						player.sendMessage(ChatColor.GREEN + "Succesfully created!");
 					}
 				}
 			}

@@ -87,10 +87,12 @@ public class Tower implements Serializable{
 					@Override
 					public void run() {
 						if(!isShooting){
-							for(Player p : a.getPlayers()){
-								if(!a.getTeam(p).equalsIgnoreCase(team)){
-									if(p.getLocation().distance(getLocation().getLocation()) < range){
-										shootPlayer(p);
+							if(a.isActive()){
+								for(Player p : a.getPlayers()){
+									if(!a.getTeam(p).equalsIgnoreCase(team)){
+										if(p.getLocation().distance(getLocation().getLocation()) < range){
+											shootPlayer(p);
+										}
 									}
 								}
 							}
@@ -105,22 +107,29 @@ public class Tower implements Serializable{
 		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new BukkitRunnable(){
 			public void run(){
-				if(getLocation().getLocation().distance(player.getLocation()) > getRange()){
-					isShooting = false;
-					cancel();
-				}else{
-					if(!isDestroyed()){
-					if(LoM_API.isInArena(player)){
-						Arena a = LoM_API.getArenaP(player);
-						if(a.isActive()){
-							isShooting = true;
-							Bukkit.getWorld(a.getWorldName()).playEffect(getLocation().getLocation().add(0, 10, 0), Effect.BLAZE_SHOOT, 0);
-							Champion c = a.getChamps().get(player.getName());
-							c.setHealth(c.getHealth() - (damage* (100 / (100 + c.getArmor()))));
-							
+				try{
+					if(getLocation().getLocation().distance(player.getLocation()) > getRange()){
+						isShooting = false;
+						cancel();
+					}else{
+						if(!isDestroyed()){
+						if(LoM_API.isInArena(player)){
+							Arena a = LoM_API.getArenaP(player);
+							if(a.isActive()){
+								isShooting = true;
+								Bukkit.getWorld(a.getWorldName()).playEffect(getLocation().getLocation().add(0, 10, 0), Effect.BLAZE_SHOOT, 0);
+								Champion c = a.getChamps().get(player.getName());
+								c.setHealth(c.getHealth() - (damage* (100 / (100 + c.getArmor()))));
+								
+							}
+						}else{
+							isShooting = false;
+							cancel();
+						}
 						}
 					}
-					}
+				}catch(Exception e){
+					
 				}
 			}
 		}, 1000, 2000);

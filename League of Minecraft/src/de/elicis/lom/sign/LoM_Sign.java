@@ -58,6 +58,7 @@ public class LoM_Sign implements Serializable{
 				} else if (type == LoM_SignType.NEXUS){
 					line1 = "[Nexus]";
 					line2 = getSign().getLine(1);
+					line3 = "";
 				}
 					
 			}
@@ -89,6 +90,11 @@ public class LoM_Sign implements Serializable{
 					line3 = "[" + a.getPlayers().size() + "/"+ maxplayer + "]" + "[" + state + "]";
 				}
 
+			}
+			if(type.getType().equalsIgnoreCase(LoM_SignType.NEXUS.getType())){
+				line1 = "[Nexus]";
+				line2 = getSign().getLine(1);
+				line3 = "";
 			}
 			Sign sign = (Sign) b.getState();
 			sign.setLine(0, line1);
