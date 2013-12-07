@@ -19,7 +19,7 @@ public class Veigar extends Champion {
 		magicResist = 30 + (level * 0) + itemmagicResist;
 		speed = 1 + itemspeed;
 		basicAttack = new MageBasicAttack(player2, 0, 7);
-		skills.add(new RangedBasicAttack(player2, 0, 1));
+		skills.add(new RangedBasicAttack(player2, 0, 0));
 		addSkills(player2);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);

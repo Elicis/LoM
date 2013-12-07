@@ -2,6 +2,9 @@ package de.elicis.lom.champions;
 
 import org.bukkit.entity.Player;
 
+import de.elicis.lom.champions.skills.MageBasicAttack;
+import de.elicis.lom.champions.skills.Alistar.Pulverize;
+
 public class Alistar extends Champion {
 
 	public Alistar(Player player2) {
@@ -16,6 +19,8 @@ public class Alistar extends Champion {
 		armor = (int) (14.5 + (level * 3.5) + itemarmor);
 		magicResist = (int) (30 + (level * 1.25) + itemmagicResist);
 		speed = 1 + itemspeed;
+		basicAttack = new MageBasicAttack(player2, 0, 7); // TODO: Create Mele Basic Attack
+		skills.add(new Pulverize(player2, 70, 0, 17));
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);
 		getPlayer().setHealthScaled(true);

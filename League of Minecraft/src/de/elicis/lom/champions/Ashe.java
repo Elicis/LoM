@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import de.elicis.lom.champions.skills.RangedBasicAttack;
 import de.elicis.lom.champions.skills.ashe.EnchantedCrystalArrow;
+import de.elicis.lom.champions.skills.ashe.Focus;
 import de.elicis.lom.champions.skills.ashe.Hawkshot;
 import de.elicis.lom.champions.skills.ashe.Volley;
 
@@ -23,9 +24,10 @@ public class Ashe extends Champion {
 		speed = 1 + itemspeed;
 		//TODO: Finish rest of ashes skills
 		basicAttack = new RangedBasicAttack(player2, 0, 7);
-		skills.add(new Volley(player2, 60, 1, 16));
-		skills.add(new Hawkshot(player2, 0, 2, 60));
-		skills.add(new EnchantedCrystalArrow(player2, 100, 4, 100));
+		skills.add(new Focus(player2, 0, 0, 0)); // Focus (Passive)
+		skills.add(new Volley(player2, 60, 1, 16)); // Volley
+		skills.add(new Hawkshot(player2, 0, 2, 60)); // Hawk Shot
+		skills.add(new EnchantedCrystalArrow(player2, 100, 4, 100)); // Enchanted Crystal Arrow
 		addSkills(player2);
 		getPlayer().setMaxHealth(health);
 		getPlayer().setHealth(health);

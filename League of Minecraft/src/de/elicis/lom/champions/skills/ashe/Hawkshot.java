@@ -1,12 +1,13 @@
 package de.elicis.lom.champions.skills.ashe;
 
 import org.bukkit.Effect;
-import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionType;
 
 import de.elicis.lom.Main;
 import de.elicis.lom.champions.skills.Skill;
@@ -14,7 +15,7 @@ import de.elicis.lom.champions.skills.Skill;
 public class Hawkshot extends Skill {
 	
 	public Hawkshot(Player player2, int mana, int slot, int cooldown) {
-		super(player2, mana, new ItemStack(Material.POTION), slot, cooldown);
+		super(player2, mana, new ItemStack(new Potion(PotionType.SLOWNESS).toItemStack(1)), slot, cooldown);
 		setItemSlot();
 	}
 	
