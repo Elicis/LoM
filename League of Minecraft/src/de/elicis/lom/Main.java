@@ -36,12 +36,9 @@ public class Main extends JavaPlugin {
 	InvSave invSave = new InvSave();
 	Engine eng;
 	ConfigCreator creator;
-
-	public static Main instance;
 	
 	@Override
 	public void onEnable(){
-		instance = this;
 		addChamps();
 		getConfig().options().copyDefaults(true);
 		saveConfig();
