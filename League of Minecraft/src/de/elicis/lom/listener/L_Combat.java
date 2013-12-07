@@ -75,16 +75,21 @@ public class L_Combat implements Listener {
 							if(LoM_API.getArenaP(damaged).getTeam(damaged) == "red"){
 								damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5, 2));
 								damaged.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2, 1));
+								Champion champdamaged = LoM_API.getArenaP(damaged).getChamps().get(damaged.getName());
+								Champion champshoother = LoM_API.getArenaP(player).getChamps().get(player.getName());
+								Double Damage = (double) (425 + champshoother.getabilityPower() * (100/(100 + champdamaged.getitemMagicResist())));
 								for(Entity e: damaged.getNearbyEntities(3, 3, 3)){
 									if(e instanceof Player){
 										Player p2 = (Player) e;
 										if(LoM_API.getArenaP(p2).getTeam(p2) == "red"){
 											damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1));
 											// TODO: Take half health for team mates nearby
+											p2.setHealth(p2.getHealth() - (Damage/2));
+											
 										}
 									}
 								}
-								// TODO: Take health from damaged player
+								damaged.setHealth(damaged.getHealth() - Damage);
 							}
 						}
 					}
@@ -94,16 +99,20 @@ public class L_Combat implements Listener {
 							if(LoM_API.getArenaP(damaged).getTeam(damaged) == "blue"){
 								damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5, 2));
 								damaged.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2, 1));
+								Champion champdamaged = LoM_API.getArenaP(damaged).getChamps().get(damaged.getName());
+								Champion champshoother = LoM_API.getArenaP(player).getChamps().get(player.getName());
+								Double Damage = (double) (425 + champshoother.getabilityPower() * (100/(100 + champdamaged.getitemMagicResist())));
 								for(Entity e: damaged.getNearbyEntities(3, 3, 3)){
 									if(e instanceof Player){
 										Player p2 = (Player) e;
 										if(LoM_API.getArenaP(p2).getTeam(p2) == "blue"){
 											damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1));
 											// TODO: Take half health for team mates nearby
+											p2.setHealth(p2.getHealth() - (Damage/2));
 										}
 									}
 								}
-								// TODO: Take health from damaged player
+								damaged.setHealth(damaged.getHealth() - Damage);
 							}
 						}
 					}
