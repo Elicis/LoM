@@ -12,6 +12,7 @@ public class Focus extends Skill {
 
 	public Focus(Player player2, int mana, int slot, int cooldown) {
 		super(player2, mana, new ItemStack(Material.BOOK), slot, cooldown);
+		setItemSlot();
 	}
 
 	public void setItemSlot(){
@@ -28,6 +29,7 @@ public class Focus extends Skill {
 		 * The message is mostly just a test.
 		 */
 		getPlayer().sendMessage(ChatColor.GOLD + "Focus " + ChatColor.RED + "is a passive skill");
+		setItemSlot();
 	}
 
 }

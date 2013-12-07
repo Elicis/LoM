@@ -291,7 +291,7 @@ public class Shop implements Listener{
 		List<String> list = new ArrayList<String>();
 		Inventory inv = Bukkit.createInventory(null, 54, "Mana");
 		//Sapphire Crystal
-		ShopItem manacrystal = new ShopItem("Sapphire Crystal", Material.getMaterial("Lapislazuli"), ShopItemType.MANA, 200, 400);
+		ShopItem manacrystal = new ShopItem("Sapphire Crystal", Material.BED, ShopItemType.MANA, 200, 400); // TODO: Change to lapis, just did this to test
 		list.clear();
 		list.add("Mana +200");
 		manacrystal.getItemMeta().setLore(list);

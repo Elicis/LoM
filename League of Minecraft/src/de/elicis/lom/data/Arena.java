@@ -48,7 +48,7 @@ public class Arena implements Serializable {
 	public Arena(String name2) {
 		world = name2;
 		name = name2;
-		minChamps = 1; // As a test
+		minChamps = 1; // TODO: Make it so this can be changed in config.
 	}
 
 	public String getName() {
@@ -237,8 +237,7 @@ public class Arena implements Serializable {
 			}
 		}
 		
-		System.out.println("Champs Size: " + Champs.size());
-		
+		System.out.println("Champs Size: " + Champs.size() + "/" + minChamps);
 		if(Champs.size() >= minChamps){
 			startCountdown();
 			countdownStarted = true;

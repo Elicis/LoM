@@ -1,7 +1,6 @@
 package de.elicis.lom.champions.skills.Alistar;
 
 import org.bukkit.Sound;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +21,6 @@ public class Pulverize extends Skill {
 	public void setItemSlot(){
 		ItemMeta im = getIconItem().getItemMeta();
 		im.setDisplayName("Pulverize");
-		im.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
 		getIconItem().setItemMeta(im);
 		getPlayer().getInventory().setItem(getSlot(), getIconItem());
 	}
