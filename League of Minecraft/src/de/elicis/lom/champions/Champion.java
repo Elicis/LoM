@@ -3,7 +3,6 @@ package de.elicis.lom.champions;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -181,7 +180,6 @@ public abstract class Champion {
 
 	public void setMana(int newint) {
 		mana = newint;
-		getPlayer().sendMessage(ChatColor.AQUA + "Current Mana " + ChatColor.GOLD + newint);
 	}
 
 	public void setManaRegen(Double newint) {
