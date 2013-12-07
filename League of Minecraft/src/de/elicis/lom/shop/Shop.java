@@ -1,6 +1,7 @@
 package de.elicis.lom.shop;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,9 +24,16 @@ import de.elicis.lom.events.ShopBuyEvent;
 public class Shop implements Listener{
 	int pages;
 	ArrayList<Inventory> sites = new ArrayList<Inventory>();
-
+	ItemStack back;
+	ShopProxy proxy;
 	public Shop() {
+		back = new ItemStack(Material.SNOW_BALL);
+		ItemMeta meta = back.getItemMeta();
+		meta.setDisplayName("Back");
+		back.setItemMeta(meta);
+		proxy = new ShopProxy();
 		createShop();
+		
 	}
 
 	@EventHandler
@@ -35,42 +43,46 @@ public class Shop implements Listener{
 			if(!event.isCancelled()){
 				event.setCancelled(true);
 			}
-			if(!event.getInventory().getName().equalsIgnoreCase("LoM Shop")){
-				ShopItem item = (ShopItem) event.getCurrentItem();
-				ShopBuyEvent event1 = new ShopBuyEvent(player, item, item.getPrice(player));
-				if(!event1.isCancelled()){
-					if(LoM_API.isInArena(player)){
-						Arena a = LoM_API.getArenaP(player);
-						if(a.isActive()){
-							Champion champ = a.getChamps().get(player.getName());
-							if((champ.getMoney() - event1.getPrice()) > 0){
-								champ.setMoney(champ.getMoney() - event1.getPrice());
-								player.getInventory().addItem(item.getItemStack());
-								for(ShopItemType type : item.getItemType()){
-									int eff = item.getEffects().get(item.getItemType().indexOf(type));
-									switch(type){
-									case ARMOR:
-										champ.setitemDefense(champ.getItemArmor() + eff);
-										break;
-									case DAMAGE:
-										champ.setitemDamage(champ.getItemDamage() + eff);
-										break;
-									case HEALTH:
-										champ.setitemHealth(champ.getItemHealth() + eff);
-										break;
-									case MAGICRESISTANCE:
-										champ.setitemMagicResist(champ.getitemMagicResist() + eff);
-										break;
-									case MANA:
-										champ.setitemMana(champ.getItemMana() + eff);
-										break;
-									default:
-										break;
+			if(!event.getInventory().getName().equalsIgnoreCase("LoM Shop") ){
+				if(!(event.getCursor().getType() == Material.SNOW_BALL)){
+					ShopItem item = proxy.getItem(this.getInventoryId(event.getInventory()), event.getSlot());
+					ShopBuyEvent event1 = new ShopBuyEvent(player, item, item.getPrice(player));
+					if(!event1.isCancelled()){
+						if(LoM_API.isInArena(player)){
+							Arena a = LoM_API.getArenaP(player);
+							if(a.isActive()){
+								Champion champ = a.getChamps().get(player.getName());
+								if((champ.getMoney() - event1.getPrice()) > 0){
+									champ.setMoney(champ.getMoney() - event1.getPrice());
+									player.getInventory().addItem(item.getItemStack());
+									for(ShopItemType type : item.getItemType()){
+										int eff = item.getEffects().get(item.getItemType().indexOf(type));
+										switch(type){
+										case ARMOR:
+											champ.setitemDefense(champ.getItemArmor() + eff);
+											break;
+										case DAMAGE:
+											champ.setitemDamage(champ.getItemDamage() + eff);
+											break;
+										case HEALTH:
+											champ.setitemHealth(champ.getItemHealth() + eff);
+											break;
+										case MAGICRESISTANCE:
+											champ.setitemMagicResist(champ.getitemMagicResist() + eff);
+											break;
+										case MANA:
+											champ.setitemMana(champ.getItemMana() + eff);
+											break;
+										default:
+											break;
+										}
 									}
 								}
 							}
 						}
-					}
+				}
+				}else{
+					player.openInventory(sites.get(0));
 				}
 			}else{
 				ItemStack item = event.getCurrentItem();
@@ -190,6 +202,7 @@ public class Shop implements Listener{
 		list.add("Health +180");
 		ruby.getItemMeta().setLore(list);
 		inv.addItem(ruby);
+		proxy.addItem(1, ruby);
 		//Giants Belt
 		ShopItem giant = new ShopItem("Giants Belt",Material.LEASH, ShopItemType.HEALTH, 360, 1000);
 		giant.getItemMeta().setDisplayName("Giant's Belt");
@@ -197,7 +210,9 @@ public class Shop implements Listener{
 		list.add("Health +380");
 		giant.getItemMeta().setLore(list);
 		inv.addItem(giant);
+		proxy.addItem(1, giant);
 		//TODO: Add more Items
+		inv.setItem(53, back);
 		sites.add(inv);
 	}
 	public void createArmorPage(){
@@ -209,13 +224,17 @@ public class Shop implements Listener{
 		list.add("Armor +15");
 		clArmor.getItemMeta().setLore(list);
 		inv.addItem(clArmor);
+		proxy.addItem(2, clArmor);
 		//Chain Vest
 		ShopItem chArmor = new ShopItem("Chain Vest",Material.IRON_CHESTPLATE, ShopItemType.ARMOR, 40, 720);
 		list.clear();
 		list.add("Armor +40");
 		chArmor.getItemMeta().setLore(list);
 		inv.addItem(chArmor);
+		proxy.addItem(2, chArmor);
 		//TODO: Add more Items
+		
+		inv.setItem(53, back);
 		sites.add(inv);
 	}
 	public void createMagicResistPage(){
@@ -230,6 +249,7 @@ public class Shop implements Listener{
 		list.add("Magicresistance + 20");
 		nullmagicmantle.getItemMeta().setLore(list);
 		inv.addItem(nullmagicmantle);
+		proxy.addItem(3, nullmagicmantle);
 		// Negatron Cloak
 		ShopItem negatroncloak = new ShopItem("Negatron Cloak", Material.LEATHER_CHESTPLATE, ShopItemType.MAGICRESISTANCE, 40, 720);
 		LeatherArmorMeta meta = (LeatherArmorMeta) negatroncloak.getItemMeta();
@@ -239,8 +259,10 @@ public class Shop implements Listener{
 		list.add("Magicresistance + 40");
 		negatroncloak.getItemMeta().setLore(list);
 		inv.addItem(negatroncloak);
+		proxy.addItem(3, negatroncloak);
 		//TODO: Add more Items
 		
+		inv.setItem(53, back);
 		sites.add(inv);
 	}
 	public void createDamagePage(){
@@ -252,14 +274,17 @@ public class Shop implements Listener{
 		list.add("Damage +10");
 		longs.getItemMeta().setLore(list);
 		inv.addItem(longs);
+		proxy.addItem(4, longs);
 		//B.F.Sword
 		ShopItem bfsword = new ShopItem("B.F.Sword", Material.IRON_SWORD, ShopItemType.DAMAGE, 45, 1550);
 		list.clear();
 		list.add("Damage +45");
 		bfsword.getItemMeta().setLore(list);
 		inv.addItem(bfsword);
+		proxy.addItem(4, bfsword);
 		//TODO: Add more Items
 		
+		inv.setItem(53, back);
 		sites.add(inv);
 	}
 	public void createAbilityPPage(){
@@ -271,20 +296,24 @@ public class Shop implements Listener{
 		list.add("Ability Power + 20");
 		ampltome.getItemMeta().setLore(list);
 		inv.addItem(ampltome);
+		proxy.addItem(5, ampltome);
 		//Blasting Wand
 		ShopItem blastwand = new ShopItem("Blasting Wand", Material.STICK, ShopItemType.ABILITYPOWER, 40, 860);
 		list.clear();
 		list.add("Ability Power + 40");
 		blastwand.getItemMeta().setLore(list);
 		inv.addItem(blastwand);
+		proxy.addItem(5, blastwand);
 		//Needlessly Large Rod
 		ShopItem nedrod = new ShopItem("Needlessly Large Rod", Material.STICK, ShopItemType.ABILITYPOWER, 80, 1600);
 		list.clear();
 		list.add("Ability Power + 40");
 		nedrod.getItemMeta().setLore(list);
 		inv.addItem(nedrod);
+		proxy.addItem(5, nedrod);
 		//TODO: Add more Items
 		
+		inv.setItem(53, back);
 		sites.add(inv);
 	}
 	public void createManaPage(){
@@ -296,8 +325,10 @@ public class Shop implements Listener{
 		list.add("Mana +200");
 		manacrystal.getItemMeta().setLore(list);
 		inv.addItem(manacrystal);
+		proxy.addItem(6, manacrystal);
 		//TODO: Add more Items
 		
+		inv.setItem(53, back);
 		sites.add(inv);
 	}
 	public void createConsumePage(){
@@ -305,6 +336,15 @@ public class Shop implements Listener{
 		Inventory inv = Bukkit.createInventory(null, 54, "Consume");
 		//TODO: Add more Items
 		
+		inv.setItem(53, back);
 		sites.add(inv);
+	}
+	public int getInventoryId(Inventory i){
+		for(int n = 0; n < sites.size(); n++){
+			if(sites.get(n).getName().equalsIgnoreCase(i.getName())){
+				return n;
+			}
+		}
+		return 0;
 	}
 }

@@ -48,7 +48,7 @@ public class Arena implements Serializable {
 	public Arena(String name2) {
 		world = name2;
 		name = name2;
-		minChamps = 1; // TODO: Make it so this can be changed in config.
+		minChamps = 1; // As a test
 	}
 
 	public String getName() {
@@ -136,8 +136,9 @@ public class Arena implements Serializable {
 		}
 		else if (TeamBlue.contains(player.getName())) {
 			return "blue";
+		}else{
+			return "";
 		}
-		return "";
 	}
 
 	public ArrayList<Player> getPlayers() {
@@ -237,7 +238,8 @@ public class Arena implements Serializable {
 			}
 		}
 		
-		System.out.println("Champs Size: " + Champs.size() + "/" + minChamps);
+		System.out.println("Champs Size: " + Champs.size());
+		
 		if(Champs.size() >= minChamps){
 			startCountdown();
 			countdownStarted = true;
