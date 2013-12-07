@@ -1,6 +1,7 @@
 package de.elicis.lom.champions.skills.ashe;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -31,6 +32,7 @@ public class EnchantedCrystalArrow extends Skill{
 		Arrow arrow1 = (Arrow)getPlayer().launchProjectile(Arrow.class);
 		arrow1.setVelocity(arrow1.getVelocity().multiply(3));
 		arrow1.setMetadata("EnchantedCrystalArrow", new FixedMetadataValue(Main.getPlugin(), "EnchantedCrystalArrow"));
+		getPlayer().playSound(getPlayer().getLocation(), Sound.FIREWORK_LAUNCH, 10, 1);
 	}
 
 }
