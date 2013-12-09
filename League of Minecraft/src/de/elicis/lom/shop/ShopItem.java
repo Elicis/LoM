@@ -1,10 +1,12 @@
 package de.elicis.lom.shop;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ShopItem extends ItemStack{
 	ArrayList<ShopItemType> shoptype = new ArrayList<ShopItemType>();
@@ -12,13 +14,20 @@ public class ShopItem extends ItemStack{
 	int price;
 	boolean hasParts;
 	ArrayList<ShopItem> parts = new ArrayList<ShopItem>();
+	ItemMeta meta;
+	List<String> tempLore = new ArrayList<String>();
 	public ShopItem(String name, Material mat, ShopItemType type, int effect, int price){
 		super(mat);
 		shoptype.add(type);
 		this.effect.add(effect);
 		this.price = price;
 		this.hasParts = false;
-		this.getItemMeta().setDisplayName(name);
+		this.meta = this.getItemMeta();
+		meta.setDisplayName(name);
+		tempLore.add(type.getName() + " +" + effect);
+		tempLore.add("Price: " + price + " Gold");
+		meta.setLore(tempLore);
+		this.setItemMeta(meta);
 	}
 	public ShopItem(String name, Material mat, ShopItemType type, int effect, int price, ArrayList<ShopItem> parts){
 		super(mat);
@@ -27,7 +36,12 @@ public class ShopItem extends ItemStack{
 		this.price = price;
 		this.parts = parts;
 		this.hasParts = true;
-		this.getItemMeta().setDisplayName(name);
+		this.meta = this.getItemMeta();
+		meta.setDisplayName(name);
+		tempLore.add(type.getName() + " +" + effect);
+		tempLore.add("Price: " + price + " Gold");
+		meta.setLore(tempLore);
+		this.setItemMeta(meta);
 	} 
 	public ShopItem(String name, Material mat, ArrayList<ShopItemType> type, int effect, int price){
 		super(mat);
@@ -35,7 +49,14 @@ public class ShopItem extends ItemStack{
 		this.effect.add(effect);
 		this.price = price;
 		this.hasParts = false;
-		this.getItemMeta().setDisplayName(name);
+		this.meta = this.getItemMeta();
+		meta.setDisplayName(name);
+		for(ShopItemType temptype : type){
+			tempLore.add(temptype.getName() + " +" + effect);
+		}
+		tempLore.add("Price: " + price + " Gold");
+		meta.setLore(tempLore);
+		this.setItemMeta(meta);
 	}
 	public ShopItem(String name, Material mat, ArrayList<ShopItemType> type, int effect, int price, ArrayList<ShopItem> parts){
 		super(mat);
@@ -44,7 +65,14 @@ public class ShopItem extends ItemStack{
 		this.price = price;
 		this.parts = parts;
 		this.hasParts = true;
-		this.getItemMeta().setDisplayName(name);
+		this.meta = this.getItemMeta();
+		meta.setDisplayName(name);
+		for(ShopItemType temptype : type){
+			tempLore.add(temptype.getName() + " +" + effect);
+		}
+		tempLore.add("Price: " + price + " Gold");
+		meta.setLore(tempLore);
+		this.setItemMeta(meta);
 	} 
 	
 	public ArrayList<ShopItemType> getItemType() {

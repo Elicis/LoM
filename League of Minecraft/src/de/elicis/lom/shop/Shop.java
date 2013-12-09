@@ -1,8 +1,6 @@
 package de.elicis.lom.shop;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -194,21 +192,15 @@ public class Shop implements Listener{
 		sites.add(inv1);
 	}
 	public void createHealthPage(){
-		List<String> list = new ArrayList<String>();
 		Inventory inv = Bukkit.createInventory(null, 54, "Health");
 		//Ruby Crystal
 		ShopItem ruby = new ShopItem("Ruby Crystal",Material.REDSTONE_BLOCK,ShopItemType.HEALTH, 180, 475);
 		ruby.getItemMeta().setDisplayName("Ruby Crystal");
-		list.add("Health +180");
-		ruby.getItemMeta().setLore(list);
 		inv.addItem(ruby);
 		proxy.addItem(1, ruby);
 		//Giants Belt
 		ShopItem giant = new ShopItem("Giants Belt",Material.LEASH, ShopItemType.HEALTH, 360, 1000);
 		giant.getItemMeta().setDisplayName("Giant's Belt");
-		list.clear();
-		list.add("Health +380");
-		giant.getItemMeta().setLore(list);
 		inv.addItem(giant);
 		proxy.addItem(1, giant);
 		//TODO: Add more Items
@@ -216,20 +208,13 @@ public class Shop implements Listener{
 		sites.add(inv);
 	}
 	public void createArmorPage(){
-		List<String> list = new ArrayList<String>();
 		Inventory inv = Bukkit.createInventory(null, 54, "Armor");
 		//Cloth Armor
 		ShopItem clArmor = new ShopItem("Cloth Armor", Material.LEATHER_CHESTPLATE, ShopItemType.ARMOR, 15, 300);
-		list.clear();
-		list.add("Armor +15");
-		clArmor.getItemMeta().setLore(list);
 		inv.addItem(clArmor);
 		proxy.addItem(2, clArmor);
 		//Chain Vest
 		ShopItem chArmor = new ShopItem("Chain Vest",Material.IRON_CHESTPLATE, ShopItemType.ARMOR, 40, 720);
-		list.clear();
-		list.add("Armor +40");
-		chArmor.getItemMeta().setLore(list);
 		inv.addItem(chArmor);
 		proxy.addItem(2, chArmor);
 		//TODO: Add more Items
@@ -238,16 +223,12 @@ public class Shop implements Listener{
 		sites.add(inv);
 	}
 	public void createMagicResistPage(){
-		List<String> list = new ArrayList<String>();
 		Inventory inv = Bukkit.createInventory(null, 54, "Magicresistance");
 		//Null Magic Mantle
 		ShopItem nullmagicmantle = new ShopItem("Null Magic Mantle", Material.LEATHER_CHESTPLATE, ShopItemType.MAGICRESISTANCE, 20, 400);
 		LeatherArmorMeta meta2 = (LeatherArmorMeta) nullmagicmantle.getItemMeta();
 		meta2.setColor(Color.ORANGE);
 		nullmagicmantle.setItemMeta(meta2);
-		list.clear();
-		list.add("Magicresistance + 20");
-		nullmagicmantle.getItemMeta().setLore(list);
 		inv.addItem(nullmagicmantle);
 		proxy.addItem(3, nullmagicmantle);
 		// Negatron Cloak
@@ -255,9 +236,6 @@ public class Shop implements Listener{
 		LeatherArmorMeta meta = (LeatherArmorMeta) negatroncloak.getItemMeta();
 		meta.setColor(Color.WHITE);
 		negatroncloak.setItemMeta(meta);
-		list.clear();
-		list.add("Magicresistance + 40");
-		negatroncloak.getItemMeta().setLore(list);
 		inv.addItem(negatroncloak);
 		proxy.addItem(3, negatroncloak);
 		//TODO: Add more Items
@@ -266,20 +244,13 @@ public class Shop implements Listener{
 		sites.add(inv);
 	}
 	public void createDamagePage(){
-		List<String> list = new ArrayList<String>();
 		Inventory inv = Bukkit.createInventory(null, 54, "Damage");
 		//Long Sword
 		ShopItem longs = new ShopItem("Long Sword", Material.IRON_SWORD, ShopItemType.DAMAGE, 10, 360);
-		list.clear();
-		list.add("Damage +10");
-		longs.getItemMeta().setLore(list);
 		inv.addItem(longs);
 		proxy.addItem(4, longs);
 		//B.F.Sword
 		ShopItem bfsword = new ShopItem("B.F.Sword", Material.IRON_SWORD, ShopItemType.DAMAGE, 45, 1550);
-		list.clear();
-		list.add("Damage +45");
-		bfsword.getItemMeta().setLore(list);
 		inv.addItem(bfsword);
 		proxy.addItem(4, bfsword);
 		//TODO: Add more Items
@@ -288,27 +259,17 @@ public class Shop implements Listener{
 		sites.add(inv);
 	}
 	public void createAbilityPPage(){
-		List<String> list = new ArrayList<String>();
 		Inventory inv = Bukkit.createInventory(null, 54, "Abilitypower");
 		//Amplifying Tome
 		ShopItem ampltome = new ShopItem("Amplifying Tome", Material.ENCHANTED_BOOK, ShopItemType.ABILITYPOWER, 20, 435);
-		list.clear();
-		list.add("Ability Power + 20");
-		ampltome.getItemMeta().setLore(list);
 		inv.addItem(ampltome);
 		proxy.addItem(5, ampltome);
 		//Blasting Wand
 		ShopItem blastwand = new ShopItem("Blasting Wand", Material.STICK, ShopItemType.ABILITYPOWER, 40, 860);
-		list.clear();
-		list.add("Ability Power + 40");
-		blastwand.getItemMeta().setLore(list);
 		inv.addItem(blastwand);
 		proxy.addItem(5, blastwand);
 		//Needlessly Large Rod
 		ShopItem nedrod = new ShopItem("Needlessly Large Rod", Material.STICK, ShopItemType.ABILITYPOWER, 80, 1600);
-		list.clear();
-		list.add("Ability Power + 40");
-		nedrod.getItemMeta().setLore(list);
 		inv.addItem(nedrod);
 		proxy.addItem(5, nedrod);
 		//TODO: Add more Items
@@ -317,13 +278,9 @@ public class Shop implements Listener{
 		sites.add(inv);
 	}
 	public void createManaPage(){
-		List<String> list = new ArrayList<String>();
 		Inventory inv = Bukkit.createInventory(null, 54, "Mana");
 		//Sapphire Crystal
 		ShopItem manacrystal = new ShopItem("Sapphire Crystal", Material.BED, ShopItemType.MANA, 200, 400); // TODO: Change to lapis, just did this to test
-		list.clear();
-		list.add("Mana +200");
-		manacrystal.getItemMeta().setLore(list);
 		inv.addItem(manacrystal);
 		proxy.addItem(6, manacrystal);
 		//TODO: Add more Items
@@ -332,7 +289,6 @@ public class Shop implements Listener{
 		sites.add(inv);
 	}
 	public void createConsumePage(){
-		List<String> list = new ArrayList<String>();
 		Inventory inv = Bukkit.createInventory(null, 54, "Consume");
 		//TODO: Add more Items
 		
