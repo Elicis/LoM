@@ -19,7 +19,6 @@ public class LoM_API {
 			if (arena.getWorld().getName() == world.getName()) {
 				return true;
 			}
-			continue;
 		}
 		return false;
 	}
@@ -32,7 +31,6 @@ public class LoM_API {
 			if (arena.getPlayersS().contains(player.getName())) {
 				return true;
 			}
-			continue;
 		}
 		return false;
 	}
@@ -42,7 +40,7 @@ public class LoM_API {
 	 */
 	public static Arena getArenaP(Player player) {
 		for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
-			if (arena.getPlayers().contains(player)) {
+			if (arena.getPlayersS().contains(player.getName())) {
 				return arena;
 			}
 			

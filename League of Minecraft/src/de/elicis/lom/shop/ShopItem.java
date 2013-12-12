@@ -43,10 +43,10 @@ public class ShopItem extends ItemStack{
 		meta.setLore(tempLore);
 		this.setItemMeta(meta);
 	} 
-	public ShopItem(String name, Material mat, ArrayList<ShopItemType> type, int effect, int price){
+	public ShopItem(String name, Material mat, ArrayList<ShopItemType> type, ArrayList<Integer> effect, int price){
 		super(mat);
 		shoptype = type;
-		this.effect.add(effect);
+		this.effect = effect;
 		this.price = price;
 		this.hasParts = false;
 		this.meta = this.getItemMeta();
@@ -58,10 +58,10 @@ public class ShopItem extends ItemStack{
 		meta.setLore(tempLore);
 		this.setItemMeta(meta);
 	}
-	public ShopItem(String name, Material mat, ArrayList<ShopItemType> type, int effect, int price, ArrayList<ShopItem> parts){
+	public ShopItem(String name, Material mat, ArrayList<ShopItemType> type, ArrayList<Integer> effect, int price, ArrayList<ShopItem> parts){
 		super(mat);
 		shoptype = type;
-		this.effect.add(effect);
+		this.effect = effect;
 		this.price = price;
 		this.parts = parts;
 		this.hasParts = true;

@@ -24,7 +24,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
@@ -36,7 +35,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
-
 import de.elicis.lom.Main;
 import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
@@ -130,9 +128,7 @@ public class L_Player implements Listener {
 	@EventHandler
 	public void onPlayerDrop(PlayerDropItemEvent event) {
 		if (LoM_API.isInArena(event.getPlayer())) {
-			if (!event.getPlayer().hasPermission("lom.drop")) {
 				event.setCancelled(true);
-			}
 		}
 	}
 
@@ -159,7 +155,7 @@ public class L_Player implements Listener {
 			if (LoM_API.getArenaP(player).getTeam(player).equalsIgnoreCase("red")) {
 				player.teleport(LoM_API.getArenaP(player).getSpawnRed().getLocation());
 			} else if (LoM_API.getArenaP(player).getTeam(player).equalsIgnoreCase(
-					"blue")) {
+					"blue")){
 				player.teleport(LoM_API.getArenaP(player).getSpawnBlue().getLocation());
 			}
 
@@ -232,27 +228,10 @@ public class L_Player implements Listener {
 			if(distance >= fconfig.getDouble("arena.radius")){
 				event.setCancelled(true);
 				player.sendMessage(ChatColor.RED + "You reached the end of the arena!");
-				if(to.subtract(4, 0, 0).distance(spawn) > distance){
-					player.teleport(to.add(4, 0, 0));
-				}else if(to.subtract(4, 0, 0).distance(spawn) < distance){
-					player.teleport(to.subtract(4, 0, 0));
-				}else{
-					player.teleport(spawn);
-				}
-				
+				player.setVelocity(player.getVelocity().multiply(-1));
 			}
 		}
 		
-	}
-	
-
-	@EventHandler
-	public void onInventoryClick(InventoryClickEvent event) {
-		if (LoM_API.isInArena((Player) event.getWhoClicked())) {
-			if (!event.getWhoClicked().hasPermission("lom.inventory.change")) {
-				event.setCancelled(true);
-			}
-		}
 	}
 
 	@EventHandler

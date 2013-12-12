@@ -31,57 +31,62 @@ public class Shop implements Listener{
 		back.setItemMeta(meta);
 		proxy = new ShopProxy();
 		createShop();
-		
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event){
 		Player player = (Player) event.getWhoClicked();
+		if(LoM_API.isInArena(player)){
+			event.setCancelled(true);
+		}
 		if(isShopInventory(event.getInventory())){
-			if(!event.isCancelled()){
-				event.setCancelled(true);
-			}
+			event.setCancelled(true);
 			if(!event.getInventory().getName().equalsIgnoreCase("LoM Shop") ){
-				if(!(event.getCursor().getType() == Material.SNOW_BALL)){
-					ShopItem item = proxy.getItem(this.getInventoryId(event.getInventory()), event.getSlot());
-					ShopBuyEvent event1 = new ShopBuyEvent(player, item, item.getPrice(player));
-					if(!event1.isCancelled()){
-						if(LoM_API.isInArena(player)){
-							Arena a = LoM_API.getArenaP(player);
-							if(a.isActive()){
-								Champion champ = a.getChamps().get(player.getName());
-								if((champ.getMoney() - event1.getPrice()) > 0){
-									champ.setMoney(champ.getMoney() - event1.getPrice());
-									player.getInventory().addItem(item.getItemStack());
-									for(ShopItemType type : item.getItemType()){
-										int eff = item.getEffects().get(item.getItemType().indexOf(type));
-										switch(type){
-										case ARMOR:
-											champ.setitemDefense(champ.getItemArmor() + eff);
-											break;
-										case DAMAGE:
-											champ.setitemDamage(champ.getItemDamage() + eff);
-											break;
-										case HEALTH:
-											champ.setitemHealth(champ.getItemHealth() + eff);
-											break;
-										case MAGICRESISTANCE:
-											champ.setitemMagicResist(champ.getitemMagicResist() + eff);
-											break;
-										case MANA:
-											champ.setitemMana(champ.getItemMana() + eff);
-											break;
-										default:
-											break;
+				if(!(event.getCurrentItem().getType() == Material.AIR)){
+					if(!(event.getSlot() >= 53)){
+						ShopItem item = proxy.getItem(this.getInventoryId(event.getInventory()), event.getSlot());
+						ShopBuyEvent event1 = new ShopBuyEvent(player, item, item.getPrice(player));
+						if(!event1.isCancelled()){
+							if(LoM_API.isInArena(player)){
+								Arena a = LoM_API.getArenaP(player);
+								if(a.isActive()){
+									Champion champ = a.getChamps().get(player.getName());
+									if((champ.getMoney() - event1.getPrice()) >= 0){
+										champ.setMoney(champ.getMoney() - event1.getPrice());
+										player.getInventory().addItem(item.getItemStack());
+										player.updateInventory();
+										for(ShopItemType type : item.getItemType()){
+											int eff = item.getEffects().get(item.getItemType().indexOf(type));
+											switch(type){
+											case ARMOR:
+												champ.setitemDefense(champ.getItemArmor() + eff);
+												break;
+											case DAMAGE:
+												champ.setitemDamage(champ.getItemDamage() + eff);
+												break;
+											case HEALTH:
+												champ.setitemHealth(champ.getItemHealth() + eff);
+												break;
+											case MAGICRESISTANCE:
+												champ.setitemMagicResist(champ.getitemMagicResist() + eff);
+												break;
+											case MANA:
+												champ.setitemMana(champ.getItemMana() + eff);
+												break;
+											default:
+												break;
+											}
 										}
 									}
 								}
 							}
+					}
+					}else{
+						if(!(event.getSlot() == 53)){
+							player.openInventory(sites.get(0));
 						}
-				}
-				}else{
-					player.openInventory(sites.get(0));
-				}
+					}
 			}else{
 				ItemStack item = event.getCurrentItem();
 				switch(item.getType()){
@@ -111,6 +116,7 @@ public class Shop implements Listener{
 					break;
 				}
 			}
+		}
 		}
 	} 
 	

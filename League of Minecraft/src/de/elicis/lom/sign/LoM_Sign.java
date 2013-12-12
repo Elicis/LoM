@@ -93,7 +93,6 @@ public class LoM_Sign implements Serializable{
 			}
 			if(type.getType().equalsIgnoreCase(LoM_SignType.NEXUS.getType())){
 				line1 = "[Nexus]";
-				line2 = line2;
 				line3 = "";
 			}
 			Sign sign = (Sign) b.getState();

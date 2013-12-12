@@ -9,6 +9,6 @@ public enum ShopItemType {
 		return this.name();
 	}
 	public String getName(){
-		return this.name();
+		return this.name().toString();
 	}
 }
