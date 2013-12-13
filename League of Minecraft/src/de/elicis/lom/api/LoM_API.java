@@ -16,7 +16,7 @@ public class LoM_API {
 	 */
 	public static boolean isArena(World world) {
 		for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
-			if (arena.getWorld().getName() == world.getName()) {
+			if (arena.getWorld().getName().equalsIgnoreCase(world.getName())) {
 				return true;
 			}
 		}
@@ -122,7 +122,7 @@ public class LoM_API {
 	 */
 	public static Arena getArenaW(World world) {
 		for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
-			if (arena.getWorld().getName() == world.getName()) {
+			if (arena.getWorld().getName().equalsIgnoreCase(world.getName())) {
 				return arena;
 			}
 			

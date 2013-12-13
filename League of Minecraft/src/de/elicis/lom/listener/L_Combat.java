@@ -23,7 +23,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
-import de.elicis.lom.champions.skills.MageBasicAttack;
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.data.Nexus;
 import de.elicis.lom.sign.LoM_Sign;
@@ -83,7 +82,6 @@ public class L_Combat implements Listener {
 										Player p2 = (Player) e;
 										if(LoM_API.getArenaP(p2).getTeam(p2) == "red"){
 											damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1));
-											// TODO: Take half health for team mates nearby
 											p2.setHealth(p2.getHealth() - (Damage/2));
 											
 										}
@@ -107,7 +105,6 @@ public class L_Combat implements Listener {
 										Player p2 = (Player) e;
 										if(LoM_API.getArenaP(p2).getTeam(p2) == "blue"){
 											damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1));
-											// TODO: Take half health for team mates nearby
 											p2.setHealth(p2.getHealth() - (Damage/2));
 										}
 									}
@@ -255,30 +252,6 @@ public class L_Combat implements Listener {
 								}else{
 									nex.setHealth(nex.getHealth() - damage);
 								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	/*
-	 * Will Improve this system at a later time!
-	 */
-	
-	@EventHandler
-	public void onEntityDamageByEntity(EntityDamageByEntityEvent event){
-		if(event.getDamager() instanceof Snowball){
-			Snowball snowball = (Snowball) event.getDamager();
-			if(snowball.getShooter() instanceof Player){
-				Player shooter = (Player) snowball.getShooter();
-				if(event.getEntity() instanceof Player){
-					Player target = (Player) event.getEntity();
-					if(LoM_API.isInArena(shooter) && LoM_API.isInArena(target)){
-						if(LoM_API.getArenaP(shooter) != null && LoM_API.getArenaP(target) != null){
-							if(LoM_API.getArenaP(shooter).getChamps().get(shooter).getBasicAttack() instanceof MageBasicAttack){
-								event.setDamage(2);
 							}
 						}
 					}
