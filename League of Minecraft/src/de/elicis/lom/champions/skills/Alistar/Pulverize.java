@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 import de.elicis.lom.api.LoM_API;
@@ -34,6 +36,7 @@ public class Pulverize extends Skill {
 				// TODO: Test Pulverize
 				if(LoM_API.getArenaP(player).getTeam(player) != LoM_API.getArenaP(getPlayer()).getTeam(getPlayer())){
 					player.setVelocity(player.getVelocity().setY(5.0));
+					player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1, 2));
 				}
 			}
 		}
