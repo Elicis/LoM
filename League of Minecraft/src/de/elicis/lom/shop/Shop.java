@@ -42,51 +42,54 @@ public class Shop implements Listener{
 		}
 		if(isShopInventory(event.getInventory())){
 			event.setCancelled(true);
-			if(!event.getInventory().getName().equalsIgnoreCase("LoM Shop") ){
-				if(!(event.getCurrentItem().getType() == Material.AIR)){
-					if(!(event.getSlot() >= 53)){
-						ShopItem item = proxy.getItem(this.getInventoryId(event.getInventory()), event.getSlot());
-						ShopBuyEvent event1 = new ShopBuyEvent(player, item, item.getPrice(player));
-						if(!event1.isCancelled()){
-							if(LoM_API.isInArena(player)){
-								Arena a = LoM_API.getArenaP(player);
-								if(a.isActive()){
-									Champion champ = a.getChamps().get(player.getName());
-									if((champ.getMoney() - event1.getPrice()) >= 0){
-										champ.setMoney(champ.getMoney() - event1.getPrice());
-										player.getInventory().addItem(item.getItemStack());
-										player.updateInventory();
-										for(ShopItemType type : item.getItemType()){
-											int eff = item.getEffects().get(item.getItemType().indexOf(type));
-											switch(type){
-											case ARMOR:
-												champ.setitemDefense(champ.getItemArmor() + eff);
-												break;
-											case DAMAGE:
-												champ.setitemDamage(champ.getItemDamage() + eff);
-												break;
-											case HEALTH:
-												champ.setitemHealth(champ.getItemHealth() + eff);
-												break;
-											case MAGICRESISTANCE:
-												champ.setitemMagicResist(champ.getitemMagicResist() + eff);
-												break;
-											case MANA:
-												champ.setitemMana(champ.getItemMana() + eff);
-												break;
-											default:
-												break;
+			if(!event.getInventory().getName().equalsIgnoreCase(sites.get(0).getName()) ){
+				if(event.getCurrentItem() != null){
+					if(event.getCurrentItem().getType() != Material.AIR){
+						if(!(event.getSlot() >= 53)){
+							ShopItem item = proxy.getItem(this.getInventoryId(event.getInventory()), event.getSlot());
+							ShopBuyEvent event1 = new ShopBuyEvent(player, item, item.getPrice(player));
+							if(!event1.isCancelled()){
+								if(LoM_API.isInArena(player)){
+									Arena a = LoM_API.getArenaP(player);
+									if(a.isActive()){
+										Champion champ = a.getChamps().get(player.getName());
+										if((champ.getMoney() - event1.getPrice()) >= 0){
+											champ.setMoney(champ.getMoney() - event1.getPrice());
+											player.getInventory().addItem(item.getItemStack());
+											player.updateInventory();
+											for(ShopItemType type : item.getItemType()){
+												int eff = item.getEffects().get(item.getItemType().indexOf(type));
+												switch(type){
+												case ARMOR:
+													champ.setitemDefense(champ.getItemArmor() + eff);
+													break;
+												case DAMAGE:
+													champ.setitemDamage(champ.getItemDamage() + eff);
+													break;
+												case HEALTH:
+													champ.setitemHealth(champ.getItemHealth() + eff);
+													break;
+												case MAGICRESISTANCE:
+													champ.setitemMagicResist(champ.getitemMagicResist() + eff);
+													break;
+												case MANA:
+													champ.setitemMana(champ.getItemMana() + eff);
+													break;
+												default:
+													break;
+												}
 											}
 										}
 									}
 								}
+						}
+						}else{
+							if(event.getSlot() == 53){
+								player.openInventory(sites.get(0));
 							}
-					}
-					}else{
-						if(!(event.getSlot() == 53)){
-							player.openInventory(sites.get(0));
 						}
 					}
+				}
 			}else{
 				ItemStack item = event.getCurrentItem();
 				switch(item.getType()){
@@ -117,7 +120,7 @@ public class Shop implements Listener{
 				}
 			}
 		}
-		}
+		
 	} 
 	
 	public void createShop() {

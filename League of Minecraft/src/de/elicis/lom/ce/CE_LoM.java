@@ -487,7 +487,7 @@ public class CE_LoM implements CommandExecutor {
 					return true;
 				}
 				if(args[0].equalsIgnoreCase("shop")){
-					if (sender.hasPermission("lom.arena.leave")) {
+					if (sender.hasPermission("lom.arena.shop")) {
 						if (LoM_API.isInArena(player)) {
 							player.openInventory(de.elicis.lom.Main.getPlugin().shop.getPage(0));
 							return true;

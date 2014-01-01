@@ -134,14 +134,17 @@ public class Arena implements Serializable {
 	}
 
 	public String getTeam(Player player) {
-		if (TeamRed.contains(player.getName())) {
-			return "red";
+		for(String str: TeamRed){
+			if(str.equalsIgnoreCase(player.getName())){
+				return "red";
+			}
 		}
-		else if (TeamBlue.contains(player.getName())) {
-			return "blue";
-		}else{
-			return "";
+		for(String str: TeamBlue){
+			if(str.equalsIgnoreCase(player.getName())){
+				return "blue";
+			}
 		}
+		return null;
 	}
 
 	public ArrayList<Player> getPlayers() {

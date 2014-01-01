@@ -28,8 +28,10 @@ public class LoM_API {
 	 */
 	public static boolean isInArena(Player player) {
 		for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
-			if (arena.getPlayersS().contains(player.getName())) {
-				return true;
+			for(String str : arena.getPlayersS()){
+				if(str.equalsIgnoreCase(player.getName())){
+					return true;
+				}
 			}
 		}
 		return false;
@@ -40,8 +42,10 @@ public class LoM_API {
 	 */
 	public static Arena getArenaP(Player player) {
 		for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
-			if (arena.getPlayersS().contains(player.getName())) {
-				return arena;
+			for(String str : arena.getPlayersS()){
+				if(str.equalsIgnoreCase(player.getName())){
+					return arena;
+				}
 			}
 			
 		}
