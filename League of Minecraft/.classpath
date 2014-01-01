@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-<<<<<<< HEAD
+	<classpathentry kind="src" path=""/>
 	<classpathentry kind="lib" path="C:/Users/Simon/Downloads/bukkit-1.7.2-R0.1.jar"/>
-=======
-	<classpathentry kind="lib" path="C:/Users/Luke/Downloads/bukkit-1.7.2-R0.1-20131201.031854-2.jar"/>
->>>>>>> c92a9aedd8ba9f8be760d9b1777b64b37f021629
 	<classpathentry kind="output" path="bin"/>
 </classpath>
