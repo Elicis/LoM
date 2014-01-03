@@ -95,6 +95,8 @@ public class Tower implements Serializable{
 										}
 									}
 								}
+							}else{
+								this.cancel();
 							}
 						}
 					}
@@ -119,7 +121,7 @@ public class Tower implements Serializable{
 								isShooting = true;
 								Bukkit.getWorld(a.getWorldName()).playEffect(getLocation().getLocation().add(0, 10, 0), Effect.BLAZE_SHOOT, 0);
 								Champion c = a.getChamps().get(player.getName());
-								c.setHealth(c.getHealth() - (damage* (100 / (100 + c.getArmor()))));
+								c.setHealth(c.getHealth() - (damage* (100 / (80 + c.getArmor()))));
 								
 							}
 						}else{
