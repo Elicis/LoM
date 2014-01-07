@@ -1,8 +1,14 @@
 package de.elicis.lom.data;
 
+import java.io.Serializable;
+
 import org.bukkit.Location;
 
-public class Nexus {
+public class Nexus implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5459151405120872792L;
 	int health;
 	String team;
 	LoMLocation loc;

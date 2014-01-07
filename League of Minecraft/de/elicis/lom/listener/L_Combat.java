@@ -28,7 +28,6 @@ import de.elicis.lom.data.Nexus;
 import de.elicis.lom.sign.LoM_Sign;
 import de.elicis.lom.sign.LoM_SignType;
 import de.elicis.lom.sign.LoM_TowerSign;
-import de.elicis.lom.tower.Tower;
 
 public class L_Combat implements Listener {
 	ArrayList<Material> weapons = new ArrayList<Material>();
@@ -215,9 +214,8 @@ public class L_Combat implements Listener {
 								if(LoM_API.isInArena(player)){
 										Arena a = LoM_API.getArenaW(sign.getWorld());
 									if(a.getChamps().get(player.getName()) != null){
-										Tower t = lsign.getTower();
 										Champion c = a.getChamps().get(player.getName());
-										t.setHealth(t.getHealth()-(c.getDamage()* (100/100 + t.getArmor())));
+										lsign.getTower().setHealth(lsign.getTower().getHealth()-(c.getDamage()* (100/100 + lsign.getTower().getArmor())));
 									}
 								
 							}
@@ -239,7 +237,7 @@ public class L_Combat implements Listener {
 									if(team.equalsIgnoreCase("red")){
 										nex = a.getNexusRed();
 									}else{
-										nex = a.getNexusBlue();;
+										nex = a.getNexusBlue();
 									}
 									String winner;
 									if(team.equalsIgnoreCase("red")){

@@ -520,15 +520,10 @@ public class CE_LoM implements CommandExecutor {
 		player.setGameMode(GameMode.ADVENTURE);
 		player.setSaturation((float) 20);
 		if (arena.getTeamBlue().size() < 5 && arena.getTeamRed().size() < 5) {
-			int randomTeam = (int) (Math.random() * 2 + 1);
-			if (randomTeam == 1) {
+			if(arena.getTeamBlue().size() < arena.getTeamRed().size()){
 				arena.addPlayerBlue(player);
-				player.sendMessage(ChatColor.BLUE + "You are in Team Blue!");
-				player.teleport(arena.getLobbyBlue().getLocation());
-			} else {
+			}else{
 				arena.addPlayerRed(player);
-				player.sendMessage(ChatColor.RED + "You are in Team Red!");
-				player.teleport(arena.getLobbyRed().getLocation());
 			}
 		} else if (arena.getTeamBlue().size() < 5) {
 			arena.addPlayerBlue(player);
