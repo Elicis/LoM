@@ -16,6 +16,7 @@ import de.elicis.lom.Main;
 import de.elicis.lom.champions.Alistar;
 import de.elicis.lom.champions.Ashe;
 import de.elicis.lom.champions.Champion;
+import de.elicis.lom.events.GameStartEvent;
 import de.elicis.lom.tower.Tower;
 import de.elicis.lom.tower.TowerType;
 
@@ -397,25 +398,28 @@ public class Arena implements Serializable {
 	}
 	
 	public void startGame() {
-		active = true;
-		for (Player player : getPlayers()) {
-			if (getTeam(player).equalsIgnoreCase("red")) {
-				player.teleport(SpawnRed.getLocation());
-			} else if (getTeam(player).equalsIgnoreCase("blue")) {
-				player.teleport(SpawnBlue.getLocation());
+		GameStartEvent event = new GameStartEvent(this);
+		if(!event.isCancelled()){
+			active = true;
+			for (Player player : getPlayers()) {
+				if (getTeam(player).equalsIgnoreCase("red")) {
+					player.teleport(SpawnRed.getLocation());
+				} else if (getTeam(player).equalsIgnoreCase("blue")) {
+					player.teleport(SpawnBlue.getLocation());
+				}
+				player.sendMessage(ChatColor.GREEN
+						+ "The game has started. Go get them " + ChatColor.GOLD
+						+ getChamps().get(player.getName()).getName());
+				continue;
 			}
-			player.sendMessage(ChatColor.GREEN
-					+ "The game has started. Go get them " + ChatColor.GOLD
-					+ getChamps().get(player.getName()).getName());
-			continue;
-		}
-		
-		if(isRedTeamEmpty()){
-			endGame("blue");
-		}
-		
-		if(isBlueTeamEmpty()){
-			endGame("red");
+			
+			if(isRedTeamEmpty()){
+				endGame("blue");
+			}
+			
+			if(isBlueTeamEmpty()){
+				endGame("red");
+			}
 		}
 	}
 	public void clearTeams(){

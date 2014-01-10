@@ -25,6 +25,10 @@ import de.elicis.lom.api.LoM_API;
 import de.elicis.lom.champions.Champion;
 import de.elicis.lom.data.Arena;
 import de.elicis.lom.data.Nexus;
+import de.elicis.lom.events.NexusDamageEvent;
+import de.elicis.lom.events.NexusDestroyEvent;
+import de.elicis.lom.events.TowerDamageEvent;
+import de.elicis.lom.events.TowerDestroyEvent;
 import de.elicis.lom.sign.LoM_Sign;
 import de.elicis.lom.sign.LoM_SignType;
 import de.elicis.lom.sign.LoM_TowerSign;
@@ -216,7 +220,18 @@ public class L_Combat implements Listener {
 											Arena a = LoM_API.getArenaW(sign.getWorld());
 										if(a.getChamps().get(player.getName()) != null){
 											Champion c = a.getChamps().get(player.getName());
-											lsign.getTower().setHealth(lsign.getTower().getHealth()-(c.getDamage()* (100/100 + lsign.getTower().getArmor())));
+											int damage = (c.getDamage()* (100/100 + lsign.getTower().getArmor()));
+											if(lsign.getTower().getHealth() - damage > 0){
+												TowerDamageEvent event1 = new TowerDamageEvent(lsign.getTower(),a, damage, player);
+												if(!event1.isCancelled()){
+													lsign.getTower().setHealth(lsign.getTower().getHealth()- event1.getAmount());
+												}
+											}else{
+												TowerDestroyEvent event1 = new TowerDestroyEvent(lsign.getTower(), a, player);
+												if(!event1.isCancelled()){
+													lsign.getTower().setHealth(0);
+												}
+											}
 										}
 									}
 								
@@ -248,9 +263,15 @@ public class L_Combat implements Listener {
 										winner = "red";
 									}
 								if(nex.getHealth() - damage <= 0){
-									a.endGame(winner);
+									NexusDestroyEvent event1 = new NexusDestroyEvent(a, player, nex);
+									if(!event1.isCancelled()){
+										a.endGame(winner);
+									}
 								}else{
-									nex.setHealth(nex.getHealth() - damage);
+									NexusDamageEvent event1 = new NexusDamageEvent(a, damage, player, nex);
+									if(!event1.isCancelled()){
+										nex.setHealth(nex.getHealth() - event1.getAmount());
+									}
 								}
 							}
 						}
