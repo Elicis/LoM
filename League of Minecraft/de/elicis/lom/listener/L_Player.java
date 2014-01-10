@@ -153,10 +153,11 @@ public class L_Player implements Listener {
 						.setContents(Items.get(event.getPlayer()));
 			}
 			if (LoM_API.getArenaP(player).getTeam(player).equalsIgnoreCase("red")) {
+				event.setRespawnLocation(LoM_API.getArenaP(player).getSpawnRed().getLocation());
 				player.teleport(LoM_API.getArenaP(player).getSpawnRed().getLocation());
 			} else if (LoM_API.getArenaP(player).getTeam(player).equalsIgnoreCase(
 					"blue")){
-				player.teleport(LoM_API.getArenaP(player).getSpawnBlue().getLocation());
+				event.setRespawnLocation(LoM_API.getArenaP(player).getSpawnBlue().getLocation());
 			}
 
 		}

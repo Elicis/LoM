@@ -1,7 +1,7 @@
 name: League of Minecraft
-version: 0.2
+version: 0.2.5
 description: League of Legends in Minecraft
-author: Elicis
+author: Elicis & Multidude
 
 main: de.elicis.lom.Main
 

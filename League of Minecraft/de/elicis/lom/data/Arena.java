@@ -270,14 +270,14 @@ public class Arena implements Serializable {
 	}
 	
 	public boolean isRedTeamEmpty(){
-		if(getTeamRed().size() <= 0){
+		if(TeamRed.size() <= 0){
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean isBlueTeamEmpty(){
-		if(getTeamBlue().size() <= 0){
+		if(TeamBlue.size() <= 0){
 			return true;
 		}
 		return false;

@@ -6,7 +6,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import de.elicis.lom.Main;
@@ -88,10 +91,20 @@ public class Tower implements Serializable{
 					public void run() {
 						if(!isShooting){
 							if(a.isActive()){
-								for(Player p : a.getPlayers()){
-									if(!a.getTeam(p).equalsIgnoreCase(team)){
-										if(p.getLocation().distance(getLocation().getLocation()) < range){
-											shootPlayer(p);
+								for(Entity e:getLocation().getLocation().getWorld().getLivingEntities()){
+									if(e.getType().equals(EntityType.ZOMBIE)){
+										Zombie zom = (Zombie)e;
+										if(zom.getLocation().distance(getLocation().getLocation()) < range){
+											shootZombie(zom);
+										}
+									}else if(e.getType().equals(EntityType.PLAYER)){
+										Player player = (Player) e;
+										if(LoM_API.isInArena(player)){
+											if(!a.getTeam(player).equalsIgnoreCase(team)){
+												if(player.getLocation().distance(getLocation().getLocation()) < range){
+													shootPlayer(player);
+												}
+											}
 										}
 									}
 								}
@@ -129,6 +142,31 @@ public class Tower implements Serializable{
 							cancel();
 						}
 						}
+					}
+				}catch(Exception e){
+					
+				}
+			}
+		}, 1000, 2000);
+	}
+	public void shootZombie(final Zombie zom){
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new BukkitRunnable(){
+			public void run(){
+				try{
+					if(getLocation().getLocation().distance(zom.getLocation()) > getRange()){
+						isShooting = false;
+						cancel();
+					}else{
+						if(!isDestroyed()){
+								isShooting = true;
+								zom.getLocation().getWorld().playEffect(getLocation().getLocation().add(0, 10, 0), Effect.BLAZE_SHOOT, 0);
+								zom.setHealth(zom.getHealth() - (zom.getHealth()/3));
+								setHealth(getHealth() - 20);
+						}else{
+							isShooting = false;
+							cancel();
+						}
+						
 					}
 				}catch(Exception e){
 					

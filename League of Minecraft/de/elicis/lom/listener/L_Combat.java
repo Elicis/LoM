@@ -212,10 +212,12 @@ public class L_Combat implements Listener {
 					LoM_TowerSign lsign = LoM_API.getLoM_TowerSign(sign);
 						if(LoM_API.getArenaW(sign.getWorld()) != null){
 								if(LoM_API.isInArena(player)){
-										Arena a = LoM_API.getArenaW(sign.getWorld());
-									if(a.getChamps().get(player.getName()) != null){
-										Champion c = a.getChamps().get(player.getName());
-										lsign.getTower().setHealth(lsign.getTower().getHealth()-(c.getDamage()* (100/100 + lsign.getTower().getArmor())));
+									if(LoM_API.getArenaW(sign.getWorld()).isActive()){
+											Arena a = LoM_API.getArenaW(sign.getWorld());
+										if(a.getChamps().get(player.getName()) != null){
+											Champion c = a.getChamps().get(player.getName());
+											lsign.getTower().setHealth(lsign.getTower().getHealth()-(c.getDamage()* (100/100 + lsign.getTower().getArmor())));
+										}
 									}
 								
 							}

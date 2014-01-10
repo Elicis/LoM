@@ -5,9 +5,12 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import de.elicis.lom.champions.Champion;
@@ -27,18 +30,7 @@ public class Engine {
 							if (arena.isActive()) {
 								for (Champion champ : arena.getChamps()
 										.values()) {
-									Player player = champ.getPlayer();
-									champ.updateChamp();
-									champ.setMoney((int) (champ.getMoney() + 1 + champ
-											.getGoldRegen()));
-									player.getInventory().setItem(35, new ItemStack(Material.GOLD_INGOT));
-									ItemStack ingot = player.getInventory().getItem(35);
-									ItemMeta meta = ingot.getItemMeta();
-									List<String> list = new ArrayList<String>();
-									list.add((String) "" + champ.getMoney());
-									meta.setLore(list);
-									ingot.setItemMeta(meta);
-									player.getInventory().setItem(35, ingot);
+									
 									if ((champ.getMana() + champ.getManaRegen()) <= champ
 											.getMaxMana()) {
 										champ.setMana((int) (champ.getMana() + champ
@@ -68,9 +60,47 @@ public class Engine {
 				for(LoM_TowerSign sign : de.elicis.lom.Main.getPlugin().towerSigns){
 					sign.updateSign();
 				}
+				for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
+					if (arena.isActive()) {
+						for (Champion champ : arena.getChamps()
+								.values()) {
+							Player player = champ.getPlayer();
+							champ.setMoney((int) (champ.getMoney() + 1 + champ
+									.getGoldRegen()));
+							player.getInventory().setItem(35, new ItemStack(Material.GOLD_INGOT));
+							ItemStack ingot = player.getInventory().getItem(35);
+							ItemMeta meta = ingot.getItemMeta();
+							List<String> list = new ArrayList<String>();
+							list.add((String) "" + champ.getMoney());
+							meta.setLore(list);
+							ingot.setItemMeta(meta);
+							player.getInventory().setItem(35, ingot);
+						}
+					}
+				}
 
 			}
 
 		}, 200, 40);
+		
+		//Minionwaves
+		Bukkit.getScheduler().runTaskTimer((Plugin) de.elicis.lom.Main.getPlugin(), new Runnable() {
+			@Override
+			public void run() {
+				for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
+					if (arena.isActive()) {
+						if(arena.getNexusRed() != null && arena.getNexusBlue() != null){
+							//Zombieswarm blue
+							Zombie zom = (Zombie) arena.getWorld().spawnEntity(arena.getNexusBlue().getLoc().getLocation(), EntityType.ZOMBIE);
+							zom.setBaby(true);
+							zom.setRemoveWhenFarAway(false);
+							zom.setMetadata("isLoMMob", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), true));
+							zom.setMetadata("Lane", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), "mid"));
+						}
+					}
+				}
+				
+			}
+		}, 4000, 600);
 	}
 }

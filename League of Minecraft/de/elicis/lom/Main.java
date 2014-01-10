@@ -40,8 +40,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable(){
 		addChamps();
-		getConfig().options().copyDefaults(true);
-		saveConfig();
+		saveDefaultConfig();
 		this.getCommand("lom").setExecutor(new CE_LoM(this));
 		getInventorys().reloadConfig("inventorys.yml");
 		registerListeners();
@@ -53,7 +52,6 @@ public class Main extends JavaPlugin {
 			Signs = SL.load(this.getDataFolder().getPath() + "/data/signs.bin");
 			towerSigns = SL.load(this.getDataFolder().getPath() + "/data/towers.bin");
 		} catch (Exception e) {
-			e.printStackTrace();
 			
 		}
 		loadArenas();
@@ -96,7 +94,7 @@ public class Main extends JavaPlugin {
 			SL.save(Signs, this.getDataFolder().getPath() + "/data/signs.bin");
 			SL.save(towerSigns, this.getDataFolder().getPath() + "/data/towers.bin");
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 	}
 
