@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
@@ -90,17 +91,46 @@ public class Engine {
 				for (Arena arena : de.elicis.lom.Main.getPlugin().Arenas.values()) {
 					if (arena.isActive()) {
 						if(arena.getNexusRed() != null && arena.getNexusBlue() != null){
+							ItemStack leatherarmor = new ItemStack(Material.LEATHER_CHESTPLATE);
+							LeatherArmorMeta meta = (LeatherArmorMeta)leatherarmor.getItemMeta();
+							leatherarmor.setItemMeta(meta);
 							//Zombieswarm blue
-							Zombie zom = (Zombie) arena.getWorld().spawnEntity(arena.getNexusBlue().getLoc().getLocation(), EntityType.ZOMBIE);
-							zom.setBaby(true);
-							zom.setRemoveWhenFarAway(false);
-							zom.setMetadata("isLoMMob", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), true));
-							zom.setMetadata("Lane", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), "mid"));
+							//mid
+							for(int i = 0; i<5; i++){
+								Zombie zom = (Zombie) arena.getWorld().spawnEntity(arena.getNexusBlue().getLoc().getLocation(), EntityType.ZOMBIE);
+								zom.setBaby(true);
+								zom.setRemoveWhenFarAway(false);
+								zom.setMetadata("isLoMMob", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), true));
+								zom.setMetadata("Lane", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), "mid"));
+								zom.getEquipment().setChestplate(leatherarmor);
+								zom.getEquipment().setChestplateDropChance((float) 0.0);
+							}
+							//top
+							for(int i = 0; i<5; i++){
+								Zombie zom = (Zombie) arena.getWorld().spawnEntity(arena.getNexusBlue().getLoc().getLocation(), EntityType.ZOMBIE);
+								zom.setBaby(true);
+								zom.setRemoveWhenFarAway(false);
+								zom.setMetadata("isLoMMob", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), true));
+								zom.setMetadata("Lane", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), "top"));
+								zom.getEquipment().setChestplate(leatherarmor);
+								zom.getEquipment().setChestplateDropChance((float) 0.0);
+							}
+							//bot
+							for(int i = 0; i<5; i++){
+								Zombie zom = (Zombie) arena.getWorld().spawnEntity(arena.getNexusBlue().getLoc().getLocation(), EntityType.ZOMBIE);
+								zom.setBaby(true);
+								zom.setRemoveWhenFarAway(false);
+								zom.setMetadata("isLoMMob", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), true));
+								zom.setMetadata("Lane", new FixedMetadataValue(de.elicis.lom.Main.getPlugin(), "bot"));
+								zom.getEquipment().setChestplate(leatherarmor);
+								zom.getEquipment().setChestplateDropChance((float) 0.0);
+							}
 						}
 					}
 				}
 				
 			}
 		}, 4000, 600);
+		
 	}
 }

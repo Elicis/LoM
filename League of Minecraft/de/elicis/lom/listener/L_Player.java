@@ -227,7 +227,6 @@ public class L_Player implements Listener {
 			Location spawn = to.getWorld().getSpawnLocation();
 			Double distance = spawn.distance(to);
 			if(distance >= fconfig.getDouble("arena.radius")){
-				event.setCancelled(true);
 				player.sendMessage(ChatColor.RED + "You reached the end of the arena!");
 				player.setVelocity(player.getVelocity().multiply(-1));
 			}

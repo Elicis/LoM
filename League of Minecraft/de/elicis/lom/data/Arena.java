@@ -646,7 +646,96 @@ public class Arena implements Serializable {
 	public Nexus getNexusBlue() {
 		return nexusblue;
 	}
-
+	public Tower getNextInLineBotBlue(){
+		if(!this.getT_blue_outer_bot().isDestroyed()){
+			return this.getT_blue_outer_bot();
+		}else if(!this.getT_blue_inner_bot().isDestroyed()){
+			return this.getT_blue_inner_bot();
+		}else if(!this.getT_blue_inhib_bot().isDestroyed()){
+			return this.getT_blue_inhib_bot();
+		}else if(!this.getT_blue_nexus_bot().isDestroyed()){
+			return this.getT_blue_nexus_bot();
+		}else if(!this.getT_blue_nexus_top().isDestroyed()){
+			return this.getT_blue_nexus_top();
+		}else{
+			return null;
+		}
+	}
+	public Tower getNextInLineMidBlue(){
+		if(!this.getT_blue_outer_mid().isDestroyed()){
+			return this.getT_blue_outer_mid();
+		}else if(!this.getT_blue_inner_mid().isDestroyed()){
+			return this.getT_blue_inner_mid();
+		}else if(!this.getT_blue_inhib_mid().isDestroyed()){
+			return this.getT_blue_inhib_mid();
+		}else if(!this.getT_blue_nexus_bot().isDestroyed()){
+			return this.getT_blue_nexus_bot();
+		}else if(!this.getT_blue_nexus_top().isDestroyed()){
+			return this.getT_blue_nexus_top();
+		}else{
+			return null;
+		}
+	}
+	public Tower getNextInLineTopBlue(){
+		if(!this.getT_blue_outer_top().isDestroyed()){
+			return this.getT_blue_outer_top();
+		}else if(!this.getT_blue_inner_top().isDestroyed()){
+			return this.getT_blue_inner_top();
+		}else if(!this.getT_blue_inhib_top().isDestroyed()){
+			return this.getT_blue_inhib_top();
+		}else if(!this.getT_blue_nexus_bot().isDestroyed()){
+			return this.getT_blue_nexus_bot();
+		}else if(!this.getT_blue_nexus_top().isDestroyed()){
+			return this.getT_blue_nexus_top();
+		}else{
+			return null;
+		}
+	}
+	public Tower getNextInLineBotRed(){
+		if(!this.getT_red_outer_bot().isDestroyed()){
+			return this.getT_red_outer_bot();
+		}else if(!this.getT_red_inner_bot().isDestroyed()){
+			return this.getT_red_inner_bot();
+		}else if(!this.getT_red_inhib_bot().isDestroyed()){
+			return this.getT_red_inhib_bot();
+		}else if(!this.getT_red_nexus_bot().isDestroyed()){
+			return this.getT_red_nexus_bot();
+		}else if(!this.getT_red_nexus_top().isDestroyed()){
+			return this.getT_red_nexus_top();
+		}else{
+			return null;
+		}
+	}
+	public Tower getNextInLineMidRed(){
+		if(!this.getT_red_outer_mid().isDestroyed()){
+			return this.getT_red_outer_mid();
+		}else if(!this.getT_red_inner_mid().isDestroyed()){
+			return this.getT_red_inner_mid();
+		}else if(!this.getT_red_inhib_mid().isDestroyed()){
+			return this.getT_red_inhib_mid();
+		}else if(!this.getT_red_nexus_bot().isDestroyed()){
+			return this.getT_red_nexus_bot();
+		}else if(!this.getT_red_nexus_top().isDestroyed()){
+			return this.getT_red_nexus_top();
+		}else{
+			return null;
+		}
+	}
+	public Tower getNextInLineTopRed(){
+		if(!this.getT_red_outer_top().isDestroyed()){
+			return this.getT_red_outer_top();
+		}else if(!this.getT_red_inner_top().isDestroyed()){
+			return this.getT_red_inner_top();
+		}else if(!this.getT_red_inhib_top().isDestroyed()){
+			return this.getT_red_inhib_top();
+		}else if(!this.getT_red_nexus_bot().isDestroyed()){
+			return this.getT_red_nexus_bot();
+		}else if(!this.getT_red_nexus_top().isDestroyed()){
+			return this.getT_red_nexus_top();
+		}else{
+			return null;
+		}
+	}
 	public void setNexusRed(Nexus nexus) {
 		this.nexusred = nexus;
 	}
@@ -683,18 +772,29 @@ public class Arena implements Serializable {
 		Champs.clear();
 		ChampsRed.clear();
 		ChampsBlue.clear();
-		// TODO: Null Pointer Exception when setting towers health at end of game.
-		/*if(getTowers().size() > 0){
+		if(getTowers().size() > 0){
 			for(Tower t : getTowers()){
-				t.setHealth(t.getMaxHealth());
+				if(t != null){
+					t.setHealth(t.getMaxHealth());
+				}
 			}
-		}*/
+		}
 		if(nexusred != null && nexusblue != null){
 			nexusred.setHealth(4000);
 			nexusblue.setHealth(4000);
 		}
 		active = false;
 		
+	}
+	
+	public boolean isEveryTowerSetUp(){
+		boolean isSetUp = true;
+		for(Tower t: getTowers()){
+			if(t == null){
+				isSetUp = false;
+			}
+		}
+		return isSetUp;
 	}
 
 }

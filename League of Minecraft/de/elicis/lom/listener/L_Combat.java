@@ -1,7 +1,5 @@
 package de.elicis.lom.listener;
 
-import java.util.ArrayList;
-
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Arrow;
@@ -34,10 +32,6 @@ import de.elicis.lom.sign.LoM_SignType;
 import de.elicis.lom.sign.LoM_TowerSign;
 
 public class L_Combat implements Listener {
-	ArrayList<Material> weapons = new ArrayList<Material>();
-	public L_Combat() {
-		addweapons();
-	}
 	
 	@EventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
@@ -46,7 +40,7 @@ public class L_Combat implements Listener {
 			if(event.getDamager().hasMetadata("Hawkshot")){
 				if(arrow.getShooter() instanceof Player){
 					Player player = (Player) arrow.getShooter();
-					if(LoM_API.getArenaP(player).getTeam(player) == "blue"){
+					if(LoM_API.getArenaP(player).getTeam(player).equalsIgnoreCase("blue")){
 						for(Entity e: arrow.getNearbyEntities(3, 3, 3)){
 							if(e instanceof Player){
 								Player p2 = (Player) e;
@@ -56,7 +50,7 @@ public class L_Combat implements Listener {
 							}
 						}
 					}
-					if(LoM_API.getArenaP(player).getTeam(player) == "red"){
+					if(LoM_API.getArenaP(player).getTeam(player).equalsIgnoreCase("red")){
 						for(Entity e: arrow.getNearbyEntities(3, 3, 3)){
 							if(e instanceof Player){
 								Player p2 = (Player) e;
@@ -71,10 +65,10 @@ public class L_Combat implements Listener {
 			if(event.getDamager().hasMetadata("EnchantedCrystalArrow")){
 				if(arrow.getShooter() instanceof Player){
 					Player player = (Player)arrow.getShooter();
-					if(LoM_API.getArenaP(player).getTeam(player) == "blue"){
+					if(LoM_API.getArenaP(player).getTeam(player).equalsIgnoreCase("blue")){
 						if(event.getEntity() instanceof Player){
 							Player damaged = (Player)event.getEntity();
-							if(LoM_API.getArenaP(damaged).getTeam(damaged) == "red"){
+							if(LoM_API.getArenaP(damaged).getTeam(damaged).equalsIgnoreCase("red")){
 								damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5, 2));
 								damaged.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2, 1));
 								Champion champdamaged = LoM_API.getArenaP(damaged).getChamps().get(damaged.getName());
@@ -83,7 +77,7 @@ public class L_Combat implements Listener {
 								for(Entity e: damaged.getNearbyEntities(3, 3, 3)){
 									if(e instanceof Player){
 										Player p2 = (Player) e;
-										if(LoM_API.getArenaP(p2).getTeam(p2) == "red"){
+										if(LoM_API.getArenaP(p2).getTeam(p2).equalsIgnoreCase("red")){
 											damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1));
 											p2.setHealth(p2.getHealth() - (Damage/2));
 											
@@ -94,10 +88,10 @@ public class L_Combat implements Listener {
 							}
 						}
 					}
-					if(LoM_API.getArenaP(player).getTeam(player) == "red"){
+					if(LoM_API.getArenaP(player).getTeam(player).equalsIgnoreCase("red")){
 						if(event.getEntity() instanceof Player){
 							Player damaged = (Player)event.getEntity();
-							if(LoM_API.getArenaP(damaged).getTeam(damaged) == "blue"){
+							if(LoM_API.getArenaP(damaged).getTeam(damaged).equalsIgnoreCase("blue")){
 								damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5, 2));
 								damaged.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2, 1));
 								Champion champdamaged = LoM_API.getArenaP(damaged).getChamps().get(damaged.getName());
@@ -106,7 +100,7 @@ public class L_Combat implements Listener {
 								for(Entity e: damaged.getNearbyEntities(3, 3, 3)){
 									if(e instanceof Player){
 										Player p2 = (Player) e;
-										if(LoM_API.getArenaP(p2).getTeam(p2) == "blue"){
+										if(LoM_API.getArenaP(p2).getTeam(p2).equalsIgnoreCase("blue")){
 											damaged.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1));
 											p2.setHealth(p2.getHealth() - (Damage/2));
 										}
@@ -133,12 +127,11 @@ public class L_Combat implements Listener {
 				}
 
 				if (event.getDamager().getType() == (EntityType.PLAYER)) {
-					if (weapons.contains(player1.getItemInHand().getData().getItemType())) {
 						Player player2 = (Player) event.getDamager();
 						if (LoM_API.isInArena(player2)) {
 							if (arena.isActive()) {
-								if (arena.getTeam(player1) != arena
-										.getTeam(player2)) {
+								if (!arena.getTeam(player1).equalsIgnoreCase(arena
+										.getTeam(player2))) {
 									Champion champPlayer1 = arena.getChamps()
 											.get(player1.getName());
 									Champion champPlayer2 = arena.getChamps()
@@ -148,7 +141,6 @@ public class L_Combat implements Listener {
 													.getArmor())));
 								}
 							}
-						}
 					}
 				}
 				if (event.getCause() == DamageCause.PROJECTILE) {
@@ -158,8 +150,8 @@ public class L_Combat implements Listener {
 							Player player2 = (Player) a.getShooter();
 							if (LoM_API.isInArena(player2)) {
 								if (arena.isActive()) {
-									if (arena.getTeam(player1) != arena
-											.getTeam(player2)) {
+									if (!arena.getTeam(player1).equalsIgnoreCase(arena
+											.getTeam(player2))) {
 										Champion champPlayer1 = arena
 												.getChamps().get(
 														player1.getName());
@@ -181,8 +173,8 @@ public class L_Combat implements Listener {
 							Player player2 = (Player) a.getShooter();
 							if (LoM_API.isInArena(player2)) {
 								if (arena.isActive()) {
-									if (arena.getTeam(player1) != arena
-											.getTeam(player2)) {
+									if (!arena.getTeam(player1).equalsIgnoreCase(arena
+											.getTeam(player2))) {
 										Champion champPlayer1 = arena
 												.getChamps().get(
 														player1.getName());
@@ -279,15 +271,6 @@ public class L_Combat implements Listener {
 				}
 			}
 		}
-	}
-	
-	public void addweapons() {
-		weapons.add(Material.IRON_HOE);
-		weapons.add(Material.IRON_SWORD);
-		weapons.add(Material.WOOD_SWORD);
-		weapons.add(Material.BONE);
-		weapons.add(Material.GOLD_SWORD);
-		weapons.add(Material.DIAMOND_SWORD);
 	}
 	
 	@EventHandler
