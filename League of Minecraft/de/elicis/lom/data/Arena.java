@@ -779,9 +779,27 @@ public class Arena implements Serializable {
 				}
 			}
 		}
-		if(nexusred != null && nexusblue != null){
+		if(nexusred != null){
 			nexusred.setHealth(4000);
+		}else{
+			for(Player player: Bukkit.getOnlinePlayers()){
+				if(player.hasPermission("lom.info")){
+					player.sendMessage(ChatColor.GOLD+"[LoM]"+ ChatColor.WHITE + "The red Nexus in the Arena:" +
+					ChatColor.BLUE + this.getName()+ ChatColor.WHITE + "isn't there anymore!");
+					
+				}
+			}
+		}
+		if(nexusblue != null){
 			nexusblue.setHealth(4000);
+		}else{
+			for(Player player: Bukkit.getOnlinePlayers()){
+				if(player.hasPermission("lom.info")){
+					player.sendMessage(ChatColor.GOLD+"[LoM]"+ ChatColor.WHITE + "The blue Nexus in the Arena:" +
+					ChatColor.BLUE + this.getName()+ ChatColor.WHITE + "isn't there anymore!");
+					
+				}
+			}
 		}
 		active = false;
 		
