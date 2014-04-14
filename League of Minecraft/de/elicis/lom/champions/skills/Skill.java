@@ -2,6 +2,7 @@ package de.elicis.lom.champions.skills;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import de.elicis.lom.api.LoM_API;
 
@@ -27,6 +28,14 @@ public abstract class Skill {
 	}
 
 	public abstract void useSkill();
+	
+	
+	public void setItemSlot(String displayName){
+		ItemMeta im = iconItem.getItemMeta();
+		im.setDisplayName(displayName);
+		iconItem.setItemMeta(im);
+		player.getInventory().setItem(slot, iconItem);
+	}
 	
 	public boolean hasMana(){
 		if(LoM_API.isInArena(player)){

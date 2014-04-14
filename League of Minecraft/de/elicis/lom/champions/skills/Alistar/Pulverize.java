@@ -4,7 +4,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -17,14 +16,7 @@ public class Pulverize extends Skill {
 
 	public Pulverize(Player player2, int mana, int slot, int cooldown) {
 		super(player2, mana, new ItemStack(new Potion(PotionType.STRENGTH).toItemStack(1)), slot, cooldown);
-		setItemSlot();
-	}
-	
-	public void setItemSlot(){
-		ItemMeta im = getIconItem().getItemMeta();
-		im.setDisplayName("Pulverize");
-		getIconItem().setItemMeta(im);
-		getPlayer().getInventory().setItem(getSlot(), getIconItem());
+		setItemSlot("Pulverize");
 	}
 
 	@Override
@@ -40,7 +32,7 @@ public class Pulverize extends Skill {
 				}
 			}
 		}
-		setItemSlot();
+		setItemSlot("Pulverize");
 	}
 
 }

@@ -56,8 +56,12 @@ public abstract class Champion {
 	}
 
 	public Player getPlayer() {
-		Player player2 = Bukkit.getPlayer(player);
-		return player2;
+		for(Player p: Bukkit.getOnlinePlayers()){
+			if(p.getName().equalsIgnoreCase(player)){
+				return p;
+			}
+		}
+		return null;
 	}
 	public boolean isReady(){
 		return isReady;

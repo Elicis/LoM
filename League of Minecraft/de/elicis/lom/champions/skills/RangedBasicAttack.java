@@ -6,21 +6,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class RangedBasicAttack extends Skill {
 	long lastlaunched = 0;
 
 	public RangedBasicAttack(Player player2, int mana, int slot) {
 		super(player2, mana, new ItemStack(Material.BOW), slot, 3);
-		setItemSlot();
-	}
-	
-	public void setItemSlot(){
-		ItemMeta im = iconItem.getItemMeta();
-		im.setDisplayName("Ranged Basic Attack");
-		iconItem.setItemMeta(im);
-		player.getInventory().setItem(slot, iconItem);
+		setItemSlot("Ranged Basic Attack");
 	}
 
 	@Override

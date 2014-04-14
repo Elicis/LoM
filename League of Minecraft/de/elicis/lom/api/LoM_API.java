@@ -11,7 +11,7 @@ import de.elicis.lom.sign.LoM_TowerSign;
 import de.elicis.lom.tower.TowerType;
 
 public class LoM_API {
-	/*
+	/**
 	 * Returns true if the world is a Arena
 	 */
 	public static boolean isArena(World world) {
@@ -23,7 +23,7 @@ public class LoM_API {
 		return false;
 	}
 
-	/*
+	/**
 	 * Checks if the player is already in an arena
 	 */
 	public static boolean isInArena(Player player) {
@@ -37,7 +37,7 @@ public class LoM_API {
 		return false;
 	}
 
-	/*
+	/**
 	 * Return an Arena for a specific Player
 	 */
 	public static Arena getArenaP(Player player) {
@@ -52,7 +52,7 @@ public class LoM_API {
 		return null;
 	}
 
-	/*
+	/**
 	 * Checks if the Sign is a LoM_Sign
 	 */
 	public static boolean isLoM_Sign(Sign sign) {
@@ -65,7 +65,7 @@ public class LoM_API {
 		}
 		return isSign;
 	}
-	/*
+	/**
 	 * Checks if the Sign is a LoM_TowerSign
 	 */
 	public static boolean isLoM_TowerSign(Sign sign) {
@@ -79,7 +79,7 @@ public class LoM_API {
 		return isSign;
 	}
 
-	/*
+	/**
 	 * Return the LoM_Sign for a Sign
 	 */
 	public static LoM_Sign getLoM_Sign(Sign sign) {
@@ -91,7 +91,7 @@ public class LoM_API {
 		}
 		return null;
 	}
-	/*
+	/**
 	 * Return the LoM_TowerSign for a Sign
 	 */
 	public static LoM_TowerSign getLoM_TowerSign(Sign sign) {
@@ -103,7 +103,7 @@ public class LoM_API {
 		}
 		return null;
 	}
-	/*
+	/**
 	 * Compares two Locations
 	 */
 	public static boolean isSameLocation(Location loc1, Location loc2){
@@ -121,7 +121,7 @@ public class LoM_API {
 		}
 		return isSame;
 	}
-	/*
+	/**
 	 * Gets an arena by its world
 	 */
 	public static Arena getArenaW(World world) {
@@ -133,7 +133,7 @@ public class LoM_API {
 		}
 		return null;
 	}
-	/*
+	/**
 	 * Returns a TowerType for a String
 	 */
 	public static TowerType getTowerType(String s){

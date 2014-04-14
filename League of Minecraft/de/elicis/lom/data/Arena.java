@@ -91,7 +91,11 @@ public class Arena implements Serializable {
 	public ArrayList<Player> getTeamRed() {
 		ArrayList<Player> Player = new ArrayList<Player>();
 		for (String string : TeamRed) {
-			Player.add(Bukkit.getPlayer(string));
+			for(Player p: Bukkit.getOnlinePlayers()){
+				if(p.getName().equalsIgnoreCase(string)){
+					Player.add(p);
+				}
+			}
 		}
 		return Player;
 	}
@@ -99,7 +103,11 @@ public class Arena implements Serializable {
 	public ArrayList<Player> getTeamBlue() {
 		ArrayList<Player> Player = new ArrayList<Player>();
 		for (String string : TeamBlue) {
-			Player.add(Bukkit.getPlayer(string));
+			for(Player p: Bukkit.getOnlinePlayers()){
+				if(p.getName().equalsIgnoreCase(string)){
+					Player.add(p);
+				}
+			}
 		}
 		return Player;
 	}
@@ -151,7 +159,11 @@ public class Arena implements Serializable {
 	public ArrayList<Player> getPlayers() {
 		ArrayList<Player> Player = new ArrayList<Player>();
 		for (String string : Players) {
-			Player.add(Bukkit.getPlayer(string));
+			for(Player p: Bukkit.getOnlinePlayers()){
+				if(p.getName().equalsIgnoreCase(string)){
+					Player.add(p);
+				}
+			}
 			continue;
 		}
 		return Player;
@@ -373,15 +385,19 @@ public class Arena implements Serializable {
 				
 				else if(countdown == 0){
 					for(String player: Players){
-						if(!getChamps().containsKey(player)){
-							Random rand = new Random();
-							// TODO: Edit when more champions are added
-							int randChamp = rand.nextInt(2);
-							if(randChamp <= 1){
-								addChamp(Main.getPlugin().getServer().getPlayer(player), new Ashe(Main.getPlugin().getServer().getPlayer(player)));
-							}
-							if(randChamp == 2){
-								addChamp(Main.getPlugin().getServer().getPlayer(player), new Alistar(Main.getPlugin().getServer().getPlayer(player)));
+						for(Player p: Bukkit.getOnlinePlayers()){
+							if(p.getName().equalsIgnoreCase(player)){
+								if(!getChamps().containsKey(player)){
+									Random rand = new Random();
+									// TODO: Edit when more champions are added
+									int randChamp = rand.nextInt(2);
+									if(randChamp <= 1){
+										addChamp(p, new Ashe(p));
+									}
+									if(randChamp == 2){
+										addChamp(p, new Alistar(p));
+									}
+								}
 							}
 						}
 					}

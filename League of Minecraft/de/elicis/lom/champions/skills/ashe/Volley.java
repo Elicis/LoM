@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 import de.elicis.lom.champions.skills.Skill;
@@ -13,14 +12,7 @@ public class Volley extends Skill{
 
 	public Volley(Player player2, int mana, int slot, int cooldown) {
 		super(player2, mana, new ItemStack(Material.ARROW), slot, cooldown);
-		setItemSlot();
-	}
-
-	public void setItemSlot(){
-		ItemMeta im = getIconItem().getItemMeta();
-		im.setDisplayName("Volley");
-		getIconItem().setItemMeta(im);
-		getPlayer().getInventory().setItem(getSlot(), getIconItem());
+		setItemSlot("Volley");
 	}
 
 	
@@ -40,7 +32,7 @@ public class Volley extends Skill{
 		snow5.setVelocity(snow5.getVelocity().multiply(new Vector(-2, 0.8, 1.0)));
 		snow6.setVelocity(snow6.getVelocity().multiply(new Vector(3, 0.6, 1.0)));
 		snow7.setVelocity(snow7.getVelocity().multiply(new Vector(-3, 0.6, 1.0)));
-		setItemSlot();
+		setItemSlot("Volley");
 	}
 
 	
